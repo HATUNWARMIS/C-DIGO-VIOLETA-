@@ -205,15 +205,121 @@
     }
   };
 
+  // =====================================
+  // JARDÍN DE LOGROS VIOLETA
+  // =====================================
+
+  function actualizarJardinVioleta() {
+    const jardin = document.getElementById("jardin-violeta");
+    if (!jardin) return;
+
+    const flores = [
+      {
+        id: "signals",
+        nombre: "Reconoce las señales",
+        emoji: "🌹"
+      },
+      {
+        id: "digital",
+        nombre: "Escudo Digital",
+        emoji: "🌷"
+      },
+      {
+        id: "voice",
+        nombre: "Mi voz pone límites",
+        emoji: "🌸"
+      },
+      {
+        id: "network",
+        nombre: "Activa tu red",
+        emoji: "🌻"
+      }
+    ];
+
+    const completados = flores.filter(
+      flor => state[flor.id] === true
+    ).length;
+
+    const porcentaje = completados * 25;
+
+    document.getElementById("jardinPorcentaje")
+      .textContent = porcentaje + "%";
+
+    document.getElementById("jardinBarra")
+      .style.width = porcentaje + "%";
+
+    jardin.querySelector(".jardin-barra")
+      .setAttribute("aria-valuenow", String(porcentaje));
+
+    const mensajes = [
+      "Tu jardín está comenzando. 🌱",
+      "¡Tu primera flor ha crecido! 🌷",
+      "¡Ya tienes dos flores! 💜",
+      "¡Tres flores! Tu jardín está creciendo. 🌸",
+      "¡Tu jardín está completamente florecido! 🌺"
+    ];
+
+    document.getElementById("jardinEstado")
+      .textContent = mensajes[completados];
+
+    document.getElementById("jardinMensaje")
+      .textContent = completados === 4
+        ? "¡Lo lograste! Soy Vio y quiero felicitarte. Completaste los cuatro módulos. Tu jardín representa todo lo que aprendiste. 💜"
+        : "¡Hola! Soy Vio. Has completado " +
+          completados +
+          " de 4 módulos. Cada aprendizaje hace crecer tu jardín. 🌷";
+
+    const contenedor = document.getElementById("jardinFlores");
+
+    contenedor.replaceChildren();
+
+    flores.forEach(flor => {
+      const completada = state[flor.id] === true;
+
+      const tarjeta = document.createElement("div");
+      tarjeta.className = "jardin-flor" +
+        (completada ? " desbloqueada" : "");
+
+      const imagen = document.createElement("span");
+      imagen.textContent = completada ? flor.emoji : "🌱";
+      imagen.setAttribute("aria-hidden", "true");
+
+      const nombre = document.createElement("b");
+      nombre.textContent = flor.nombre;
+
+      const estado = document.createElement("small");
+      estado.textContent = completada
+        ? "✓ Flor desbloqueada"
+        : "Pendiente";
+
+      tarjeta.append(imagen, nombre, estado);
+      contenedor.appendChild(tarjeta);
+    });
+
+    const reconocimiento =
+      document.getElementById("jardinReconocimiento");
+
+    reconocimiento.disabled = completados !== 4;
+  }
+
+  
   function progress() {
     const n = completed();
     const percent = n * 25;
+
     $("#percent").textContent = percent + "%";
     $("#bar").style.width = percent + "%";
-    $("#progressText").textContent = `${n} de 4 módulos completados`;
+    $("#progressText").textContent =
+      `${n} de 4 módulos completados`;
+
     save(KEY, state);
+
     renderDashboard();
+
+    // Actualizar automáticamente el jardín.
+    actualizarJardinVioleta();
   }
+
 
   // ==========================================
   // VIO - TUTORA EDUCATIVA INTERACTIVA
@@ -1124,6 +1230,19 @@
   document.head.appendChild(style);
 
  
+  // RECONOCIMIENTO DEL JARDÍN COMPLETO
+  const botonJardin =
+    document.getElementById("jardinReconocimiento");
+
+  if (botonJardin) {
+    botonJardin.addEventListener("click", () => {
+      if (!allDone()) return;
+
+      // Reutiliza la constancia educativa existente.
+      certificate();
+    });
+  }
+
   // =====================================
   // INICIALIZACIÓN DE CÓDIGO VIOLETA
   // =====================================
