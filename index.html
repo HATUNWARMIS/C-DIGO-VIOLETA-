@@ -1,6 +1,49 @@
 
 <!DOCTYPE html>
 <html lang="es">
+  
+<style>
+  /* CORRECCIÓN: MÓDULOS POR ENCIMA DE VIO */
+  #backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 10000 !important;
+    background: rgba(24, 7, 42, 0.8) !important;
+    display: grid !important;
+    place-items: center !important;
+    padding: 16px !important;
+  }
+
+  #backdrop[hidden] {
+    display: none !important;
+  }
+
+  #backdrop .modal {
+    position: relative !important;
+    z-index: 10001 !important;
+    width: min(720px, 100%) !important;
+    max-height: 90dvh !important;
+    overflow-y: auto !important;
+    background: #fffaff !important;
+    color: #351451 !important;
+    border-radius: 22px !important;
+    padding: 25px !important;
+    box-sizing: border-box !important;
+  }
+
+  #modalBody {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  #close {
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    z-index: 10002 !important;
+  }
+</style>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
