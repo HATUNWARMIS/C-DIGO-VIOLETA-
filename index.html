@@ -1,7 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="es">
-  
+<head>
 <style>
   /* CORRECCIÓN: MÓDULOS POR ENCIMA DE VIO */
   #backdrop {
@@ -297,13 +296,12 @@
   }
 </style>
 
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#321052">
   <meta name="description" content="Código Violeta: educación, prevención, derechos y recursos de apoyo para mujeres y adolescentes.">
   <title>Código Violeta | Tu voz, tu historia, tu red</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=20261026-3">
 
   <style>
     /* AJUSTES GENERALES */
@@ -756,6 +754,31 @@
 }
 </style>
 
+
+<style>
+/* AJUSTE FINAL DE TARJETAS DE LIDERESAS */
+#lideresas { padding-top: 80px; padding-bottom: 85px; }
+#lideresas .violetas-grid { align-items: stretch; }
+#lideresas .violeta-card {
+  display:flex; flex-direction:column; min-width:0; padding:0 !important;
+  overflow:hidden; border-radius:24px; height:100%;
+}
+#lideresas .violeta-foto { flex:0 0 240px; height:240px; width:100%; margin:0 !important; }
+#lideresas .violeta-foto img { width:100%; height:100%; object-fit:cover; object-position:center 24%; }
+#lideresas .violeta-foto-sin-retrato { background:linear-gradient(135deg,#e3cafa,#f8dfec); }
+#lideresas .violeta-foto-sin-retrato small { font-size:13px; color:#5c287a; }
+#lideresas .violeta-card > .violeta-etiqueta,
+#lideresas .violeta-card > h3,
+#lideresas .violeta-card > p,
+#lideresas .violeta-card > a { margin-left:22px !important; margin-right:22px !important; }
+#lideresas .violeta-card > .violeta-etiqueta { margin-top:23px; }
+#lideresas .violeta-card > h3 { margin-top:12px; }
+#lideresas .violeta-card > a { margin-top:auto; margin-bottom:22px; justify-content:center; }
+#lideresas .violeta-card > p:last-of-type { margin-bottom:22px; }
+#lideresas .violetas-grid .violeta-card[hidden] { display:none !important; }
+@media (max-width:650px) { #lideresas { padding-top:48px; padding-bottom:55px; } }
+</style>
+
 </head>
 
 <body>
@@ -1022,6 +1045,9 @@
 
       <div class="violetas-grid">
         <article class="violeta-card" data-zona="peru">
+          <div class="violeta-foto">
+            <img src="assets/maria-alvarado.png.jfif" alt="Retrato histórico de María Jesús Alvarado Rivera" loading="lazy" decoding="async">
+          </div>
           <div class="violeta-icono">📖</div>
           <span class="violeta-etiqueta">PERÚ · FEMINISMO</span>
           <h3>María Jesús Alvarado Rivera</h3>
@@ -1039,30 +1065,9 @@
         </article>
 
         <article class="violeta-card" data-zona="peru">
-          
-<div class="violeta-foto">
-  <img
-    src="assets/maria-alvarado.png"
-    alt="Retrato histórico de María Jesús Alvarado Rivera"
-    loading="lazy"
-  >
-</div>
-
-<div class="violeta-foto">
-  <img
-    src="assets/zoila-caceres.jpg"
-    alt="Retrato histórico de Zoila Aurora Cáceres"
-    loading="lazy"
-  >
-</div>
-
-<div class="violeta-foto">
-  <img
-    src="assets/magda-portal.jpg"
-    alt="Retrato histórico de Magda Portal"
-    loading="lazy"
-  >
-</div>
+          <div class="violeta-foto">
+            <img src="assets/zoila-caceres.jpg.jfif" alt="Retrato histórico de Zoila Aurora Cáceres" loading="lazy" decoding="async">
+          </div>
 
           <div class="violeta-icono">🗳️</div>
           <span class="violeta-etiqueta">PERÚ · DERECHOS CIVILES</span>
@@ -1079,6 +1084,9 @@
         </article>
 
         <article class="violeta-card" data-zona="peru">
+          <div class="violeta-foto">
+            <img src="assets/magda-portal.jpg.jfif" alt="Retrato histórico de Magda Portal" loading="lazy" decoding="async">
+          </div>
           <div class="violeta-icono">✍️</div>
           <span class="violeta-etiqueta">PERÚ · LIDERAZGO SOCIAL</span>
           <h3>Magda Portal</h3>
@@ -1095,6 +1103,10 @@
         </article>
 
         <article class="violeta-card" data-zona="ancash">
+          <div class="violeta-foto violeta-foto-sin-retrato" role="img" aria-label="Retrato no disponible">
+            <span aria-hidden="true">✿</span>
+            <small>Una historia que inspira</small>
+          </div>
           <div class="violeta-icono">⚖️</div>
           <span class="violeta-etiqueta">ÁNCASH · JUSTICIA</span>
           <h3>Melicia Aurea Brito Mallqui</h3>
@@ -1108,6 +1120,10 @@
         </article>
 
         <article class="violeta-card" data-zona="ancash">
+          <div class="violeta-foto violeta-foto-sin-retrato" role="img" aria-label="Retrato no disponible">
+            <span aria-hidden="true">✿</span>
+            <small>Una historia que inspira</small>
+          </div>
           <div class="violeta-icono">🤝</div>
           <span class="violeta-etiqueta">ÁNCASH · DEFENSA DE DERECHOS</span>
           <h3>Soledad Rodríguez Loli</h3>
@@ -1121,6 +1137,10 @@
         </article>
 
         <article class="violeta-card" data-zona="ancash">
+          <div class="violeta-foto violeta-foto-sin-retrato" role="img" aria-label="Retrato no disponible">
+            <span aria-hidden="true">✿</span>
+            <small>Una historia que inspira</small>
+          </div>
           <div class="violeta-icono">🎓</div>
           <span class="violeta-etiqueta">ÁNCASH · EDUCACIÓN</span>
           <h3>Violeta Ardiles Poma de Moreno</h3>
@@ -1340,7 +1360,7 @@
   <div id="vioCompanion" role="status" aria-live="polite" hidden></div>
 
   <!-- LÓGICA ORIGINAL DE MÓDULOS -->
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=20261026-3"></script>
 
   <!-- VIO: UN SOLO SISTEMA DE VOZ Y ACOMPAÑAMIENTO -->
   <script>
