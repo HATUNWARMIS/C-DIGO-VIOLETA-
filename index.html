@@ -1059,5 +1059,337 @@
 })();
 </script>
 
+<style>
+/* Saludo de bienvenida de Vio */
+
+#vioWelcome {
+  position: fixed;
+  top: 16%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 970;
+  width: min(340px, calc(100vw - 32px));
+  box-sizing: border-box;
+  padding: 17px;
+  background: #fff;
+  color: #40165f;
+  border: 2px solid #e8d1f7;
+  border-radius: 19px;
+  box-shadow: 0 10px 30px rgba(40,10,70,.2);
+  font-family: Arial, sans-serif;
+}
+
+#vioWelcome[hidden] {
+  display: none !important;
+}
+
+#vioWelcome h3 {
+  margin: 0 0 8px;
+  color: #7531a8;
+}
+
+#vioWelcome p {
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+#vioWelcome button {
+  padding: 10px 13px;
+  margin: 5px 5px 0 0;
+  border: 1px solid #d8b5ee;
+  border-radius: 11px;
+  background: #f4e9fc;
+  color: #40165f;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#vioCompanion {
+  position: fixed;
+  right: 14px;
+  top: 15%;
+  z-index: 940;
+  max-width: min(265px, 70vw);
+  padding: 12px 15px;
+  background: #fff;
+  color: #542078;
+  border: 1px solid #e7d1f7;
+  border-radius: 15px;
+  box-shadow: 0 5px 18px rgba(40,10,70,.17);
+  font: 13px/1.5 Arial, sans-serif;
+  pointer-events: none;
+}
+
+#vioCompanion[hidden] {
+  display: none !important;
+}
+</style>
+
+<section
+  id="vioWelcome"
+  role="dialog"
+  aria-label="Bienvenida de Vio"
+  hidden
+>
+  <h3>🌷 ¡Hola! Soy Vio</h3>
+
+  <p>
+    ¡Bienvenida a Código Violeta! 💜
+    Estoy aquí para ayudarte a aprender,
+    explorar y encontrar recursos de apoyo.
+    ¿Te gustaría comenzar?
+  </p>
+
+  <button id="vioWelcomeStart" type="button">
+    💜 ¡Vamos!
+  </button>
+
+  <button id="vioWelcomeVoice" type="button">
+    🔊 Activar voz
+  </button>
+
+  <button id="vioWelcomeSkip" type="button">
+    Ahora no
+  </button>
+</section>
+
+<div
+  id="vioCompanion"
+  role="status"
+  aria-live="polite"
+  hidden
+></div>
+
+<script>
+(() => {
+  "use strict";
+
+  const welcome = document.getElementById("vioWelcome");
+  const companion = document.getElementById("vioCompanion");
+
+  const start = document.getElementById("vioWelcomeStart");
+  const voice = document.getElementById("vioWelcomeVoice");
+  const skip = document.getElementById("vioWelcomeSkip");
+
+  const vioButton = document.getElementById("vioButton");
+  const vioChat = document.getElementById("vioChat");
+  const vioMover = document.getElementById("vioMover");
+
+  let companionEnabled = true;
+  let companionVoice = false;
+
+  const canSpeak =
+    "speechSynthesis" in window &&
+    "SpeechSynthesisUtterance" in window;
+
+  const initialGreeting =
+    "¡Hola! Soy Vio, tu guía violeta. " +
+    "Bienvenida a Código Violeta. " +
+    "Estoy aquí para acompañarte durante tu recorrido.";
+
+  function say(message) {
+    if (!companionVoice || !canSpeak) return;
+
+    window.speechSynthesis.cancel();
+
+    const speech = new SpeechSynthesisUtterance(message);
+    speech.lang = "es-PE";
+    speech.rate = 0.94;
+    speech.pitch = 1.1;
+
+    const voices = window.speechSynthesis.getVoices();
+
+    const spanish = voices.find(v =>
+      v.lang.toLowerCase().startsWith("es")
+    );
+
+    if (spanish) {
+      speech.voice = spanish;
+    }
+
+    window.speechSynthesis.speak(speech);
+  }
+
+  function showMessage(message) {
+    if (!companionEnabled) return;
+
+    companion.textContent = "🌷 Vio: " + message;
+    companion.hidden = false;
+
+    say(message);
+  }
+
+  function closeWelcome() {
+    welcome.hidden = true;
+  }
+
+  function stopVoice() {
+    if (canSpeak) {
+      window.speechSynthesis.cancel();
+    }
+  }
+
+  // Mostrar saludo al cargar la página
+
+  welcome.hidden = false;
+
+  // Comenzar recorrido
+
+  start.addEventListener("click", () => {
+    closeWelcome();
+
+    showMessage(
+      "¡Qué bueno que estás aquí! Comienza por el primer módulo."
+    );
+
+    const route = document.getElementById("ruta");
+
+    if (route) {
+      route.scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+  });
+
+  // Activar voz desde la bienvenida
+
+  voice.addEventListener("click", () => {
+    companionVoice = !companionVoice;
+
+    voice.textContent = companionVoice
+      ? "🔇 Silenciar"
+      : "🔊 Activar voz";
+
+    if (companionVoice) {
+      say(initialGreeting);
+    } else {
+      stopVoice();
+    }
+  });
+
+  // Cerrar bienvenida
+
+  skip.addEventListener("click", () => {
+    closeWelcome();
+    companion.hidden = true;
+    companionEnabled = false;
+    stopVoice();
+  });
+
+  // Al abrir el chat de Vio
+
+  vioButton.addEventListener("click", () => {
+    closeWelcome();
+    companion.hidden = true;
+  });
+
+  // Mensajes por módulo
+
+  const moduleMessages = {
+    signals:
+      "En este módulo aprenderás a reconocer señales de alerta.",
+    digital:
+      "Vamos a aprender a proteger tu privacidad digital.",
+    voice:
+      "Aquí practicarás cómo expresar tus límites.",
+    network:
+      "Ahora descubrirás cómo construir tu red de apoyo."
+  };
+
+  document.querySelectorAll("[data-module]").forEach(button => {
+    button.addEventListener("click", () => {
+      const key = button.dataset.module;
+
+      showMessage(
+        moduleMessages[key] ||
+        "¡Continúa aprendiendo a tu ritmo!"
+      );
+    });
+  });
+
+  // Mensajes para las herramientas
+
+  const toolMessages = {
+    quiz:
+      "¡Es momento de comprobar lo que aprendiste!",
+    plan:
+      "Aquí puedes preparar tu propio plan de prevención.",
+    chat:
+      "Vamos a practicar con conversaciones ficticias.",
+    evidence:
+      "Aquí encontrarás recomendaciones para cuidar tu información.",
+    help:
+      "Te mostraré recursos oficiales de orientación.",
+    certificate:
+      "¡Tu esfuerzo merece reconocimiento!"
+  };
+
+  document.querySelectorAll("[data-tool]").forEach(button => {
+    button.addEventListener("click", () => {
+      const key = button.dataset.tool;
+
+      if (toolMessages[key]) {
+        showMessage(toolMessages[key]);
+      }
+    });
+  });
+
+  // Detectar cambios en el progreso
+
+  const progressText = document.getElementById("progressText");
+
+  if (progressText) {
+    let previous = progressText.textContent.trim();
+
+    const observer = new MutationObserver(() => {
+      const current = progressText.textContent.trim();
+
+      if (current !== previous) {
+        previous = current;
+
+        showMessage(
+          "¡Muy bien! Tu progreso está avanzando. " +
+          "Puedes continuar con el siguiente módulo."
+        );
+      }
+    });
+
+    observer.observe(progressText, {
+      childList: true,
+      characterData: true,
+      subtree: true
+    });
+  }
+
+  // Salida rápida
+
+  ["exit", "exit2"].forEach(id => {
+    const exitButton = document.getElementById(id);
+
+    if (exitButton) {
+      exitButton.addEventListener("click", () => {
+        companionEnabled = false;
+        companion.hidden = true;
+        welcome.hidden = true;
+        stopVoice();
+      });
+    }
+  });
+
+  // Evitar mensajes encima del chat
+
+  const observer = new MutationObserver(() => {
+    if (!vioChat.hidden) {
+      companion.hidden = true;
+    }
+  });
+
+  observer.observe(vioChat, {
+    attributes: true,
+    attributeFilter: ["hidden"]
+  });
+
+})();
+</script>
 </body>
 </html>
