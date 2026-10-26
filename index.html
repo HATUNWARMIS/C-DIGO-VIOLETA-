@@ -44,6 +44,74 @@
   }
 </style>
 
+<style>
+  /* VIO COMO TUTORA DENTRO DE LAS ACTIVIDADES */
+  .vio-tutora {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin: 16px 0;
+    padding: 14px;
+    border: 1px solid #e4c7f5;
+    border-radius: 18px;
+    background: #f7efff;
+    color: #462064;
+  }
+
+  .vio-tutora img {
+    width: 66px;
+    height: 76px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .vio-tutora-contenido {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .vio-tutora-contenido strong {
+    color: #702ba4;
+  }
+
+  .vio-tutora-contenido p {
+    margin: 8px 0;
+    line-height: 1.55;
+  }
+
+  .vio-tutora-botones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .vio-tutora-botones button {
+    border: 1px solid #d4b4eb;
+    background: white;
+    color: #62218f;
+    border-radius: 12px;
+    padding: 9px 12px;
+    font-weight: bold;
+  }
+
+  .vio-tutora-botones button:hover {
+    background: #ead8fa;
+  }
+
+  @media (max-width: 480px) {
+    .vio-tutora {
+      gap: 8px;
+      padding: 10px;
+    }
+
+    .vio-tutora img {
+      width: 48px;
+      height: 58px;
+    }
+  }
+</style>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
