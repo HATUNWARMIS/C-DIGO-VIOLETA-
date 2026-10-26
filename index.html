@@ -6,4 +6,262 @@
 <section class="section" id="ruta"><small>✦ TU CAMINO, A TU RITMO</small><h2>Ruta Código Violeta</h2><p>Explora, practica y toma decisiones. Cada módulo te acerca a una versión más informada y segura de ti.</p><div class="modules"><article><div class="art a1"><b>01</b><span>🚩</span><small>OBSERVA · IDENTIFICA</small></div><h3>Reconoce las señales</h3><p>Identifica control, manipulación, celos, culpa y otras formas de violencia.</p><button data-module="signals">Comenzar módulo →</button></article><article><div class="art a2"><b>02</b><span>🛡️</span><small>PROTEGE · PREVIENE</small></div><h3>Escudo Digital</h3><p>Cuida tus cuentas, reconoce amenazas en línea y aprende a preservar evidencias.</p><button data-module="digital">Comenzar módulo →</button></article><article><div class="art a3"><b>03</b><span>🗣️</span><small>EXPRESA · PON LÍMITES</small></div><h3>Mi voz pone límites</h3><p>Practica frases asertivas y descubre formas seguras de acompañar a una amiga.</p><button data-module="voice">Comenzar módulo →</button></article><article><div class="art a4"><b>04</b><span>🕸️</span><small>CONÉCTATE · PIDE APOYO</small></div><h3>Activa tu red</h3><p>Identifica personas de confianza, recursos de apoyo y próximos pasos.</p><button data-module="network">Comenzar módulo →</button></article></div></section>
 <section class="section tools" id="herramientas"><small>✦ HERRAMIENTAS PARA TI</small><h2>Tu seguridad, en un solo lugar</h2><p>Recursos prácticos para preparar tus próximos pasos sin compartir públicamente tu información.</p><div class="toolgrid"><button data-tool="plan"><span>💜</span><b>Mi Código Violeta</b><small>Crea un plan personal imprimible.</small></button><button data-tool="quiz"><span>🧠</span><b>Quiz inicial y final</b><small>Mide lo que vas aprendiendo.</small></button><button data-tool="offer"><span>🔎</span><b>Verificador de ofertas</b><small>Detecta señales de empleo sospechoso.</small></button><button data-tool="chat"><span>💬</span><b>Simulador de chats</b><small>Practica reconocer banderas rojas.</small></button><button data-tool="evidence"><span>🔐</span><b>Bóveda de evidencias</b><small>Guía para guardar pruebas con cuidado.</small></button><button data-tool="library"><span>📚</span><b>Biblioteca digital</b><small>Guías rápidas y frases de límites.</small></button><button data-tool="stories"><span>🌷</span><b>Rincón de historias</b><small>Mensajes de ánimo preparados.</small></button><button data-tool="certificate"><span>🏆</span><b>Reconocimiento</b><small>Constancia local de avance.</small></button></div></section>
 <section class="help" id="ayuda"><div><small>NO ESTÁS SOLA</small><h2>Pedir ayuda también es valentía.</h2><p>Si estás en peligro inmediato, busca un lugar seguro y contacta a los servicios de emergencia o a alguien de confianza.</p><button data-tool="help">Ver rutas de ayuda →</button></div><div class="helpCards"><a href="tel:100"><b>📞 Línea 100</b><small>Orientación frente a violencia familiar y sexual en Perú.</small></a><a href="tel:105"><b>🚨 Policía · 105</b><small>Emergencias policiales.</small></a><a href="https://www.gob.pe/aurora" target="_blank" rel="noopener"><b>🏛️ Programa Aurora</b><small>Consulta servicios oficiales.</small></a></div></section>
-<section class="section" id="biblioteca"><small>✦ PEQUEÑOS RECORDATORIOS</small><h2>Frases para llevar contigo</h2><div class="quotes"><blockquote>“Mis límites merecen respeto.”</blockquote><blockquote>“No tengo que demostrar cariño entregando mis contraseñas.”</blockquote><blockquote>“Puedo pedir ayuda sin sentir vergüenza.”</blockquote><blockquote>“Mi historia me pertenece.”</blockquote></div></section></main><footer><b>✿ CÓDIGO VIOLETA</b><span>Áncash, Perú · Aprende, decide y activa tu red.</span><small>Material educativo; no reemplaza atención profesional ni servicios de emergencia.</small></footer><button class="floatingExit" id="exit2">↗ Salir rápido</button><div class="backdrop" id="backdrop" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button id="close" class="close" aria-label="Cerrar">×</button><div id="modalBody"></div></section></div><div id="toast" class="toast" role="status"></div><script src="js/app.js"></script></body></html>
+<section class="section" id="biblioteca"><small>✦ PEQUEÑOS RECORDATORIOS</small><h2>Frases para llevar contigo</h2><div class="quotes"><blockquote>“Mis límites merecen respeto.”</blockquote><blockquote>“No tengo que demostrar cariño entregando mis contraseñas.”</blockquote><blockquote>“Puedo pedir ayuda sin sentir vergüenza.”</blockquote><blockquote>“Mi historia me pertenece.”</blockquote></div></section></main><footer><b>✿ CÓDIGO VIOLETA</b><span>Áncash, Perú · Aprende, decide y activa tu red.</span><small>Material educativo; no reemplaza atención profesional ni servicios de emergencia.</small></footer><button class="floatingExit" id="exit2">↗ Salir rápido</button><div class="backdrop" id="backdrop" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button id="close" class="close" aria-label="Cerrar">×</button><div id="modalBody"></div></section></div><div id="toast" class="toast" role="status"></div><script src="js/app.js">
+<!-- ASISTENTE INTERACTIVA FLOR -->
+<style>
+  #florWidget {
+    position: fixed;
+    right: 16px;
+    bottom: 90px;
+    z-index: 900;
+    font-family: Arial, sans-serif;
+  }
+
+  #florButton {
+    width: 76px;
+    height: 76px;
+    border: 3px solid #a76bd0;
+    border-radius: 50%;
+    background: #fff;
+    padding: 5px;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(65, 15, 95, .25);
+    animation: florFloat 3s ease-in-out infinite;
+  }
+
+  #florButton img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  @keyframes florFloat {
+    0%, 100% {
+      transform: translateY(0) rotate(-4deg);
+    }
+    50% {
+      transform: translateY(-9px) rotate(4deg);
+    }
+  }
+
+  #florChat {
+    position: absolute;
+    bottom: 90px;
+    right: 0;
+    width: min(320px, calc(100vw - 32px));
+    max-height: min(480px, 65vh);
+    overflow-y: auto;
+    background: white;
+    color: #351451;
+    border: 2px solid #e6d3f4;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(40, 10, 70, .25);
+    padding: 18px;
+  }
+
+  #florChat[hidden] {
+    display: none;
+  }
+
+  #florChat h3 {
+    color: #7430a5;
+    margin: 0 0 10px;
+  }
+
+  #florChat p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  #florClose {
+    float: right;
+    background: transparent;
+    border: 0;
+    font-size: 26px;
+    color: #351451;
+    cursor: pointer;
+  }
+
+  .florOption {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    background: #f5ebff;
+    border: 1px solid #dec6f0;
+    border-radius: 12px;
+    color: #40165f;
+    font-weight: bold;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .florOption:hover,
+  .florOption:focus-visible {
+    background: #e8d4f8;
+    outline: 2px solid #9958c6;
+  }
+
+  #florReply {
+    background: #f7f1fb;
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #florButton {
+      animation: none;
+    }
+  }
+</style>
+
+<div id="florWidget">
+
+  <section
+    id="florChat"
+    role="dialog"
+    aria-label="Asistente Flor"
+    hidden
+  >
+    <button
+      id="florClose"
+      type="button"
+      aria-label="Cerrar asistente"
+    >×</button>
+
+    <h3>🌷 ¡Hola! Soy Flor</h3>
+
+    <p>
+      Soy tu guía de Código Violeta.
+      ¿En qué puedo ayudarte hoy?
+    </p>
+
+    <button class="florOption" data-flor="route">
+      📚 Empezar mi ruta
+    </button>
+
+    <button class="florOption" data-flor="progress">
+      📊 Ver mi progreso
+    </button>
+
+    <button class="florOption" data-flor="quiz">
+      🧠 Hacer mi evaluación
+    </button>
+
+    <button class="florOption" data-flor="simulator">
+      🎭 Practicar decisiones
+    </button>
+
+    <button class="florOption" data-flor="help">
+      💜 Necesito orientación
+    </button>
+
+    <div id="florReply" aria-live="polite">
+      Elige una opción para comenzar. 💜
+    </div>
+  </section>
+
+  <button
+    id="florButton"
+    type="button"
+    aria-label="Hablar con Flor"
+    aria-expanded="false"
+    aria-controls="florChat"
+  >
+    <img
+      src="assets/flor-mascota.png"
+      alt=""
+    >
+  </button>
+
+</div>
+
+<script>
+(() => {
+  const button = document.getElementById("florButton");
+  const chat = document.getElementById("florChat");
+  const close = document.getElementById("florClose");
+  const reply = document.getElementById("florReply");
+
+  function toggleFlor(open) {
+    chat.hidden = !open;
+    button.setAttribute("aria-expanded", String(open));
+
+    if (open) {
+      close.focus();
+    } else {
+      button.focus();
+    }
+  }
+
+  button.onclick = () => {
+    toggleFlor(chat.hidden);
+  };
+
+  close.onclick = () => {
+    toggleFlor(false);
+  };
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && !chat.hidden) {
+      toggleFlor(false);
+    }
+  });
+
+  const messages = {
+    route:
+      "¡Vamos! Te mostraré los cuatro módulos educativos.",
+
+    progress:
+      "Aquí puedes revisar los módulos que ya completaste.",
+
+    quiz:
+      "El cuestionario te ayudará a comprobar lo que aprendiste.",
+
+    simulator:
+      "Practiquemos decisiones con situaciones ficticias.",
+
+    help:
+      "Te mostraré recursos de orientación disponibles en Perú."
+  };
+
+  const targets = {
+    route: "#ruta",
+    progress: "#mi-panel",
+    quiz: '[data-tool="quiz"]',
+    simulator: '[data-tool="simulator"]',
+    help: '[data-tool="help"]'
+  };
+
+  document.querySelectorAll("[data-flor]").forEach(option => {
+    option.onclick = () => {
+      const action = option.dataset.flor;
+      const target = document.querySelector(targets[action]);
+
+      if (!target) {
+        reply.textContent =
+          "Esta opción aún no está disponible en tu página.";
+        return;
+      }
+
+      reply.textContent = messages[action];
+
+      toggleFlor(false);
+
+      if (action === "route" || action === "progress") {
+        target.scrollIntoView({
+          behavior: window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+          ).matches ? "auto" : "smooth"
+        });
+      } else {
+        target.click();
+      }
+    };
+  });
+})();
+</script>
+</script></body></html>
