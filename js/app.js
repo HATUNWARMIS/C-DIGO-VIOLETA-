@@ -215,6 +215,140 @@
     renderDashboard();
   }
 
+  // ==========================================
+  // VIO - TUTORA EDUCATIVA INTERACTIVA
+  // ==========================================
+
+  function vioTutora({
+    mensaje = "¡Hola! Soy Vio. Aprendamos juntas.",
+    pista = "",
+    explicacion = ""
+  } = {}) {
+
+    const contenedor = document.createElement("div");
+    contenedor.className = "vio-tutora";
+
+    contenedor.innerHTML = `
+      <img src="assets/flor-mascota.png" alt="Vio">
+      <div class="vio-tutora-contenido">
+        <strong>🌷 Vio, tu tutora</strong>
+        <p class="vio-tutora-mensaje"></p>
+        <div class="vio-tutora-botones">
+          <button type="button" data-vio-tutora="pista">
+            💡 Dame una pista
+          </button>
+          <button type="button" data-vio-tutora="explicar">
+            📖 Explícame
+          </button>
+          <button type="button" data-vio-tutora="escuchar">
+            🔊 Escuchar
+          </button>
+        </div>
+      </div>
+    `;
+
+    const texto = contenedor.querySelector(".vio-tutora-mensaje");
+    texto.textContent = mensaje;
+
+    let actual = mensaje;
+
+    function hablar() {
+      // Respetar la configuración de voz de la visitante.
+      const botonVoz = document.getElementById("vioVoice");
+      const vozActiva =
+        botonVoz?.getAttribute("aria-pressed") === "true";
+
+      if (!vozActiva) return;
+
+      if (!("speechSynthesis" in window)) return;
+
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(actual);
+      const selector = document.getElementById("vioVoiceSelect");
+      const voces = speechSynthesis.getVoices()
+        .filter(v => v.lang.toLowerCase().startsWith("es"));
+
+      const elegida = voces[Number(selector?.value)];
+
+      if (elegida) utterance.voice = elegida;
+
+      utterance.lang = elegida?.lang || "es-PE";
+      utterance.rate = 0.94;
+      utterance.pitch = 1.08;
+
+      speechSynthesis.speak(utterance);
+    }
+
+    function mostrar(textoNuevo) {
+      actual = textoNuevo;
+      texto.textContent = actual;
+      hablar();
+    }
+
+    contenedor.querySelector('[data-vio-tutora="pista"]')
+      .addEventListener("click", () => {
+        mostrar(pista ||
+          "Lee cuidadosamente las alternativas y piensa en el respeto, la privacidad y la seguridad.");
+      });
+
+    contenedor.querySelector('[data-vio-tutora="explicar"]')
+      .addEventListener("click", () => {
+        mostrar(explicacion ||
+          "Identifica qué alternativa protege mejor los derechos y la autonomía.");
+      });
+
+    contenedor.querySelector('[data-vio-tutora="escuchar"]')
+      .addEventListener("click", () => {
+        if (!("speechSynthesis" in window)) return;
+
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(actual);
+        utterance.lang = "es-PE";
+        utterance.rate = 0.94;
+
+        const selector = document.getElementById("vioVoiceSelect");
+        const voces = speechSynthesis.getVoices()
+          .filter(v => v.lang.toLowerCase().startsWith("es"));
+
+        const elegida = voces[Number(selector?.value)];
+        if (elegida) utterance.voice = elegida;
+
+        speechSynthesis.speak(utterance);
+      });
+
+    return {
+      elemento: contenedor,
+      mostrar,
+      bloquearPistas() {
+        contenedor.querySelector(
+          '[data-vio-tutora="pista"]'
+        ).disabled = true;
+      }
+    };
+  }
+
+  function agregarVioTutora(configuracion) {
+    const cuerpo = document.getElementById("modalBody");
+    if (!cuerpo) return null;
+
+    const tutora = vioTutora(configuracion);
+
+    const titulo = cuerpo.querySelector("#modalTitle");
+
+    if (titulo) {
+      titulo.insertAdjacentElement(
+        "afterend",
+        tutora.elemento
+      );
+    } else {
+      cuerpo.prepend(tutora.elemento);
+    }
+
+    return tutora;
+  }
+
   function runModule(id) {
     const mod = mods[id];
     if (!mod) return;
@@ -240,6 +374,17 @@
         </form>
         <div id="caseFeedback" aria-live="polite"></div>
       `);
+
+      // Vio acompaña cada caso educativo.
+      const tutora = agregarVioTutora({
+        mensaje:
+          "Vamos con el caso " + (current + 1) +
+          ". Lee la situación y elige la alternativa que consideres más adecuada.",
+        pista:
+          "Piensa qué respuesta protege mejor la autonomía, el respeto y la seguridad. No necesitas apresurarte.",
+        explicacion:
+          "Observa si alguna opción implica control, presión o pérdida de privacidad. Elige la que respete los derechos de la persona."
+      });
 
       $("#caseForm").onsubmit = e => {
         e.preventDefault();
