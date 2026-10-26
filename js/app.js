@@ -391,6 +391,19 @@
         const answer = Number(new FormData(e.target).get("answer"));
         const ok = answer === item.a;
         if (ok) correct++;
+        
+        if (tutora) {
+          tutora.bloquearPistas();
+
+          tutora.mostrar(
+            ok
+              ? "¡Muy bien! Elegiste la respuesta esperada. " +
+                item.e
+              : "Gracias por intentarlo. Revisemos la respuesta. " +
+                item.e
+          );
+        }
+
         $("#caseForm").remove();
         $("#caseFeedback").innerHTML = `
           <div class="feedback ${ok ? "good" : "warn"}">
@@ -422,6 +435,20 @@
         </div>
         <button class="action" id="saveModule">Guardar módulo completado ✓</button>
       `);
+      
+      agregarVioTutora({
+        mensaje:
+          "¡Terminaste este módulo! " +
+          "Respondiste correctamente " + correct +
+          " de " + mod.cases.length +
+          " casos. Lo importante es comprender las explicaciones y seguir aprendiendo.",
+        pista:
+          "Puedes repetir el módulo para reforzar tus conocimientos.",
+        explicacion:
+          "Cada caso te ayuda a reconocer situaciones y tomar decisiones más informadas."
+      });
+<CodeBlock language="javascript" editable>
+
       $("#saveModule").onclick = () => {
         state[id] = true;
         progress();
@@ -569,6 +596,17 @@
         </form>
         <p><small>Pregunta ${current + 1} de 10. No se envían respuestas a un servidor.</small></p>
       `);
+      
+      agregarVioTutora({
+        mensaje:
+          "Pregunta " + (current + 1) +
+          " de 10. ¡Tómate tu tiempo!",
+        pista:
+          "Piensa en lo que aprendiste durante los módulos.",
+        explicacion:
+          "Lee todas las alternativas antes de decidir. En esta evaluación no revelaré las respuestas hasta el final."
+      });
+
       $("#quizForm").onsubmit = e => {
         e.preventDefault();
         answers.push(Number(new FormData(e.target).get("answer")));
