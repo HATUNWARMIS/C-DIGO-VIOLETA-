@@ -1,1864 +1,1143 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-   
-<style>
-/* VIOLETAS QUE HICIERON HISTORIA */
-
-#lideresas {
-  background: linear-gradient(
-    145deg,
-    #faf5ff 0%,
-    #f2e4fa 55%,
-    #fff7fc 100%
-  );
-  color: #37164e;
-}
-
-.violetas-intro {
-  max-width: 790px;
-  margin-bottom: 28px;
-}
-
-.violetas-intro h2 {
-  color: #552077;
-}
-
-.violetas-intro p {
-  line-height: 1.75;
-}
-
-.violetas-filtros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 26px;
-}
-
-.violetas-filtro {
-  padding: 11px 20px;
-  border: 1px solid #d8b4ec;
-  border-radius: 30px;
-  background: white;
-  color: #672c8c;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.violetas-filtro.activo {
-  background: #702ca0;
-  color: white;
-  border-color: #702ca0;
-}
-
-.violetas-grid {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(min(100%, 270px), 1fr)
-  );
-  gap: 22px;
-}
-
-.violeta-card {
-  display: flex;
-  flex-direction: column;
-  background: white;
-  padding: 25px;
-  border-radius: 22px;
-  border: 1px solid #ead9f5;
-  box-shadow: 0 7px 22px rgba(66,20,94,.08);
-  transition: transform .2s ease;
-}
-
-.violeta-card:hover {
-  transform: translateY(-5px);
-}
-
-.violeta-card[hidden] {
-  display: none !important;
-}
-
-.violeta-icono {
-  font-size: 38px;
-  margin-bottom: 12px;
-}
-
-.violeta-etiqueta {
-  color: #8648ae;
-  font-size: 11px;
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-.violeta-card h3 {
-  color: #522074;
-  font-size: 22px;
-  margin: 12px 0;
-}
-
-.violeta-fecha {
-  color: #795a8d;
-  font-size: 13px;
-  margin-top: 0;
-}
-
-.violeta-card p {
-  font-size: 14px;
-  line-height: 1.7;
-}
-
-.violeta-card a {
-  display: inline-block;
-  margin-top: auto;
-  padding-top: 15px;
-  color: #7130a3;
-  font-weight: bold;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.violetas-mensaje {
-  max-width: 850px;
-  margin: 38px auto 0;
-  padding: 30px;
-  text-align: center;
-  background: white;
-  border: 1px solid #e8d4f4;
-  border-radius: 24px;
-}
-
-.violetas-mensaje span {
-  font-size: 40px;
-}
-
-.violetas-mensaje h3 {
-  color: #63258b;
-}
-
-.violetas-mensaje p {
-  line-height: 1.7;
-}
-
-#violetasInspiracion {
-  padding: 13px 20px;
-  background: #7130a3;
-  color: white;
-  border: 0;
-  border-radius: 13px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#violetasFrase {
-  font-weight: bold;
-  color: #642b8b;
-}
-
-@media(prefers-reduced-motion:reduce) {
-  .violeta-card {
-    transition: none;
-  }
-  .violeta-card:hover {
-    transform: none;
-  }
-}
-</style>
-
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#321052">
-<title>Código Violeta | Tu voz, tu historia, tu red</title>
-<link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#321052">
+  <meta name="description" content="Código Violeta: educación, prevención, derechos y recursos de apoyo para mujeres y adolescentes.">
+  <title>Código Violeta | Tu voz, tu historia, tu red</title>
+  <link rel="stylesheet" href="css/styles.css">
 
-<style>
-/* =====================================
-   VIO: ASISTENTE INTERACTIVA
-===================================== */
-
-#vioPortada {
-  background: transparent;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  display: block;
-}
-
-#vioPortada img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
-
-/* Personaje flotante más grande */
-
-#vioMover {
-  position: fixed;
-  top: 50%;
-  left: 0;
-  width: 180px;
-  height: 190px;
-  z-index: 900;
-  animation: vioViaje 20s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-@keyframes vioViaje {
-  from {
-    transform: translateX(10px);
-  }
-  to {
-    transform: translateX(calc(100vw - 190px));
-  }
-}
-
-#vioButton {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  box-shadow: none;
-  cursor: pointer;
-  pointer-events: auto;
-}
-
-#vioButton img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transform: scale(1.35);
-  filter: drop-shadow(0 8px 7px rgba(62,15,85,.3));
-  animation: vioSalta 2s ease-in-out infinite;
-}
-
-@keyframes vioSalta {
-  0%,100% {
-    translate: 0 0;
-  }
-  50% {
-    translate: 0 -12px;
-  }
-}
-
-#vioLabel {
-  position: absolute;
-  top: -23px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  color: #7430a5;
-  border-radius: 20px;
-  padding: 8px 13px;
-  font: bold 13px Arial,sans-serif;
-  white-space: nowrap;
-  box-shadow: 0 4px 15px rgba(40,10,70,.18);
-}
-
-#vioMover.paused,
-#vioMover:hover,
-#vioMover:focus-within {
-  animation-play-state: paused;
-}
-
-#vioMover.paused img,
-#vioMover:hover img,
-#vioMover:focus-within img {
-  animation-play-state: paused;
-}
-
-/* Ventana del asistente */
-
-#vioChat {
-  position: fixed;
-  right: 16px;
-  bottom: 95px;
-  z-index: 950;
-  width: min(360px,calc(100vw - 32px));
-  max-height: min(570px,75dvh);
-  overflow-y: auto;
-  box-sizing: border-box;
-  padding: 20px;
-  border: 2px solid #e7d1f7;
-  border-radius: 23px;
-  background: #fff;
-  color: #351451;
-  box-shadow: 0 12px 40px rgba(55,15,80,.3);
-  font-family: Arial,sans-serif;
-}
-
-#vioChat[hidden] {
-  display: none !important;
-}
-
-.vioHeader {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.vioHeader img {
-  width: 65px;
-  height: 70px;
-  object-fit: contain;
-}
-
-.vioHeader h3 {
-  margin: 0;
-  font-size: 22px;
-  color: #7430a5;
-}
-
-.vioHeader p {
-  margin: 4px 0;
-  font-size: 12px;
-}
-
-#vioClose {
-  margin-left: auto;
-  align-self: flex-start;
-  border: 0;
-  background: transparent;
-  color: #351451;
-  font-size: 27px;
-  cursor: pointer;
-}
-
-#vioChat > p {
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.vioOption {
-  display: block;
-  width: 100%;
-  margin: 9px 0;
-  padding: 13px;
-  border: 1px solid #dfc8f1;
-  border-radius: 13px;
-  background: #f6edff;
-  color: #40165f;
-  font-size: 14px;
-  font-weight: bold;
-  text-align: left;
-  cursor: pointer;
-}
-
-.vioOption:hover,
-.vioOption:focus-visible {
-  background: #e9d7fa;
-}
-
-#vioReply {
-  margin-top: 12px;
-  padding: 13px;
-  border-radius: 13px;
-  background: #f7f1fb;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.vioControls {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.vioControls button {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #cda9e8;
-  border-radius: 11px;
-  background: white;
-  color: #542078;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#vioVoiceSelect {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-top: 9px;
-  border: 1px solid #cda9e8;
-  border-radius: 10px;
-  background: white;
-  color: #351451;
-}
-
-#vioStatus {
-  font-size: 12px;
-  color: #68447c;
-  line-height: 1.4;
-}
-
-#vioButton:focus-visible,
-#vioPortada:focus-visible,
-#vioChat button:focus-visible,
-#vioVoiceSelect:focus-visible {
-  outline: 3px solid #a65cdb;
-  outline-offset: 3px;
-}
-
-/* Celulares */
-
-@media(max-width:600px) {
-  #vioMover {
-    width: 140px;
-    height: 150px;
-    animation-name: vioViajeMovil;
-  }
-
-  @keyframes vioViajeMovil {
-    from {
-      transform: translateX(5px);
+  <style>
+    /* AJUSTES GENERALES */
+    html { scroll-behavior: smooth; }
+    [hidden] { display: none !important; }
+    button { cursor: pointer; }
+    button:focus-visible, a:focus-visible, select:focus-visible {
+      outline: 3px solid #b36be0;
+      outline-offset: 3px;
     }
-    to {
-      transform: translateX(calc(100vw - 145px));
+
+    /* MUJERES QUE HICIERON HISTORIA */
+    #lideresas {
+      background: linear-gradient(145deg,#faf5ff,#f2e4fa,#fff7fc);
+      color: #37164e;
     }
-  }
+    .violetas-intro { max-width: 790px; margin-bottom: 28px; }
+    .violetas-intro h2 { color: #552077; }
+    .violetas-intro p { line-height: 1.75; }
+    .violetas-filtros {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px;
+    }
+    .violetas-filtro {
+      padding: 11px 20px; border: 1px solid #d8b4ec;
+      border-radius: 30px; background: white; color: #672c8c;
+      font-weight: bold;
+    }
+    .violetas-filtro.activo {
+      background: #702ca0; color: white; border-color: #702ca0;
+    }
+    .violetas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(min(100%,270px),1fr));
+      gap: 22px;
+    }
+    .violeta-card {
+      display: flex; flex-direction: column; background: white;
+      padding: 25px; border-radius: 22px;
+      border: 1px solid #ead9f5;
+      box-shadow: 0 7px 22px rgba(66,20,94,.08);
+    }
+    .violeta-icono { font-size: 38px; margin-bottom: 12px; }
+    .violeta-etiqueta {
+      color: #8648ae; font-size: 11px;
+      font-weight: bold; letter-spacing: 1px;
+    }
+    .violeta-card h3 { color: #522074; font-size: 22px; }
+    .violeta-card p { font-size: 14px; line-height: 1.7; }
+    .violeta-card a {
+      margin-top: auto; padding-top: 15px;
+      color: #7130a3; font-weight: bold;
+    }
+    .violetas-mensaje {
+      max-width: 850px; margin: 38px auto 0; padding: 30px;
+      text-align: center; background: white;
+      border: 1px solid #e8d4f4; border-radius: 24px;
+    }
+    .violetas-mensaje h3 { color: #63258b; }
+    .violetas-mensaje p { line-height: 1.7; }
+    #violetasInspiracion {
+      padding: 13px 20px; background: #7130a3; color: white;
+      border: 0; border-radius: 13px; font-weight: bold;
+    }
+    #violetasFrase { font-weight: bold; color: #642b8b; }
 
-  #vioButton img {
-    transform: scale(1.25);
-  }
+    /* VIO: MASCOTA FLOTANTE */
+    #vioPortada {
+      background: transparent; border: 0; padding: 0; display: block;
+    }
+    #vioPortada img { display: block; max-width: 100%; height: auto; }
 
-  #vioChat {
-    right: 10px;
-    bottom: 80px;
-    max-height: 70dvh;
-  }
-}
+    #vioMover {
+      position: fixed;
+      left: 0;
+      top: 48%;
+      width: 180px;
+      height: 190px;
+      z-index: 900;
+      pointer-events: none;
+      animation: vioViaje 22s ease-in-out infinite alternate;
+    }
+    @keyframes vioViaje {
+      from { transform: translateX(10px); }
+      to { transform: translateX(max(10px,calc(100vw - 190px))); }
+    }
+    #vioMover.paused,
+    #vioMover:hover,
+    #vioMover:focus-within {
+      animation-play-state: paused;
+    }
+    #vioButton {
+      position: relative;
+      width: 100%; height: 100%;
+      border: 0; padding: 0;
+      background: transparent; box-shadow: none;
+      pointer-events: auto;
+    }
+    #vioButton img {
+      display: block; width: 100%; height: 100%;
+      object-fit: contain;
+      transform: scale(1.3);
+      filter: drop-shadow(0 8px 7px rgba(62,15,85,.3));
+      animation: vioSalta 2.4s ease-in-out infinite;
+    }
+    @keyframes vioSalta {
+      0%,100% { translate: 0 0; }
+      50% { translate: 0 -10px; }
+    }
+    #vioLabel {
+      position: absolute; top: -22px; left: 50%;
+      transform: translateX(-50%);
+      background: white; color: #7430a5;
+      padding: 8px 13px; border-radius: 20px;
+      font: bold 13px Arial,sans-serif;
+      white-space: nowrap;
+      box-shadow: 0 4px 15px rgba(40,10,70,.18);
+    }
 
-/* Accesibilidad */
+    /* VIO: VENTANA DE CHAT */
+    #vioChat {
+      position: fixed; right: 16px; bottom: 90px;
+      z-index: 950;
+      width: min(360px,calc(100vw - 32px));
+      max-height: 75dvh;
+      overflow-y: auto;
+      box-sizing: border-box;
+      padding: 20px;
+      background: white; color: #351451;
+      border: 2px solid #e7d1f7;
+      border-radius: 23px;
+      box-shadow: 0 12px 40px rgba(55,15,80,.3);
+      font-family: Arial,sans-serif;
+    }
+    .vioHeader { display: flex; align-items: center; gap: 10px; }
+    .vioHeader img { width: 65px; height: 70px; object-fit: contain; }
+    .vioHeader h3 { margin: 0; font-size: 21px; color: #7430a5; }
+    .vioHeader p { margin: 4px 0; font-size: 12px; }
+    #vioClose {
+      margin-left: auto; align-self: flex-start;
+      border: 0; background: transparent;
+      color: #351451; font-size: 27px;
+    }
+    .vioOption {
+      display: block; width: 100%;
+      margin: 9px 0; padding: 13px;
+      border: 1px solid #dfc8f1; border-radius: 13px;
+      background: #f6edff; color: #40165f;
+      font-size: 14px; font-weight: bold; text-align: left;
+    }
+    .vioOption:hover { background: #e9d7fa; }
+    #vioReply {
+      margin-top: 12px; padding: 13px;
+      border-radius: 13px; background: #f7f1fb;
+      font-size: 14px; line-height: 1.5;
+    }
+    .vioControls { display: flex; gap: 8px; margin-top: 12px; }
+    .vioControls button {
+      flex: 1; padding: 10px;
+      border: 1px solid #cda9e8; border-radius: 11px;
+      background: white; color: #542078; font-weight: bold;
+    }
+    #vioVoiceSelect {
+      width: 100%; padding: 10px; margin-top: 9px;
+      border: 1px solid #cda9e8; border-radius: 10px;
+      background: white; color: #351451;
+    }
+    #vioStatus { font-size: 12px; color: #68447c; }
 
-@media(prefers-reduced-motion:reduce) {
-  #vioMover,
-  #vioButton img {
-    animation: none !important;
-  }
-  #vioMover {
-    transform: translateX(10px);
-  }
-}
-</style>
+    /* SALUDO DE BIENVENIDA */
+    #vioWelcome {
+      position: fixed; top: 14%; left: 50%;
+      transform: translateX(-50%);
+      z-index: 970;
+      width: min(360px,calc(100vw - 32px));
+      box-sizing: border-box;
+      padding: 20px; background: white; color: #40165f;
+      border: 2px solid #e8d1f7; border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(40,10,70,.2);
+      font-family: Arial,sans-serif;
+    }
+    #vioWelcome h3 { color: #7531a8; margin: 0 0 10px; }
+    #vioWelcome p { font-size: 14px; line-height: 1.6; }
+    #vioWelcome button {
+      padding: 10px 13px; margin: 5px 5px 0 0;
+      border: 1px solid #d8b5ee; border-radius: 11px;
+      background: #f4e9fc; color: #40165f; font-weight: bold;
+    }
+
+    /* MENSAJE CONTEXTUAL DE VIO */
+    #vioCompanion {
+      position: fixed; top: 14%; right: 14px;
+      z-index: 940;
+      max-width: min(270px,70vw);
+      padding: 13px 16px;
+      background: white; color: #542078;
+      border: 1px solid #e7d1f7; border-radius: 15px;
+      box-shadow: 0 5px 18px rgba(40,10,70,.17);
+      font: 13px/1.5 Arial,sans-serif;
+      pointer-events: none;
+    }
+
+    @media(max-width:600px) {
+      #vioMover {
+        width: 140px; height: 150px;
+        animation-name: vioViajeMovil;
+      }
+      @keyframes vioViajeMovil {
+        from { transform: translateX(5px); }
+        to { transform: translateX(max(5px,calc(100vw - 145px))); }
+      }
+      #vioButton img { transform: scale(1.2); }
+      #vioChat { right: 10px; bottom: 80px; max-height: 70dvh; }
+      #vioCompanion { top: 12%; }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      html { scroll-behavior: auto; }
+      #vioMover, #vioButton img { animation: none !important; }
+      #vioMover { transform: translateX(10px); }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- CINTA SUPERIOR -->
-
-<div class="ticker">
-  <div>
-    💜 Tu voz importa　✦　Reconoce la señal, protege tu historia　
-    🌷 No estás sola　✦　Tus límites merecen respeto　
-    💜 Tu seguridad también es tu poder　✦　Aprende a tu ritmo　
-    💜 Tu voz importa　✦　Reconoce la señal, protege tu historia
-  </div>
-</div>
-
-<!-- ENCABEZADO -->
-
-<header>
-  <a class="logo" href="#inicio">
-    <span>✿</span>
-    <b>CÓDIGO<br>VIOLETA</b>
-  </a>
-
-  <button id="menubtn" aria-label="Abrir menú">☰</button>
-
-  <nav id="nav">
-    <a href="#inicio">Inicio</a>
-    <a href="#ruta">Ruta educativa</a>
-    <a href="#herramientas">Herramientas</a>
-    <a href="#ayuda">Rutas de ayuda</a>
-    <a href="#biblioteca">Biblioteca</a>
-  </nav>
-
-  <button class="exit" id="exit">
-    Salida rápida ↗
-  </button>
-</header>
-
-<main>
-
-<!-- PORTADA -->
-
-<section class="hero" id="inicio">
-  <div class="shade"></div>
-
-  <div class="heroText">
-    <small>✦ LABORATORIO VIRTUAL · ÁNCASH</small>
-
-    <h1>
-      Tu historia.<br>
-      <em>Tu voz.</em> Tu red.
-    </h1>
-
-    <h2>
-      Reconoce la señal, protege tu historia
-      y activa tu red.
-    </h2>
-
-    <p>
-      Un espacio práctico para jóvenes y adolescentes
-      de 16 a 24 años. Explora situaciones, toma
-      decisiones y construye tu plan de prevención
-      a tu ritmo.
-    </p>
-
-    <div class="actions">
-      <a class="primary" href="#ruta">
-        Iniciar mi ruta →
-      </a>
-      <a class="secondary" href="#herramientas">
-        Explorar herramientas ↓
-      </a>
-    </div>
-
-    <div class="chips">
-      <span>🛡 Aprende y decide</span>
-      <span>♡ Construye tu red</span>
-      <span>✦ Tu seguridad importa</span>
-    </div>
-  </div>
-
-  <div class="mascot">
-    <button
-      id="vioPortada"
-      type="button"
-      aria-label="Hablar con Vio"
-    >
-      <img
-        src="assets/flor-mascota.png"
-        alt="Vio, mascota de Código Violeta"
-      >
-    </button>
-    <b>Un paso a la vez 💜</b>
-  </div>
-
-  <div class="quote">
-    “No tienes que tener todas las respuestas hoy.
-    Puedes empezar con un paso pequeño.”
-  </div>
-</section>
-
-<!-- INTRODUCCIÓN Y PROGRESO -->
-
-<section class="intro">
-  <article>
-    <small>BIENVENIDA A TU ESPACIO</small>
-    <h2>Un laboratorio para elegir con más información</h2>
-    <p>
-      No es una charla tradicional: es una experiencia
-      interactiva con historias ficticias, decisiones
-      y herramientas para reconocer señales de alerta,
-      cuidar tu privacidad y pedir apoyo de forma segura.
-    </p>
-  </article>
-
-  <article class="progress">
-    <div class="phead">
-      <b>Tu progreso</b>
-      <strong id="percent">0%</strong>
-    </div>
-
-    <div class="bar"><i id="bar"></i></div>
-
-    <p id="progressText">
-      0 de 4 módulos completados
-    </p>
-
-    <i>“Avanzar a tu ritmo también es avanzar.”</i>
-  </article>
-</section>
-
-<!-- MÓDULOS -->
-
-<section class="section" id="ruta">
-  <small>✦ TU CAMINO, A TU RITMO</small>
-  <h2>Ruta Código Violeta</h2>
-
-  <p>
-    Explora, practica y toma decisiones.
-    Cada módulo te acerca a una versión
-    más informada y segura de ti.
-  </p>
-
-  <div class="modules">
-
-    <article>
-      <div class="art a1">
-        <b>01</b><span>🚩</span>
-        <small>OBSERVA · IDENTIFICA</small>
-      </div>
-      <h3>Reconoce las señales</h3>
-      <p>
-        Identifica control, manipulación, celos,
-        culpa y otras formas de violencia.
-      </p>
-      <button data-module="signals">
-        Comenzar módulo →
-      </button>
-    </article>
-
-    <article>
-      <div class="art a2">
-        <b>02</b><span>🛡️</span>
-        <small>PROTEGE · PREVIENE</small>
-      </div>
-      <h3>Escudo Digital</h3>
-      <p>
-        Cuida tus cuentas, reconoce amenazas
-        en línea y aprende a preservar evidencias.
-      </p>
-      <button data-module="digital">
-        Comenzar módulo →
-      </button>
-    </article>
-
-    <article>
-      <div class="art a3">
-        <b>03</b><span>🗣️</span>
-        <small>EXPRESA · PON LÍMITES</small>
-      </div>
-      <h3>Mi voz pone límites</h3>
-      <p>
-        Practica frases asertivas y descubre
-        formas seguras de acompañar a una amiga.
-      </p>
-      <button data-module="voice">
-        Comenzar módulo →
-      </button>
-    </article>
-
-    <article>
-      <div class="art a4">
-        <b>04</b><span>🕸️</span>
-        <small>CONÉCTATE · PIDE APOYO</small>
-      </div>
-      <h3>Activa tu red</h3>
-      <p>
-        Identifica personas de confianza,
-        recursos de apoyo y próximos pasos.
-      </p>
-      <button data-module="network">
-        Comenzar módulo →
-      </button>
-    </article>
-
-  </div>
-</section>
-
-<!-- HERRAMIENTAS -->
-
-<!-- =====================================
- VIOLETAS QUE HICIERON HISTORIA
-===================================== -->
-
-<section class="section" id="lideresas">
-
-  <div class="violetas-intro">
-    <small>✦ MEMORIA, DERECHOS Y LIDERAZGO</small>
-
-    <h2>Violetas que hicieron historia 💜</h2>
-
-    <p>
-      Mujeres que abrieron caminos en el Perú y Áncash.
-      Conoce sus aportes a la igualdad, la educación,
-      la justicia y el derecho a una vida libre
-      de violencia.
-    </p>
-
-    <p>
-      Recordar sus historias es reconocer que
-      los derechos son fruto de esfuerzos
-      individuales y colectivos.
-    </p>
-  </div>
-
-  <div class="violetas-filtros"
-       role="group"
-       aria-label="Filtrar mujeres líderes">
-
-    <button type="button"
-            class="violetas-filtro activo"
-            data-region="todas"
-            aria-pressed="true">
-      💜 Todas
-    </button>
-
-    <button type="button"
-            class="violetas-filtro"
-            data-region="peru"
-            aria-pressed="false">
-      🇵🇪 Perú
-    </button>
-
-    <button type="button"
-            class="violetas-filtro"
-            data-region="ancash"
-            aria-pressed="false">
-      🏔️ Áncash
-    </button>
-  </div>
-
-  <div class="violetas-grid">
-
-    <!-- MARÍA JESÚS ALVARADO -->
-
-    <article class="violeta-card" data-zona="peru">
-      <div class="violeta-icono">📖</div>
-      <span class="violeta-etiqueta">PERÚ · FEMINISMO</span>
-
-      <h3>María Jesús Alvarado Rivera</h3>
-
-      <p class="violeta-fecha">1878–1971</p>
-
-      <p>
-        Educadora, periodista y pionera del feminismo
-        peruano. Defendió la educación de las mujeres,
-        su autonomía económica y su participación
-        en la sociedad y la política.
-      </p>
-
-      <p>
-        En 1914 fundó Evolución Femenina,
-        organización dedicada a promover
-        los derechos de las mujeres.
-      </p>
-
-      <a href="https://memoriaperu.bnp.gob.pe/micrositio/maria-alvarado"
-         target="_blank"
-         rel="noopener noreferrer">
-        Conocer su historia ↗
-      </a>
-    </article>
-
-    <!-- ZOILA AURORA CÁCERES -->
-
-    <article class="violeta-card" data-zona="peru">
-      <div class="violeta-icono">🗳️</div>
-      <span class="violeta-etiqueta">PERÚ · DERECHOS CIVILES</span>
-
-      <h3>Zoila Aurora Cáceres</h3>
-
-      <p>
-        Escritora y activista que participó
-        en la defensa de los derechos civiles
-        y políticos de las mujeres peruanas.
-      </p>
-
-      <p>
-        Su trayectoria forma parte de la historia
-        de las luchas por el sufragio femenino
-        y la participación pública de las mujeres.
-      </p>
-
-      <a href="https://memoriaperu.bnp.gob.pe/micrositio/derechos-mujer"
-         target="_blank"
-         rel="noopener noreferrer">
-        Explorar su legado ↗
-      </a>
-    </article>
-
-    <!-- MAGDA PORTAL -->
-
-    <article class="violeta-card" data-zona="peru">
-      <div class="violeta-icono">✍️</div>
-      <span class="violeta-etiqueta">PERÚ · LIDERAZGO SOCIAL</span>
-
-      <h3>Magda Portal</h3>
-
-      <p>
-        Escritora, poeta y activista peruana.
-        Participó en movimientos sociales
-        y defendió los derechos civiles
-        de las mujeres.
-      </p>
-
-      <p>
-        Su trayectoria muestra cómo la literatura
-        y la participación pública pueden
-        contribuir al cambio social.
-      </p>
-
-      <a href="https://www.bnp.gob.pe/biblioteca-nacional-del-peru-realizara-conversatorio-mujeres-que-hicieron-historia/"
-         target="_blank"
-         rel="noopener noreferrer">
-        Conocer su aporte ↗
-      </a>
-    </article>
-
-    <!-- ÁNCASH: MELICIA BRITO -->
-
-    <article class="violeta-card" data-zona="ancash">
-      <div class="violeta-icono">⚖️</div>
-      <span class="violeta-etiqueta">ÁNCASH · JUSTICIA</span>
-
-      <h3>Melicia Aurea Brito Mallqui</h3>
-
-      <p>
-        Jueza superior reconocida en 2024
-        por el Sistema Nacional Especializado
-        de Justicia de Áncash, en una ceremonia
-        que destacó contribuciones a la igualdad
-        y a los derechos de las mujeres.
-      </p>
-
-      <a href="https://www.pj.gob.pe/wps/wcm/connect/cortesuperiorancashpj/s_csj_ancash_nuevo/as_inicio/as_imagen_prensa/as_noticias/csjan_n_snej_ancash_reconocio_a_personalidades_que_luchan_por_la_igualdad_de_derechos_de_las_mujeres"
-         target="_blank"
-         rel="noopener noreferrer">
-        Ver reconocimiento oficial ↗
-      </a>
-    </article>
-
-    <!-- ÁNCASH: SOLEDAD RODRÍGUEZ -->
-
-    <article class="violeta-card" data-zona="ancash">
-      <div class="violeta-icono">🤝</div>
-      <span class="violeta-etiqueta">ÁNCASH · DEFENSA DE DERECHOS</span>
-
-      <h3>Soledad Rodríguez Loli</h3>
-
-      <p>
-        Reconocida en 2024 por el Sistema Nacional
-        Especializado de Justicia de Áncash.
-        La nota institucional la identifica
-        como jefa de la Oficina Defensorial
-        de Áncash en ese momento.
-      </p>
-
-      <p>
-        Su reconocimiento destaca la importancia
-        de las instituciones que trabajan
-        por la igualdad y la protección de derechos.
-      </p>
-
-      <a href="https://www.pj.gob.pe/wps/wcm/connect/cortesuperiorancashpj/s_csj_ancash_nuevo/as_inicio/as_imagen_prensa/as_noticias/csjan_n_snej_ancash_reconocio_a_personalidades_que_luchan_por_la_igualdad_de_derechos_de_las_mujeres"
-         target="_blank"
-         rel="noopener noreferrer">
-        Ver fuente oficial ↗
-      </a>
-    </article>
-
-    <!-- ÁNCASH: VIOLETA ARDILES -->
-
-    <article class="violeta-card" data-zona="ancash">
-      <div class="violeta-icono">🎓</div>
-      <span class="violeta-etiqueta">ÁNCASH · EDUCACIÓN</span>
-
-      <h3>Violeta Ardiles Poma de Moreno</h3>
-
-      <p>
-        Profesora incluida entre las mujeres
-        reconocidas en 2024 por el Sistema
-        Nacional Especializado de Justicia
-        de Áncash.
-      </p>
-
-      <p>
-        Su presencia en este reconocimiento
-        permite destacar el papel de las
-        educadoras en una sociedad que
-        promueve la igualdad.
-      </p>
-
-      <a href="https://www.pj.gob.pe/wps/wcm/connect/cortesuperiorancashpj/s_csj_ancash_nuevo/as_inicio/as_imagen_prensa/as_noticias/csjan_n_snej_ancash_reconocio_a_personalidades_que_luchan_por_la_igualdad_de_derechos_de_las_mujeres"
-         target="_blank"
-         rel="noopener noreferrer">
-        Ver reconocimiento oficial ↗
-      </a>
-    </article>
-
-  </div>
-
-  <div class="violetas-mensaje">
-    <span>🌷</span>
-    <h3>La historia también se escribe desde Áncash</h3>
-
-    <p>
-      Reconocer a las mujeres que nos precedieron
-      también significa valorar a quienes hoy
-      trabajan por una sociedad más justa.
-      Sus historias merecen ser conocidas,
-      documentadas y transmitidas.
-    </p>
-
-    <button type="button" id="violetasInspiracion">
-      💜 Descubrir un mensaje inspirador
-    </button>
-
-    <p id="violetasFrase" aria-live="polite"></p>
-  </div>
-
-</section>
-
-<section class="section tools" id="herramientas">
-  <small>✦ HERRAMIENTAS PARA TI</small>
-  <h2>Tu seguridad, en un solo lugar</h2>
-
-  <p>
-    Recursos prácticos para preparar tus próximos
-    pasos sin compartir públicamente tu información.
-  </p>
-
-  <div class="toolgrid">
-
-    <button data-tool="plan">
-      <span>💜</span>
-      <b>Mi Código Violeta</b>
-      <small>Crea un plan personal imprimible.</small>
-    </button>
-
-    <button data-tool="quiz">
-      <span>🧠</span>
-      <b>Quiz inicial y final</b>
-      <small>Mide lo que vas aprendiendo.</small>
-    </button>
-
-    <button data-tool="offer">
-      <span>🔎</span>
-      <b>Verificador de ofertas</b>
-      <small>Detecta señales de empleo sospechoso.</small>
-    </button>
-
-    <button data-tool="chat">
-      <span>💬</span>
-      <b>Simulador de chats</b>
-      <small>Practica reconocer banderas rojas.</small>
-    </button>
-
-    <button data-tool="evidence">
-      <span>🔐</span>
-      <b>Bóveda de evidencias</b>
-      <small>Guía para guardar pruebas con cuidado.</small>
-    </button>
-
-    <button data-tool="library">
-      <span>📚</span>
-      <b>Biblioteca digital</b>
-      <small>Guías rápidas y frases de límites.</small>
-    </button>
-
-    <button data-tool="stories">
-      <span>🌷</span>
-      <b>Rincón de historias</b>
-      <small>Mensajes de ánimo preparados.</small>
-    </button>
-
-    <button data-tool="certificate">
-      <span>🏆</span>
-      <b>Reconocimiento</b>
-      <small>Constancia local de avance.</small>
-    </button>
-
-  </div>
-</section>
-
-<!-- AYUDA -->
-
-<section class="help" id="ayuda">
-  <div>
-    <small>NO ESTÁS SOLA</small>
-    <h2>Pedir ayuda también es valentía.</h2>
-    <p>
-      Si estás en peligro inmediato, busca un lugar
-      seguro y contacta a los servicios de emergencia
-      o a alguien de confianza.
-    </p>
-    <button data-tool="help">
-      Ver rutas de ayuda →
-    </button>
-  </div>
-
-  <div class="helpCards">
-    <a href="tel:100">
-      <b>📞 Línea 100</b>
-      <small>
-        Orientación frente a violencia
-        familiar y sexual en Perú.
-      </small>
-    </a>
-
-    <a href="tel:105">
-      <b>🚨 Policía · 105</b>
-      <small>Emergencias policiales.</small>
-    </a>
-
-    <a
-      href="https://www.gob.pe/aurora"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <b>🏛️ Servicios oficiales</b>
-      <small>Consulta recursos públicos de apoyo.</small>
-    </a>
-  </div>
-</section>
-
-<!-- BIBLIOTECA -->
-
-<section class="section" id="biblioteca">
-  <small>✦ PEQUEÑOS RECORDATORIOS</small>
-  <h2>Frases para llevar contigo</h2>
-
-  <div class="quotes">
-    <blockquote>“Mis límites merecen respeto.”</blockquote>
-    <blockquote>
-      “No tengo que demostrar cariño
-      entregando mis contraseñas.”
-    </blockquote>
-    <blockquote>
-      “Puedo pedir ayuda sin sentir vergüenza.”
-    </blockquote>
-    <blockquote>“Mi historia me pertenece.”</blockquote>
-  </div>
-</section>
-
-</main>
-
-<!-- PIE DE PÁGINA -->
-
-<footer>
-  <b>✿ CÓDIGO VIOLETA</b>
-  <span>
-    Áncash, Perú · Aprende, decide y activa tu red.
-  </span>
-  <small>
-    Material educativo; no reemplaza atención
-    profesional ni servicios de emergencia.
-  </small>
-</footer>
-
-<!-- SALIDA RÁPIDA -->
-
-<button class="floatingExit" id="exit2">
-  ↗ Salir rápido
-</button>
-
-<!-- VENTANA PRINCIPAL -->
-
-<div class="backdrop" id="backdrop" hidden>
-  <section
-    class="modal"
-    role="dialog"
-    aria-modal="true"
-    aria-labelledby="modalTitle"
-  >
-    <button
-      id="close"
-      class="close"
-      aria-label="Cerrar"
-    >×</button>
-    <div id="modalBody"></div>
-  </section>
-</div>
-
-<div id="toast" class="toast" role="status"></div>
-
-<!-- =====================================
-     VIO: PERSONAJE FLOTANTE
-===================================== -->
-
-<div id="vioMover">
-  <button
-    id="vioButton"
-    type="button"
-    aria-label="Hablar con Vio"
-    aria-expanded="false"
-    aria-controls="vioChat"
-  >
-    <span id="vioLabel">¡Soy Vio! 💜</span>
-    <img src="assets/flor-mascota.png" alt="">
-  </button>
-</div>
-
-<!-- CHAT DE VIO -->
-
-<section
-  id="vioChat"
-  role="dialog"
-  aria-label="Vio, tu guía violeta"
-  hidden
->
-  <div class="vioHeader">
-    <img src="assets/flor-mascota.png" alt="">
-
+  <!-- CINTA SUPERIOR -->
+  <div class="ticker">
     <div>
-      <h3>¡Hola! Soy Vio 🌷</h3>
-      <p>Tu guía de Código Violeta</p>
+      💜 Tu voz importa　✦　Reconoce la señal, protege tu historia　
+      🌷 No estás sola　✦　Tus límites merecen respeto　
+      💜 Tu seguridad también es tu poder　✦　Aprende a tu ritmo　
+      💜 Tu voz importa　✦　Reconoce la señal, protege tu historia
+    </div>
+  </div>
+
+  <!-- ENCABEZADO -->
+  <header>
+    <a class="logo" href="#inicio">
+      <span>✿</span>
+      <b>CÓDIGO<br>VIOLETA</b>
+    </a>
+
+    <button id="menubtn" type="button" aria-label="Abrir menú">☰</button>
+
+    <nav id="nav">
+      <a href="#inicio">Inicio</a>
+      <a href="#ruta">Ruta educativa</a>
+      <a href="#lideresas">Mujeres que inspiran</a>
+      <a href="#herramientas">Herramientas</a>
+      <a href="#ayuda">Rutas de ayuda</a>
+      <a href="#biblioteca">Biblioteca</a>
+    </nav>
+
+    <button class="exit" id="exit" type="button">
+      Salida rápida ↗
+    </button>
+  </header>
+
+  <main>
+
+    <!-- PORTADA -->
+    <section class="hero" id="inicio">
+      <div class="shade"></div>
+
+      <div class="heroText">
+        <small>✦ LABORATORIO VIRTUAL · ÁNCASH</small>
+        <h1>Tu historia.<br><em>Tu voz.</em> Tu red.</h1>
+        <h2>Reconoce la señal, protege tu historia y activa tu red.</h2>
+        <p>
+          Un espacio práctico para jóvenes y adolescentes.
+          Explora situaciones, toma decisiones y construye
+          tu plan de prevención a tu ritmo.
+        </p>
+
+        <div class="actions">
+          <a class="primary" href="#ruta">Iniciar mi ruta →</a>
+          <a class="secondary" href="#herramientas">Explorar herramientas ↓</a>
+        </div>
+
+        <div class="chips">
+          <span>🛡 Aprende y decide</span>
+          <span>♡ Construye tu red</span>
+          <span>✦ Tu seguridad importa</span>
+        </div>
+      </div>
+
+      <div class="mascot">
+        <button id="vioPortada" type="button" aria-label="Hablar con Vio">
+          <img src="assets/flor-mascota.png" alt="Vio, mascota de Código Violeta">
+        </button>
+        <b>Un paso a la vez 💜</b>
+      </div>
+
+      <div class="quote">
+        “No tienes que tener todas las respuestas hoy.
+        Puedes empezar con un paso pequeño.”
+      </div>
+    </section>
+
+    <!-- INTRODUCCIÓN -->
+    <section class="intro">
+      <article>
+        <small>BIENVENIDA A TU ESPACIO</small>
+        <h2>Un laboratorio para elegir con más información</h2>
+        <p>
+          Una experiencia interactiva con historias ficticias,
+          decisiones y herramientas para reconocer señales de alerta,
+          cuidar tu privacidad y pedir apoyo de forma segura.
+        </p>
+      </article>
+
+      <article class="progress">
+        <div class="phead">
+          <b>Tu progreso</b>
+          <strong id="percent">0%</strong>
+        </div>
+        <div class="bar"><i id="bar"></i></div>
+        <p id="progressText">0 de 4 módulos completados</p>
+        <i>“Avanzar a tu ritmo también es avanzar.”</i>
+      </article>
+    </section>
+
+    <!-- RUTA EDUCATIVA -->
+    <section class="section" id="ruta">
+      <small>✦ TU CAMINO, A TU RITMO</small>
+      <h2>Ruta Código Violeta</h2>
+      <p>
+        Explora, practica y toma decisiones.
+        Cada módulo te acerca a una versión más informada y segura de ti.
+      </p>
+
+      <div class="modules">
+        <article>
+          <div class="art a1">
+            <b>01</b><span>🚩</span>
+            <small>OBSERVA · IDENTIFICA</small>
+          </div>
+          <h3>Reconoce las señales</h3>
+          <p>
+            Identifica control, manipulación, celos,
+            culpa y otras formas de violencia.
+          </p>
+          <button type="button" data-module="signals">
+            Comenzar módulo →
+          </button>
+        </article>
+
+        <article>
+          <div class="art a2">
+            <b>02</b><span>🛡️</span>
+            <small>PROTEGE · PREVIENE</small>
+          </div>
+          <h3>Escudo Digital</h3>
+          <p>
+            Cuida tus cuentas, reconoce amenazas
+            en línea y aprende a preservar evidencias.
+          </p>
+          <button type="button" data-module="digital">
+            Comenzar módulo →
+          </button>
+        </article>
+
+        <article>
+          <div class="art a3">
+            <b>03</b><span>🗣️</span>
+            <small>EXPRESA · PON LÍMITES</small>
+          </div>
+          <h3>Mi voz pone límites</h3>
+          <p>
+            Practica frases asertivas y descubre formas
+            seguras de acompañar a una amiga.
+          </p>
+          <button type="button" data-module="voice">
+            Comenzar módulo →
+          </button>
+        </article>
+
+        <article>
+          <div class="art a4">
+            <b>04</b><span>🕸️</span>
+            <small>CONÉCTATE · PIDE APOYO</small>
+          </div>
+          <h3>Activa tu red</h3>
+          <p>
+            Identifica personas de confianza,
+            recursos de apoyo y próximos pasos.
+          </p>
+          <button type="button" data-module="network">
+            Comenzar módulo →
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <!-- MUJERES LÍDERES -->
+    <section class="section" id="lideresas">
+      <div class="violetas-intro">
+        <small>✦ MEMORIA, DERECHOS Y LIDERAZGO</small>
+        <h2>Violetas que hicieron historia 💜</h2>
+        <p>
+          Mujeres que abrieron caminos en el Perú y Áncash.
+          Conoce sus aportes a la igualdad, la educación,
+          la justicia y los derechos de las mujeres.
+        </p>
+        <p>
+          Recordar sus historias es reconocer que los derechos
+          son fruto de esfuerzos individuales y colectivos.
+        </p>
+      </div>
+
+      <div class="violetas-filtros" role="group" aria-label="Filtrar lideresas">
+        <button type="button" class="violetas-filtro activo" data-region="todas" aria-pressed="true">💜 Todas</button>
+        <button type="button" class="violetas-filtro" data-region="peru" aria-pressed="false">🇵🇪 Perú</button>
+        <button type="button" class="violetas-filtro" data-region="ancash" aria-pressed="false">🏔️ Áncash</button>
+      </div>
+
+      <div class="violetas-grid">
+        <article class="violeta-card" data-zona="peru">
+          <div class="violeta-icono">📖</div>
+          <span class="violeta-etiqueta">PERÚ · FEMINISMO</span>
+          <h3>María Jesús Alvarado Rivera</h3>
+          <p>1878–1971</p>
+          <p>
+            Educadora, periodista y pionera del feminismo peruano.
+            Defendió la educación, la autonomía económica
+            y la participación de las mujeres.
+          </p>
+          <p>
+            En 1914 fundó Evolución Femenina,
+            organización dedicada a promover sus derechos.
+          </p>
+          <a href="https://memoriaperu.bnp.gob.pe/micrositio/maria-alvarado" target="_blank" rel="noopener noreferrer">Conocer su historia ↗</a>
+        </article>
+
+        <article class="violeta-card" data-zona="peru">
+          <div class="violeta-icono">🗳️</div>
+          <span class="violeta-etiqueta">PERÚ · DERECHOS CIVILES</span>
+          <h3>Zoila Aurora Cáceres</h3>
+          <p>
+            Escritora y activista que defendió los derechos
+            civiles y políticos de las mujeres peruanas.
+          </p>
+          <p>
+            Su trayectoria forma parte de la historia
+            de las luchas por el sufragio femenino.
+          </p>
+          <a href="https://memoriaperu.bnp.gob.pe/micrositio/derechos-mujer" target="_blank" rel="noopener noreferrer">Explorar su legado ↗</a>
+        </article>
+
+        <article class="violeta-card" data-zona="peru">
+          <div class="violeta-icono">✍️</div>
+          <span class="violeta-etiqueta">PERÚ · LIDERAZGO SOCIAL</span>
+          <h3>Magda Portal</h3>
+          <p>
+            Escritora, poeta y activista peruana.
+            Participó en movimientos sociales y defendió
+            los derechos civiles de las mujeres.
+          </p>
+          <p>
+            Su trayectoria muestra cómo la literatura
+            y la participación pública contribuyen al cambio social.
+          </p>
+          <a href="https://www.bnp.gob.pe/biblioteca-nacional-del-peru-realizara-conversatorio-mujeres-que-hicieron-historia/" target="_blank" rel="noopener noreferrer">Conocer su aporte ↗</a>
+        </article>
+
+        <article class="violeta-card" data-zona="ancash">
+          <div class="violeta-icono">⚖️</div>
+          <span class="violeta-etiqueta">ÁNCASH · JUSTICIA</span>
+          <h3>Melicia Aurea Brito Mallqui</h3>
+          <p>
+            Jueza superior reconocida en 2024 por el Sistema
+            Nacional Especializado de Justicia de Áncash,
+            en una ceremonia que destacó contribuciones
+            a la igualdad y los derechos de las mujeres.
+          </p>
+          <a href="https://www.pj.gob.pe/" target="_blank" rel="noopener noreferrer">Consultar Poder Judicial ↗</a>
+        </article>
+
+        <article class="violeta-card" data-zona="ancash">
+          <div class="violeta-icono">🤝</div>
+          <span class="violeta-etiqueta">ÁNCASH · DEFENSA DE DERECHOS</span>
+          <h3>Soledad Rodríguez Loli</h3>
+          <p>
+            Reconocida en 2024 por el Sistema Nacional
+            Especializado de Justicia de Áncash.
+            La nota institucional la identificó como jefa
+            de la Oficina Defensorial de Áncash.
+          </p>
+          <a href="https://www.pj.gob.pe/" target="_blank" rel="noopener noreferrer">Consultar Poder Judicial ↗</a>
+        </article>
+
+        <article class="violeta-card" data-zona="ancash">
+          <div class="violeta-icono">🎓</div>
+          <span class="violeta-etiqueta">ÁNCASH · EDUCACIÓN</span>
+          <h3>Violeta Ardiles Poma de Moreno</h3>
+          <p>
+            Profesora incluida entre las mujeres reconocidas
+            en 2024 por el Sistema Nacional Especializado
+            de Justicia de Áncash.
+          </p>
+          <p>
+            Su reconocimiento permite destacar
+            el papel de las educadoras en la sociedad.
+          </p>
+          <a href="https://www.pj.gob.pe/" target="_blank" rel="noopener noreferrer">Consultar Poder Judicial ↗</a>
+        </article>
+      </div>
+
+      <div class="violetas-mensaje">
+        <span style="font-size:40px">🌷</span>
+        <h3>La historia también se escribe desde Áncash</h3>
+        <p>
+          Reconocer a quienes nos precedieron también significa
+          valorar a las mujeres que hoy trabajan por una sociedad más justa.
+        </p>
+        <button type="button" id="violetasInspiracion">
+          💜 Descubrir un mensaje inspirador
+        </button>
+        <p id="violetasFrase" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- HERRAMIENTAS -->
+    <section class="section tools" id="herramientas">
+      <small>✦ HERRAMIENTAS PARA TI</small>
+      <h2>Tu seguridad, en un solo lugar</h2>
+      <p>Recursos prácticos para preparar tus próximos pasos.</p>
+
+      <div class="toolgrid">
+        <button type="button" data-tool="plan">
+          <span>💜</span><b>Mi Código Violeta</b>
+          <small>Crea un plan personal imprimible.</small>
+        </button>
+
+        <button type="button" data-tool="quiz">
+          <span>🧠</span><b>Quiz inicial y final</b>
+          <small>Mide lo que vas aprendiendo.</small>
+        </button>
+
+        <button type="button" data-tool="offer">
+          <span>🔎</span><b>Verificador de ofertas</b>
+          <small>Detecta señales de empleo sospechoso.</small>
+        </button>
+
+        <button type="button" data-tool="chat">
+          <span>💬</span><b>Simulador de chats</b>
+          <small>Practica reconocer banderas rojas.</small>
+        </button>
+
+        <button type="button" data-tool="evidence">
+          <span>🔐</span><b>Bóveda de evidencias</b>
+          <small>Guía para guardar pruebas con cuidado.</small>
+        </button>
+
+        <button type="button" data-tool="library">
+          <span>📚</span><b>Biblioteca digital</b>
+          <small>Guías rápidas y frases de límites.</small>
+        </button>
+
+        <button type="button" data-tool="stories">
+          <span>🌷</span><b>Rincón de historias</b>
+          <small>Mensajes de ánimo preparados.</small>
+        </button>
+
+        <button type="button" data-tool="certificate">
+          <span>🏆</span><b>Reconocimiento</b>
+          <small>Constancia local de avance.</small>
+        </button>
+      </div>
+    </section>
+
+    <!-- RUTAS DE AYUDA -->
+    <section class="help" id="ayuda">
+      <div>
+        <small>NO ESTÁS SOLA</small>
+        <h2>Pedir ayuda también es valentía.</h2>
+        <p>
+          Si estás en peligro inmediato, busca un lugar seguro
+          y contacta a los servicios de emergencia
+          o a una persona de confianza.
+        </p>
+        <button type="button" data-tool="help">
+          Ver rutas de ayuda →
+        </button>
+      </div>
+
+      <div class="helpCards">
+        <a href="tel:100">
+          <b>📞 Línea 100</b>
+          <small>Orientación frente a violencia familiar y sexual en Perú.</small>
+        </a>
+        <a href="tel:105">
+          <b>🚨 Policía · 105</b>
+          <small>Emergencias policiales.</small>
+        </a>
+        <a href="https://www.gob.pe/aurora" target="_blank" rel="noopener noreferrer">
+          <b>🏛️ Servicios oficiales</b>
+          <small>Consulta recursos públicos de apoyo.</small>
+        </a>
+      </div>
+    </section>
+
+    <!-- BIBLIOTECA -->
+    <section class="section" id="biblioteca">
+      <small>✦ PEQUEÑOS RECORDATORIOS</small>
+      <h2>Frases para llevar contigo</h2>
+      <div class="quotes">
+        <blockquote>“Mis límites merecen respeto.”</blockquote>
+        <blockquote>“No tengo que demostrar cariño entregando mis contraseñas.”</blockquote>
+        <blockquote>“Puedo pedir ayuda sin sentir vergüenza.”</blockquote>
+        <blockquote>“Mi historia me pertenece.”</blockquote>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <b>✿ CÓDIGO VIOLETA</b>
+    <span>Áncash, Perú · Aprende, decide y activa tu red.</span>
+    <small>
+      Material educativo; no reemplaza atención profesional
+      ni servicios de emergencia.
+    </small>
+  </footer>
+
+  <!-- SALIDA RÁPIDA -->
+  <button class="floatingExit" id="exit2" type="button">
+    ↗ Salir rápido
+  </button>
+
+  <!-- VENTANA PARA MÓDULOS Y HERRAMIENTAS -->
+  <div class="backdrop" id="backdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-label="Actividad interactiva">
+      <button id="close" class="close" type="button" aria-label="Cerrar">×</button>
+      <div id="modalBody"></div>
+    </section>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <!-- VIO FLOTANTE -->
+  <div id="vioMover">
+    <button id="vioButton" type="button"
+            aria-label="Hablar con Vio"
+            aria-expanded="false"
+            aria-controls="vioChat">
+      <span id="vioLabel">¡Soy Vio! 💜</span>
+      <img src="assets/flor-mascota.png" alt="">
+    </button>
+  </div>
+
+  <!-- CHAT DE VIO -->
+  <section id="vioChat" role="dialog" aria-label="Vio, guía virtual" hidden>
+    <div class="vioHeader">
+      <img src="assets/flor-mascota.png" alt="">
+      <div>
+        <h3>¡Hola! Soy Vio 🌷</h3>
+        <p>Tu guía de Código Violeta</p>
+      </div>
+      <button id="vioClose" type="button" aria-label="Cerrar asistente">×</button>
     </div>
 
-    <button
-      id="vioClose"
-      type="button"
-      aria-label="Cerrar asistente"
-    >×</button>
-  </div>
+    <p>¿Qué te gustaría hacer?</p>
 
-  <p>
-    ¡Hola! Estoy aquí para ayudarte a explorar
-    Código Violeta. ¿Qué te gustaría hacer?
-  </p>
+    <button class="vioOption" type="button" data-vio="route">📚 Empezar mi ruta</button>
+    <button class="vioOption" type="button" data-vio="progress">📊 Ver mi progreso</button>
+    <button class="vioOption" type="button" data-vio="quiz">🧠 Hacer mi evaluación</button>
+    <button class="vioOption" type="button" data-vio="simulator">🎭 Practicar decisiones</button>
+    <button class="vioOption" type="button" data-vio="help">💜 Necesito orientación</button>
 
-  <button class="vioOption" data-vio="route">
-    📚 Empezar mi ruta
-  </button>
+    <div id="vioReply" aria-live="polite">
+      Elige una opción y te acompaño. 💜
+    </div>
 
-  <button class="vioOption" data-vio="progress">
-    📊 Ver mi progreso
-  </button>
+    <div class="vioControls">
+      <button id="vioVoice" type="button" aria-pressed="false">
+        🔇 Activar voz
+      </button>
+      <button id="vioSpeak" type="button">
+        🔊 Escuchar
+      </button>
+    </div>
 
-  <button class="vioOption" data-vio="quiz">
-    🧠 Hacer mi evaluación
-  </button>
+    <label for="vioVoiceSelect"
+           style="display:block;margin-top:14px;font-size:13px;font-weight:bold">
+      🎙️ Elige la voz de Vio
+    </label>
+    <select id="vioVoiceSelect">
+      <option value="">Cargando voces...</option>
+    </select>
+    <p id="vioStatus" role="status">La voz está desactivada.</p>
+  </section>
 
-  <button class="vioOption" data-vio="simulator">
-    🎭 Practicar decisiones
-  </button>
+  <!-- BIENVENIDA -->
+  <section id="vioWelcome" role="dialog" aria-label="Bienvenida de Vio" hidden>
+    <h3>🌷 ¡Hola! Soy Vio</h3>
+    <p>
+      ¡Bienvenida a Código Violeta! 💜
+      Estoy aquí para acompañarte mientras aprendes,
+      exploras y conoces recursos de apoyo.
+      ¿Comenzamos?
+    </p>
+    <button id="vioWelcomeStart" type="button">💜 ¡Vamos!</button>
+    <button id="vioWelcomeVoice" type="button">🔊 Activar voz</button>
+    <button id="vioWelcomeSkip" type="button">Ahora no</button>
+  </section>
 
-  <button class="vioOption" data-vio="help">
-    💜 Necesito orientación
-  </button>
+  <!-- MENSAJE DE ACOMPAÑAMIENTO -->
+  <div id="vioCompanion" role="status" aria-live="polite" hidden></div>
 
-  <div id="vioReply" aria-live="polite">
-    Elige una opción y te acompaño. 💜
-  </div>
+  <!-- LÓGICA ORIGINAL DE MÓDULOS -->
+  <script src="js/app.js"></script>
 
-  <div class="vioControls">
-    <button
-      id="vioVoice"
-      type="button"
-      aria-pressed="false"
-    >
-      🔇 Activar voz
-    </button>
+  <!-- VIO: UN SOLO SISTEMA DE VOZ Y ACOMPAÑAMIENTO -->
+  <script>
+  (() => {
+    "use strict";
 
-    <button id="vioSpeak" type="button">
-      🔊 Escuchar
-    </button>
-  </div>
+    const $ = id => document.getElementById(id);
 
-  <label
-    for="vioVoiceSelect"
-    style="display:block;margin-top:14px;font-size:13px;font-weight:bold"
-  >
-    🎙️ Elige la voz de Vio
-  </label>
+    const mover = $("vioMover");
+    const button = $("vioButton");
+    const portada = $("vioPortada");
+    const chat = $("vioChat");
+    const reply = $("vioReply");
+    const welcome = $("vioWelcome");
+    const companion = $("vioCompanion");
+    const voiceButton = $("vioVoice");
+    const welcomeVoice = $("vioWelcomeVoice");
+    const voiceSelect = $("vioVoiceSelect");
+    const status = $("vioStatus");
 
-  <select id="vioVoiceSelect">
-    <option value="">Cargando voces disponibles...</option>
-  </select>
+    const canSpeak =
+      "speechSynthesis" in window &&
+      "SpeechSynthesisUtterance" in window;
 
-  <p id="vioStatus" role="status">
-    La voz está desactivada.
-  </p>
-</section>
+    let voiceEnabled = false;
+    let voices = [];
+    let selectedVoice = null;
+    let companionEnabled = true;
+    let lastMessage = "";
+    let messageTimeout = null;
 
-<!-- JAVASCRIPT ORIGINAL -->
-
-<script src="js/app.js"></script>
-
-<!-- JAVASCRIPT DE VIO -->
-
-<script>
-(() => {
-  "use strict";
-
-  const $ = id => document.getElementById(id);
-
-  const mover = $("vioMover");
-  const button = $("vioButton");
-  const portada = $("vioPortada");
-  const chat = $("vioChat");
-  const closeButton = $("vioClose");
-  const reply = $("vioReply");
-  const voiceButton = $("vioVoice");
-  const speakButton = $("vioSpeak");
-  const voiceSelect = $("vioVoiceSelect");
-  const status = $("vioStatus");
-
-  const supported =
-    "speechSynthesis" in window &&
-    "SpeechSynthesisUtterance" in window;
-
-  let voiceEnabled = false;
-  let voices = [];
-  let selectedVoice = null;
-
-  const welcome =
-    "¡Hola! Soy Vio, tu guía violeta. " +
-    "Estoy aquí para ayudarte a explorar Código Violeta. " +
-    "¿Qué te gustaría hacer?";
-
-  const messages = {
-    route:
-      "¡Vamos! Te llevaré a los cuatro módulos educativos.",
-    progress:
-      "Aquí puedes revisar tus módulos completados.",
-    quiz:
-      "Vamos a comprobar lo que has aprendido.",
-    simulator:
-      "Practiquemos decisiones con historias ficticias.",
-    help:
-      "Te mostraré recursos de orientación disponibles en Perú."
-  };
-
-  // BUSCAR VOCES EN ESPAÑOL
-
-  function loadVoices() {
-    if (!supported) return;
-
-    const previous = selectedVoice
-      ? selectedVoice.voiceURI
-      : null;
-
-    voices = window.speechSynthesis.getVoices()
-      .filter(v => v.lang.toLowerCase().startsWith("es"));
-
-    voiceSelect.innerHTML = "";
-
-    if (!voices.length) {
-      const option = document.createElement("option");
-      option.value = "";
-      option.textContent = "Voz española predeterminada";
-      voiceSelect.appendChild(option);
-      selectedVoice = null;
-      return;
-    }
+    const greeting =
+      "¡Hola! Soy Vio, tu guía violeta. " +
+      "Bienvenida a Código Violeta. " +
+      "Estoy aquí para acompañarte durante tu recorrido.";
 
     const femaleNames = [
-      "helena", "sabina", "paulina", "monica",
-      "mónica", "lucia", "lucía", "laura",
-      "sofia", "sofía", "elena", "maria",
-      "maría", "paloma", "conchita",
-      "isabela", "isabella", "carmen",
-      "ines", "inés", "jimena", "dalia",
-      "google español", "female"
+      "helena","sabina","paulina","monica","mónica",
+      "lucia","lucía","laura","sofia","sofía",
+      "elena","maria","maría","paloma","conchita",
+      "isabela","carmen","ines","inés","jimena",
+      "dalia","female"
     ];
 
-    const preferred =
-      voices.find(v => v.voiceURI === previous) ||
-      voices.find(v =>
-        femaleNames.some(name =>
-          v.name.toLowerCase().includes(name)
-        )
-      ) ||
-      voices.find(v => v.lang.toLowerCase() === "es-pe") ||
-      voices[0];
+    function loadVoices() {
+      if (!canSpeak) return;
 
-    voices.forEach((voice, i) => {
-      const option = document.createElement("option");
-      option.value = String(i);
-      option.textContent =
-        voice.name + " (" + voice.lang + ")";
-      voiceSelect.appendChild(option);
-    });
+      const previous = selectedVoice?.voiceURI;
 
-    selectedVoice = preferred;
+      voices = speechSynthesis.getVoices().filter(v =>
+        v.lang.toLowerCase().startsWith("es")
+      );
 
-    voiceSelect.value = String(
-      voices.indexOf(preferred)
-    );
-  }
+      voiceSelect.replaceChildren();
 
-  if (supported) {
-    loadVoices();
+      if (!voices.length) {
+        const option = document.createElement("option");
+        option.textContent = "Voz española predeterminada";
+        voiceSelect.appendChild(option);
+        selectedVoice = null;
+        return;
+      }
 
-    window.speechSynthesis.addEventListener(
-      "voiceschanged",
-      loadVoices
-    );
+      const preferred =
+        voices.find(v => v.voiceURI === previous) ||
+        voices.find(v =>
+          femaleNames.some(name =>
+            v.name.toLowerCase().includes(name)
+          )
+        ) ||
+        voices.find(v => v.lang.toLowerCase() === "es-pe") ||
+        voices[0];
 
-    voiceSelect.addEventListener("change", () => {
-      selectedVoice = voices[Number(voiceSelect.value)] || null;
+      voices.forEach((v, index) => {
+        const option = document.createElement("option");
+        option.value = String(index);
+        option.textContent = `${v.name} (${v.lang})`;
+        voiceSelect.appendChild(option);
+      });
+
+      selectedVoice = preferred;
+      voiceSelect.value = String(voices.indexOf(preferred));
+    }
+
+    function stopSpeaking() {
+      if (canSpeak) speechSynthesis.cancel();
+    }
+
+    function speak(message, force = false) {
+      if (!canSpeak || (!voiceEnabled && !force)) return;
+
       stopSpeaking();
 
-      status.textContent =
-        "Voz seleccionada. Pulsa Escuchar para probarla.";
-    });
-  }
+      const speech = new SpeechSynthesisUtterance(message);
+      speech.lang = selectedVoice?.lang || "es-PE";
+      speech.rate = 0.94;
+      speech.pitch = 1.08;
+      speech.volume = 1;
 
-  function stopSpeaking() {
-    if (supported) {
-      window.speechSynthesis.cancel();
-    }
-  }
+      if (selectedVoice) speech.voice = selectedVoice;
 
-  function speak(text, force = false) {
-    if (!supported) return;
-    if (!voiceEnabled && !force) return;
-
-    stopSpeaking();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    utterance.lang = selectedVoice
-      ? selectedVoice.lang
-      : "es-PE";
-
-    utterance.rate = 0.94;
-    utterance.pitch = 1.12;
-    utterance.volume = 1;
-
-    if (selectedVoice) {
-      utterance.voice = selectedVoice;
+      speechSynthesis.speak(speech);
     }
 
-    window.speechSynthesis.speak(utterance);
-  }
-
-  // ABRIR Y CERRAR CHAT
-
-  function toggle(open) {
-    chat.hidden = !open;
-    mover.classList.toggle("paused", open);
-
-    button.setAttribute(
-      "aria-expanded",
-      String(open)
-    );
-
-    if (open) {
-      closeButton.focus();
-      speak(welcome);
-    } else {
-      stopSpeaking();
-      button.focus();
-    }
-  }
-
-  button.addEventListener("click", () => {
-    toggle(chat.hidden);
-  });
-
-  portada.addEventListener("click", () => {
-    toggle(true);
-  });
-
-  closeButton.addEventListener("click", () => {
-    toggle(false);
-  });
-
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && !chat.hidden) {
-      toggle(false);
-    }
-  });
-
-  // ACTIVAR VOZ
-
-  if (!supported) {
-    voiceButton.disabled = true;
-    speakButton.disabled = true;
-    voiceSelect.disabled = true;
-
-    status.textContent =
-      "Este navegador no permite la voz automática.";
-  } else {
-    voiceButton.addEventListener("click", () => {
-      voiceEnabled = !voiceEnabled;
-
-      voiceButton.textContent = voiceEnabled
+    function updateVoiceButtons() {
+      const label = voiceEnabled
         ? "🔊 Desactivar voz"
         : "🔇 Activar voz";
 
-      voiceButton.setAttribute(
-        "aria-pressed",
-        String(voiceEnabled)
-      );
+      voiceButton.textContent = label;
+      welcomeVoice.textContent = voiceEnabled
+        ? "🔇 Silenciar"
+        : "🔊 Activar voz";
 
+      voiceButton.setAttribute("aria-pressed", String(voiceEnabled));
       status.textContent = voiceEnabled
-        ? "Voz activada."
+        ? "Voz activada. Puedes seleccionar otra voz."
         : "La voz está desactivada.";
+    }
+
+    function toggleVoice() {
+      if (!canSpeak) return;
+
+      voiceEnabled = !voiceEnabled;
+      updateVoiceButtons();
 
       if (voiceEnabled) {
-        speak(welcome);
+        speak(greeting);
       } else {
         stopSpeaking();
       }
-    });
+    }
 
-    speakButton.addEventListener("click", () => {
-      speak(reply.textContent.trim(), true);
-    });
-  }
+    function showMessage(message, readAloud = true) {
+      if (!companionEnabled) return;
 
-  // NAVEGACIÓN
+      lastMessage = message;
+      companion.textContent = "🌷 Vio: " + message;
 
-  const targets = {
-    route: "#ruta",
-    progress: "#mi-panel",
-    quiz: '[data-tool="quiz"]',
-    simulator: '[data-tool="simulator"]',
-    help: '[data-tool="help"]'
-  };
+      if (chat.hidden && welcome.hidden) {
+        companion.hidden = false;
+      }
 
-  document.querySelectorAll("[data-vio]").forEach(option => {
-    option.addEventListener("click", () => {
+      clearTimeout(messageTimeout);
+      messageTimeout = setTimeout(() => {
+        companion.hidden = true;
+      }, 7500);
 
-      const action = option.dataset.vio;
-      let target = document.querySelector(targets[action]);
+      if (readAloud) speak(message);
+    }
+
+    function toggleChat(open) {
+      chat.hidden = !open;
+      mover.classList.toggle("paused", open);
+      button.setAttribute("aria-expanded", String(open));
+
+      if (open) {
+        welcome.hidden = true;
+        companion.hidden = true;
+        $("vioClose").focus();
+        speak(greeting);
+      } else {
+        stopSpeaking();
+        button.focus();
+      }
+    }
+
+    function navigate(action) {
+      const messages = {
+        route: "¡Vamos a explorar los cuatro módulos educativos!",
+        progress: "Aquí puedes consultar tu progreso.",
+        quiz: "¡Es momento de comprobar lo aprendido!",
+        simulator: "Practiquemos decisiones con historias ficticias.",
+        help: "Aquí encontrarás recursos de orientación."
+      };
+
+      const selectors = {
+        route: "#ruta",
+        progress: "#mi-panel",
+        quiz: '[data-tool="quiz"]',
+        simulator: '[data-tool="simulator"]',
+        help: '[data-tool="help"]'
+      };
+
+      let target = document.querySelector(selectors[action]);
 
       if (!target && action === "progress") {
         target = document.querySelector(".progress");
       }
 
       if (!target && action === "simulator") {
-        target = document.querySelector(
-          '[data-tool="chat"]'
-        );
+        target = document.querySelector('[data-tool="chat"]');
       }
 
       if (!target) {
-        reply.textContent =
-          "Esta opción todavía no está disponible.";
+        reply.textContent = "Esta opción todavía no está disponible.";
         speak(reply.textContent);
         return;
       }
 
-      reply.textContent = messages[action];
-
-      // Reproduce la explicación antes de navegar
-      speak(messages[action]);
+      const message = messages[action];
+      reply.textContent = message;
 
       chat.hidden = true;
       mover.classList.remove("paused");
+      button.setAttribute("aria-expanded", "false");
 
-      button.setAttribute(
-        "aria-expanded",
-        "false"
-      );
+      showMessage(message);
 
       if (action === "route" || action === "progress") {
-        const reduced = window.matchMedia(
-          "(prefers-reduced-motion: reduce)"
-        ).matches;
-
         target.scrollIntoView({
-          behavior: reduced ? "auto" : "smooth"
+          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto" : "smooth"
         });
       } else {
+        // El evento llega a js/app.js para abrir la herramienta.
         target.click();
       }
-    });
-  });
-
-  // SALIDA RÁPIDA: DETENER AUDIO
-
-  ["exit", "exit2"].forEach(id => {
-    const element = $(id);
-
-    if (element) {
-      element.addEventListener("click", () => {
-        stopSpeaking();
-        chat.hidden = true;
-        mover.classList.remove("paused");
-      });
-    }
-  });
-
-})();
-</script>
-
-<style>
-/* Saludo de bienvenida de Vio */
-
-#vioWelcome {
-  position: fixed;
-  top: 16%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 970;
-  width: min(340px, calc(100vw - 32px));
-  box-sizing: border-box;
-  padding: 17px;
-  background: #fff;
-  color: #40165f;
-  border: 2px solid #e8d1f7;
-  border-radius: 19px;
-  box-shadow: 0 10px 30px rgba(40,10,70,.2);
-  font-family: Arial, sans-serif;
-}
-
-#vioWelcome[hidden] {
-  display: none !important;
-}
-
-#vioWelcome h3 {
-  margin: 0 0 8px;
-  color: #7531a8;
-}
-
-#vioWelcome p {
-  line-height: 1.5;
-  font-size: 14px;
-}
-
-#vioWelcome button {
-  padding: 10px 13px;
-  margin: 5px 5px 0 0;
-  border: 1px solid #d8b5ee;
-  border-radius: 11px;
-  background: #f4e9fc;
-  color: #40165f;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#vioCompanion {
-  position: fixed;
-  right: 14px;
-  top: 15%;
-  z-index: 940;
-  max-width: min(265px, 70vw);
-  padding: 12px 15px;
-  background: #fff;
-  color: #542078;
-  border: 1px solid #e7d1f7;
-  border-radius: 15px;
-  box-shadow: 0 5px 18px rgba(40,10,70,.17);
-  font: 13px/1.5 Arial, sans-serif;
-  pointer-events: none;
-}
-
-#vioCompanion[hidden] {
-  display: none !important;
-}
-</style>
-
-<section
-  id="vioWelcome"
-  role="dialog"
-  aria-label="Bienvenida de Vio"
-  hidden
->
-  <h3>🌷 ¡Hola! Soy Vio</h3>
-
-  <p>
-    ¡Bienvenida a Código Violeta! 💜
-    Estoy aquí para ayudarte a aprender,
-    explorar y encontrar recursos de apoyo.
-    ¿Te gustaría comenzar?
-  </p>
-
-  <button id="vioWelcomeStart" type="button">
-    💜 ¡Vamos!
-  </button>
-
-  <button id="vioWelcomeVoice" type="button">
-    🔊 Activar voz
-  </button>
-
-  <button id="vioWelcomeSkip" type="button">
-    Ahora no
-  </button>
-</section>
-
-<div
-  id="vioCompanion"
-  role="status"
-  aria-live="polite"
-  hidden
-></div>
-
-<script>
-(() => {
-  "use strict";
-
-  const welcome = document.getElementById("vioWelcome");
-  const companion = document.getElementById("vioCompanion");
-
-  const start = document.getElementById("vioWelcomeStart");
-  const voice = document.getElementById("vioWelcomeVoice");
-  const skip = document.getElementById("vioWelcomeSkip");
-
-  const vioButton = document.getElementById("vioButton");
-  const vioChat = document.getElementById("vioChat");
-  const vioMover = document.getElementById("vioMover");
-
-  let companionEnabled = true;
-  let companionVoice = false;
-
-  const canSpeak =
-    "speechSynthesis" in window &&
-    "SpeechSynthesisUtterance" in window;
-
-  const initialGreeting =
-    "¡Hola! Soy Vio, tu guía violeta. " +
-    "Bienvenida a Código Violeta. " +
-    "Estoy aquí para acompañarte durante tu recorrido.";
-
-  function say(message) {
-    if (!companionVoice || !canSpeak) return;
-
-    window.speechSynthesis.cancel();
-
-    const speech = new SpeechSynthesisUtterance(message);
-    speech.lang = "es-PE";
-    speech.rate = 0.94;
-    speech.pitch = 1.1;
-
-    const voices = window.speechSynthesis.getVoices();
-
-    const spanish = voices.find(v =>
-      v.lang.toLowerCase().startsWith("es")
-    );
-
-    if (spanish) {
-      speech.voice = spanish;
     }
 
-    window.speechSynthesis.speak(speech);
-  }
-
-  function showMessage(message) {
-    if (!companionEnabled) return;
-
-    companion.textContent = "🌷 Vio: " + message;
-    companion.hidden = false;
-
-    say(message);
-  }
-
-  function closeWelcome() {
-    welcome.hidden = true;
-  }
-
-  function stopVoice() {
+    // VOCES
     if (canSpeak) {
-      window.speechSynthesis.cancel();
-    }
-  }
+      loadVoices();
+      speechSynthesis.addEventListener("voiceschanged", loadVoices);
 
-  // Mostrar saludo al cargar la página
+      voiceButton.addEventListener("click", toggleVoice);
+      welcomeVoice.addEventListener("click", toggleVoice);
 
-  welcome.hidden = false;
-
-  // Comenzar recorrido
-
-  start.addEventListener("click", () => {
-    closeWelcome();
-
-    showMessage(
-      "¡Qué bueno que estás aquí! Comienza por el primer módulo."
-    );
-
-    const route = document.getElementById("ruta");
-
-    if (route) {
-      route.scrollIntoView({
-        behavior: "smooth"
+      voiceSelect.addEventListener("change", () => {
+        selectedVoice = voices[Number(voiceSelect.value)] || null;
+        stopSpeaking();
+        status.textContent = "Voz seleccionada. Pulsa Escuchar.";
       });
-    }
-  });
 
-  // Activar voz desde la bienvenida
-
-  voice.addEventListener("click", () => {
-    companionVoice = !companionVoice;
-
-    voice.textContent = companionVoice
-      ? "🔇 Silenciar"
-      : "🔊 Activar voz";
-
-    if (companionVoice) {
-      say(initialGreeting);
+      $("vioSpeak").addEventListener("click", () => {
+        speak(lastMessage || reply.textContent.trim(), true);
+      });
     } else {
-      stopVoice();
+      voiceButton.disabled = true;
+      welcomeVoice.disabled = true;
+      voiceSelect.disabled = true;
+      $("vioSpeak").disabled = true;
+      status.textContent = "La voz no está disponible en este navegador.";
     }
-  });
 
-  // Cerrar bienvenida
+    // ABRIR Y CERRAR VIO
+    button.addEventListener("click", () => toggleChat(chat.hidden));
+    portada.addEventListener("click", () => toggleChat(true));
+    $("vioClose").addEventListener("click", () => toggleChat(false));
 
-  skip.addEventListener("click", () => {
-    closeWelcome();
-    companion.hidden = true;
-    companionEnabled = false;
-    stopVoice();
-  });
-
-  // Al abrir el chat de Vio
-
-  vioButton.addEventListener("click", () => {
-    closeWelcome();
-    companion.hidden = true;
-  });
-
-  // Mensajes por módulo
-
-  const moduleMessages = {
-    signals:
-      "En este módulo aprenderás a reconocer señales de alerta.",
-    digital:
-      "Vamos a aprender a proteger tu privacidad digital.",
-    voice:
-      "Aquí practicarás cómo expresar tus límites.",
-    network:
-      "Ahora descubrirás cómo construir tu red de apoyo."
-  };
-
-  document.querySelectorAll("[data-module]").forEach(button => {
-    button.addEventListener("click", () => {
-      const key = button.dataset.module;
-
-      showMessage(
-        moduleMessages[key] ||
-        "¡Continúa aprendiendo a tu ritmo!"
-      );
-    });
-  });
-
-  // Mensajes para las herramientas
-
-  const toolMessages = {
-    quiz:
-      "¡Es momento de comprobar lo que aprendiste!",
-    plan:
-      "Aquí puedes preparar tu propio plan de prevención.",
-    chat:
-      "Vamos a practicar con conversaciones ficticias.",
-    evidence:
-      "Aquí encontrarás recomendaciones para cuidar tu información.",
-    help:
-      "Te mostraré recursos oficiales de orientación.",
-    certificate:
-      "¡Tu esfuerzo merece reconocimiento!"
-  };
-
-  document.querySelectorAll("[data-tool]").forEach(button => {
-    button.addEventListener("click", () => {
-      const key = button.dataset.tool;
-
-      if (toolMessages[key]) {
-        showMessage(toolMessages[key]);
-      }
-    });
-  });
-
-  // Detectar cambios en el progreso
-
-  const progressText = document.getElementById("progressText");
-
-  if (progressText) {
-    let previous = progressText.textContent.trim();
-
-    const observer = new MutationObserver(() => {
-      const current = progressText.textContent.trim();
-
-      if (current !== previous) {
-        previous = current;
-
-        showMessage(
-          "¡Muy bien! Tu progreso está avanzando. " +
-          "Puedes continuar con el siguiente módulo."
-        );
-      }
-    });
-
-    observer.observe(progressText, {
-      childList: true,
-      characterData: true,
-      subtree: true
-    });
-  }
-
-  // Salida rápida
-
-  ["exit", "exit2"].forEach(id => {
-    const exitButton = document.getElementById(id);
-
-    if (exitButton) {
-      exitButton.addEventListener("click", () => {
-        companionEnabled = false;
-        companion.hidden = true;
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
         welcome.hidden = true;
-        stopVoice();
+        if (!chat.hidden) toggleChat(false);
+        companion.hidden = true;
+      }
+    });
+
+    // SALUDO INICIAL
+    welcome.hidden = false;
+
+    $("vioWelcomeStart").addEventListener("click", () => {
+      welcome.hidden = true;
+      showMessage("¡Comencemos! Explora el primer módulo.");
+      $("ruta").scrollIntoView({
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto" : "smooth"
       });
-    }
-  });
+    });
 
-  // Evitar mensajes encima del chat
-
-  const observer = new MutationObserver(() => {
-    if (!vioChat.hidden) {
+    $("vioWelcomeSkip").addEventListener("click", () => {
+      welcome.hidden = true;
       companion.hidden = true;
+      stopSpeaking();
+    });
+
+    // BOTONES DEL CHAT
+    document.querySelectorAll("[data-vio]").forEach(option => {
+      option.addEventListener("click", () => {
+        navigate(option.dataset.vio);
+      });
+    });
+
+    // ACOMPAÑAMIENTO EN MÓDULOS
+    const moduleMessages = {
+      signals: "Aprenderás a reconocer señales de alerta.",
+      digital: "Vamos a proteger tu privacidad digital.",
+      voice: "Practicarás cómo expresar tus límites.",
+      network: "Descubrirás cómo construir tu red de apoyo."
+    };
+
+    document.querySelectorAll("[data-module]").forEach(item => {
+      item.addEventListener("click", () => {
+        showMessage(
+          moduleMessages[item.dataset.module] ||
+          "¡Continúa aprendiendo a tu ritmo!"
+        );
+        // No cancelamos el clic:
+        // js/app.js puede abrir el módulo normalmente.
+      });
+    });
+
+    // ACOMPAÑAMIENTO EN HERRAMIENTAS
+    const toolMessages = {
+      plan: "Aquí puedes preparar tu plan personal.",
+      quiz: "¡Vamos a comprobar lo que aprendiste!",
+      offer: "Revisaremos señales de ofertas sospechosas.",
+      chat: "Practiquemos con conversaciones ficticias.",
+      simulator: "Practiquemos decisiones en situaciones ficticias.",
+      evidence: "Aprenderás a cuidar tu información.",
+      library: "Exploremos recursos educativos.",
+      stories: "Aquí encontrarás mensajes de ánimo.",
+      certificate: "¡Tu esfuerzo merece reconocimiento!",
+      help: "Aquí encontrarás recursos de orientación."
+    };
+
+    document.querySelectorAll("[data-tool]").forEach(item => {
+      item.addEventListener("click", () => {
+        const message = toolMessages[item.dataset.tool];
+        if (message) showMessage(message);
+        // No usamos preventDefault ni stopPropagation.
+      });
+    });
+
+    // CAMBIOS EN EL PROGRESO
+    const progressText = $("progressText");
+
+    if (progressText) {
+      let previous = progressText.textContent.trim();
+
+      new MutationObserver(() => {
+        const current = progressText.textContent.trim();
+
+        if (current !== previous) {
+          previous = current;
+          showMessage(
+            "¡Muy bien! Tu progreso está avanzando. " +
+            "Puedes continuar con el siguiente módulo."
+          );
+        }
+      }).observe(progressText, {
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
     }
-  });
 
-  observer.observe(vioChat, {
-    attributes: true,
-    attributeFilter: ["hidden"]
-  });
+    // OCULTAR MENSAJES AL ABRIR EL CHAT
+    new MutationObserver(() => {
+      if (!chat.hidden) companion.hidden = true;
+    }).observe(chat, {
+      attributes: true,
+      attributeFilter: ["hidden"]
+    });
 
-})();
-</script>
-   
-<script>
-(() => {
-  "use strict";
+    // SALIDA RÁPIDA
+    ["exit","exit2"].forEach(id => {
+      const item = $(id);
+      if (!item) return;
 
-  // FILTROS POR REGIÓN
-
-  const filtros = document.querySelectorAll(
-    ".violetas-filtro"
-  );
-
-  const tarjetas = document.querySelectorAll(
-    ".violeta-card"
-  );
-
-  filtros.forEach(boton => {
-    boton.addEventListener("click", () => {
-      const region = boton.dataset.region;
-
-      filtros.forEach(f => {
-        const activo = f === boton;
-        f.classList.toggle("activo", activo);
-        f.setAttribute("aria-pressed", String(activo));
-      });
-
-      tarjetas.forEach(tarjeta => {
-        tarjeta.hidden =
-          region !== "todas" &&
-          tarjeta.dataset.zona !== region;
+      item.addEventListener("click", () => {
+        stopSpeaking();
+        welcome.hidden = true;
+        chat.hidden = true;
+        companion.hidden = true;
+        clearTimeout(messageTimeout);
+        companionEnabled = false;
       });
     });
-  });
 
-  // MENSAJES INSPIRADORES
+  })();
+  </script>
 
-  const frases = [
-    "Tu voz también puede abrir caminos.",
-    "Conocer nuestra historia fortalece nuestro presente.",
-    "El liderazgo comienza cuando decidimos participar.",
-    "Los derechos se conocen, se ejercen y se defienden.",
-    "Cada generación puede contribuir a una sociedad más justa.",
-    "Desde Áncash también se construye historia."
-  ];
+  <!-- FILTROS Y FRASES DE LIDERESAS -->
+  <script>
+  (() => {
+    "use strict";
 
-  let indice = -1;
+    const filtros = document.querySelectorAll(".violetas-filtro");
+    const tarjetas = document.querySelectorAll(".violeta-card");
 
-  const boton = document.getElementById(
-    "violetasInspiracion"
-  );
+    filtros.forEach(boton => {
+      boton.addEventListener("click", () => {
+        const region = boton.dataset.region;
 
-  const salida = document.getElementById(
-    "violetasFrase"
-  );
+        filtros.forEach(f => {
+          const activo = f === boton;
+          f.classList.toggle("activo", activo);
+          f.setAttribute("aria-pressed", String(activo));
+        });
 
-  if (boton && salida) {
-    boton.addEventListener("click", () => {
-      indice = (indice + 1) % frases.length;
-      salida.textContent = "🌷 " + frases[indice];
+        tarjetas.forEach(tarjeta => {
+          tarjeta.hidden =
+            region !== "todas" &&
+            tarjeta.dataset.zona !== region;
+        });
+      });
     });
-  }
-})();
-</script>
+
+    const frases = [
+      "Tu voz también puede abrir caminos.",
+      "Conocer nuestra historia fortalece nuestro presente.",
+      "El liderazgo comienza cuando decidimos participar.",
+      "Los derechos se conocen, se ejercen y se defienden.",
+      "Cada generación puede contribuir a una sociedad más justa.",
+      "Desde Áncash también se construye historia."
+    ];
+
+    let indice = -1;
+
+    document.getElementById("violetasInspiracion")
+      .addEventListener("click", () => {
+        indice = (indice + 1) % frases.length;
+        document.getElementById("violetasFrase").textContent =
+          "🌷 " + frases[indice];
+      });
+  })();
+  </script>
 
 </body>
 </html>
