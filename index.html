@@ -1182,5 +1182,53 @@
   })();
   </script>
 
+<script>
+(() => {
+  "use strict";
+
+  const vio = document.getElementById("vioMover");
+  const vioChat = document.getElementById("vioChat");
+  const vioWelcome = document.getElementById("vioWelcome");
+  const vioCompanion = document.getElementById("vioCompanion");
+  const backdrop = document.getElementById("backdrop");
+
+  if (!vio || !backdrop) return;
+
+  function actualizarVio() {
+    const actividadAbierta = !backdrop.hidden;
+
+    // Ocultar a Vio mientras se responde una actividad.
+    vio.style.setProperty(
+      "display",
+      actividadAbierta ? "none" : "",
+      "important"
+    );
+
+    // Ocultar las ventanas y mensajes de Vio.
+    if (actividadAbierta) {
+      if (vioChat) vioChat.hidden = true;
+      if (vioWelcome) vioWelcome.hidden = true;
+      if (vioCompanion) vioCompanion.hidden = true;
+
+      // Detener la voz para evitar distracciones.
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    }
+  }
+
+  // Detectar cuando se abre o cierra un módulo.
+  const observador = new MutationObserver(actualizarVio);
+
+  observador.observe(backdrop, {
+    attributes: true,
+    attributeFilter: ["hidden"]
+  });
+
+  // Comprobar el estado inicial.
+  actualizarVio();
+})();
+</script>
+
 </body>
 </html>
