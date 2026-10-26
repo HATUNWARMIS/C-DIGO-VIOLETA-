@@ -940,10 +940,14 @@
   `;
   document.head.appendChild(style);
 
-  // INICIALIZACIÓN
-  progress();
-})();
-  // INICIAR LA PÁGINA
+ 
+  // =====================================
+  // INICIALIZACIÓN DE CÓDIGO VIOLETA
+  // =====================================
+
+  // Actualizar progreso y panel personal
   progress();
 
+  // Fin del programa principal
 })();
+
