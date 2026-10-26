@@ -1,6 +1,170 @@
 
 <!doctype html>
 <html lang="es">
+   
+<style>
+/* VIOLETAS QUE HICIERON HISTORIA */
+
+#lideresas {
+  background: linear-gradient(
+    145deg,
+    #faf5ff 0%,
+    #f2e4fa 55%,
+    #fff7fc 100%
+  );
+  color: #37164e;
+}
+
+.violetas-intro {
+  max-width: 790px;
+  margin-bottom: 28px;
+}
+
+.violetas-intro h2 {
+  color: #552077;
+}
+
+.violetas-intro p {
+  line-height: 1.75;
+}
+
+.violetas-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+.violetas-filtro {
+  padding: 11px 20px;
+  border: 1px solid #d8b4ec;
+  border-radius: 30px;
+  background: white;
+  color: #672c8c;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.violetas-filtro.activo {
+  background: #702ca0;
+  color: white;
+  border-color: #702ca0;
+}
+
+.violetas-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, 270px), 1fr)
+  );
+  gap: 22px;
+}
+
+.violeta-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding: 25px;
+  border-radius: 22px;
+  border: 1px solid #ead9f5;
+  box-shadow: 0 7px 22px rgba(66,20,94,.08);
+  transition: transform .2s ease;
+}
+
+.violeta-card:hover {
+  transform: translateY(-5px);
+}
+
+.violeta-card[hidden] {
+  display: none !important;
+}
+
+.violeta-icono {
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+.violeta-etiqueta {
+  color: #8648ae;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.violeta-card h3 {
+  color: #522074;
+  font-size: 22px;
+  margin: 12px 0;
+}
+
+.violeta-fecha {
+  color: #795a8d;
+  font-size: 13px;
+  margin-top: 0;
+}
+
+.violeta-card p {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.violeta-card a {
+  display: inline-block;
+  margin-top: auto;
+  padding-top: 15px;
+  color: #7130a3;
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.violetas-mensaje {
+  max-width: 850px;
+  margin: 38px auto 0;
+  padding: 30px;
+  text-align: center;
+  background: white;
+  border: 1px solid #e8d4f4;
+  border-radius: 24px;
+}
+
+.violetas-mensaje span {
+  font-size: 40px;
+}
+
+.violetas-mensaje h3 {
+  color: #63258b;
+}
+
+.violetas-mensaje p {
+  line-height: 1.7;
+}
+
+#violetasInspiracion {
+  padding: 13px 20px;
+  background: #7130a3;
+  color: white;
+  border: 0;
+  border-radius: 13px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#violetasFrase {
+  font-weight: bold;
+  color: #642b8b;
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .violeta-card {
+    transition: none;
+  }
+  .violeta-card:hover {
+    transform: none;
+  }
+}
+</style>
+
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -490,6 +654,248 @@
 </section>
 
 <!-- HERRAMIENTAS -->
+
+<!-- =====================================
+ VIOLETAS QUE HICIERON HISTORIA
+===================================== -->
+
+<section class="section" id="lideresas">
+
+  <div class="violetas-intro">
+    <small>✦ MEMORIA, DERECHOS Y LIDERAZGO</small>
+
+    <h2>Violetas que hicieron historia 💜</h2>
+
+    <p>
+      Mujeres que abrieron caminos en el Perú y Áncash.
+      Conoce sus aportes a la igualdad, la educación,
+      la justicia y el derecho a una vida libre
+      de violencia.
+    </p>
+
+    <p>
+      Recordar sus historias es reconocer que
+      los derechos son fruto de esfuerzos
+      individuales y colectivos.
+    </p>
+  </div>
+
+  <div class="violetas-filtros"
+       role="group"
+       aria-label="Filtrar mujeres líderes">
+
+    <button type="button"
+            class="violetas-filtro activo"
+            data-region="todas"
+            aria-pressed="true">
+      💜 Todas
+    </button>
+
+    <button type="button"
+            class="violetas-filtro"
+            data-region="peru"
+            aria-pressed="false">
+      🇵🇪 Perú
+    </button>
+
+    <button type="button"
+            class="violetas-filtro"
+            data-region="ancash"
+            aria-pressed="false">
+      🏔️ Áncash
+    </button>
+  </div>
+
+  <div class="violetas-grid">
+
+    <!-- MARÍA JESÚS ALVARADO -->
+
+    <article class="violeta-card" data-zona="peru">
+      <div class="violeta-icono">📖</div>
+      <span class="violeta-etiqueta">PERÚ · FEMINISMO</span>
+
+      <h3>María Jesús Alvarado Rivera</h3>
+
+      <p class="violeta-fecha">1878–1971</p>
+
+      <p>
+        Educadora, periodista y pionera del feminismo
+        peruano. Defendió la educación de las mujeres,
+        su autonomía económica y su participación
+        en la sociedad y la política.
+      </p>
+
+      <p>
+        En 1914 fundó Evolución Femenina,
+        organización dedicada a promover
+        los derechos de las mujeres.
+      </p>
+
+      <a href="https://memoriaperu.bnp.gob.pe/micrositio/maria-alvarado"
+         target="_blank"
+         rel="noopener noreferrer">
+        Conocer su historia ↗
+      </a>
+    </article>
+
+    <!-- ZOILA AURORA CÁCERES -->
+
+    <article class="violeta-card" data-zona="peru">
+      <div class="violeta-icono">🗳️</div>
+      <span class="violeta-etiqueta">PERÚ · DERECHOS CIVILES</span>
+
+      <h3>Zoila Aurora Cáceres</h3>
+
+      <p>
+        Escritora y activista que participó
+        en la defensa de los derechos civiles
+        y políticos de las mujeres peruanas.
+      </p>
+
+      <p>
+        Su trayectoria forma parte de la historia
+        de las luchas por el sufragio femenino
+        y la participación pública de las mujeres.
+      </p>
+
+      <a href="https://memoriaperu.bnp.gob.pe/micrositio/derechos-mujer"
+         target="_blank"
+         rel="noopener noreferrer">
+        Explorar su legado ↗
+      </a>
+    </article>
+
+    <!-- MAGDA PORTAL -->
+
+    <article class="violeta-card" data-zona="peru">
+      <div class="violeta-icono">✍️</div>
+      <span class="violeta-etiqueta">PERÚ · LIDERAZGO SOCIAL</span>
+
+      <h3>Magda Portal</h3>
+
+      <p>
+        Escritora, poeta y activista peruana.
+        Participó en movimientos sociales
+        y defendió los derechos civiles
+        de las mujeres.
+      </p>
+
+      <p>
+        Su trayectoria muestra cómo la literatura
+        y la participación pública pueden
+        contribuir al cambio social.
+      </p>
+
+      <a href="https://www.bnp.gob.pe/biblioteca-nacional-del-peru-realizara-conversatorio-mujeres-que-hicieron-historia/"
+         target="_blank"
+         rel="noopener noreferrer">
+        Conocer su aporte ↗
+      </a>
+    </article>
+
+    <!-- ÁNCASH: MELICIA BRITO -->
+
+    <article class="violeta-card" data-zona="ancash">
+      <div class="violeta-icono">⚖️</div>
+      <span class="violeta-etiqueta">ÁNCASH · JUSTICIA</span>
+
+      <h3>Melicia Aurea Brito Mallqui</h3>
+
+      <p>
+        Jueza superior reconocida en 2024
+        por el Sistema Nacional Especializado
+        de Justicia de Áncash, en una ceremonia
+        que destacó contribuciones a la igualdad
+        y a los derechos de las mujeres.
+      </p>
+
+      <a href="https://www.pj.gob.pe/wps/wcm/connect/cortesuperiorancashpj/s_csj_ancash_nuevo/as_inicio/as_imagen_prensa/as_noticias/csjan_n_snej_ancash_reconocio_a_personalidades_que_luchan_por_la_igualdad_de_derechos_de_las_mujeres"
+         target="_blank"
+         rel="noopener noreferrer">
+        Ver reconocimiento oficial ↗
+      </a>
+    </article>
+
+    <!-- ÁNCASH: SOLEDAD RODRÍGUEZ -->
+
+    <article class="violeta-card" data-zona="ancash">
+      <div class="violeta-icono">🤝</div>
+      <span class="violeta-etiqueta">ÁNCASH · DEFENSA DE DERECHOS</span>
+
+      <h3>Soledad Rodríguez Loli</h3>
+
+      <p>
+        Reconocida en 2024 por el Sistema Nacional
+        Especializado de Justicia de Áncash.
+        La nota institucional la identifica
+        como jefa de la Oficina Defensorial
+        de Áncash en ese momento.
+      </p>
+
+      <p>
+        Su reconocimiento destaca la importancia
+        de las instituciones que trabajan
+        por la igualdad y la protección de derechos.
+      </p>
+
+      <a href="https://www.pj.gob.pe/wps/wcm/connect/cortesuperiorancashpj/s_csj_ancash_nuevo/as_inicio/as_imagen_prensa/as_noticias/csjan_n_snej_ancash_reconocio_a_personalidades_que_luchan_por_la_igualdad_de_derechos_de_las_mujeres"
+         target="_blank"
+         rel="noopener noreferrer">
+        Ver fuente oficial ↗
+      </a>
+    </article>
+
+    <!-- ÁNCASH: VIOLETA ARDILES -->
+
+    <article class="violeta-card" data-zona="ancash">
+      <div class="violeta-icono">🎓</div>
+      <span class="violeta-etiqueta">ÁNCASH · EDUCACIÓN</span>
+
+      <h3>Violeta Ardiles Poma de Moreno</h3>
+
+      <p>
+        Profesora incluida entre las mujeres
+        reconocidas en 2024 por el Sistema
+        Nacional Especializado de Justicia
+        de Áncash.
+      </p>
+
+      <p>
+        Su presencia en este reconocimiento
+        permite destacar el papel de las
+        educadoras en una sociedad que
+        promueve la igualdad.
+      </p>
+
+      <a href="https://www.pj.gob.pe/wps/wcm/connect/cortesuperiorancashpj/s_csj_ancash_nuevo/as_inicio/as_imagen_prensa/as_noticias/csjan_n_snej_ancash_reconocio_a_personalidades_que_luchan_por_la_igualdad_de_derechos_de_las_mujeres"
+         target="_blank"
+         rel="noopener noreferrer">
+        Ver reconocimiento oficial ↗
+      </a>
+    </article>
+
+  </div>
+
+  <div class="violetas-mensaje">
+    <span>🌷</span>
+    <h3>La historia también se escribe desde Áncash</h3>
+
+    <p>
+      Reconocer a las mujeres que nos precedieron
+      también significa valorar a quienes hoy
+      trabajan por una sociedad más justa.
+      Sus historias merecen ser conocidas,
+      documentadas y transmitidas.
+    </p>
+
+    <button type="button" id="violetasInspiracion">
+      💜 Descubrir un mensaje inspirador
+    </button>
+
+    <p id="violetasFrase" aria-live="polite"></p>
+  </div>
+
+</section>
 
 <section class="section tools" id="herramientas">
   <small>✦ HERRAMIENTAS PARA TI</small>
@@ -1391,5 +1797,68 @@
 
 })();
 </script>
+   
+<script>
+(() => {
+  "use strict";
+
+  // FILTROS POR REGIÓN
+
+  const filtros = document.querySelectorAll(
+    ".violetas-filtro"
+  );
+
+  const tarjetas = document.querySelectorAll(
+    ".violeta-card"
+  );
+
+  filtros.forEach(boton => {
+    boton.addEventListener("click", () => {
+      const region = boton.dataset.region;
+
+      filtros.forEach(f => {
+        const activo = f === boton;
+        f.classList.toggle("activo", activo);
+        f.setAttribute("aria-pressed", String(activo));
+      });
+
+      tarjetas.forEach(tarjeta => {
+        tarjeta.hidden =
+          region !== "todas" &&
+          tarjeta.dataset.zona !== region;
+      });
+    });
+  });
+
+  // MENSAJES INSPIRADORES
+
+  const frases = [
+    "Tu voz también puede abrir caminos.",
+    "Conocer nuestra historia fortalece nuestro presente.",
+    "El liderazgo comienza cuando decidimos participar.",
+    "Los derechos se conocen, se ejercen y se defienden.",
+    "Cada generación puede contribuir a una sociedad más justa.",
+    "Desde Áncash también se construye historia."
+  ];
+
+  let indice = -1;
+
+  const boton = document.getElementById(
+    "violetasInspiracion"
+  );
+
+  const salida = document.getElementById(
+    "violetasFrase"
+  );
+
+  if (boton && salida) {
+    boton.addEventListener("click", () => {
+      indice = (indice + 1) % frases.length;
+      salida.textContent = "🌷 " + frases[indice];
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
