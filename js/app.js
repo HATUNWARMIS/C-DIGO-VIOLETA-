@@ -1,4 +1,3 @@
-
 (() => {
   "use strict";
 
@@ -553,7 +552,7 @@
         explicacion:
           "Cada caso te ayuda a reconocer situaciones y tomar decisiones más informadas."
       });
-<CodeBlock language="javascript" editable>
+
 
       $("#saveModule").onclick = () => {
         state[id] = true;
@@ -1252,4 +1251,3 @@
 
   // Fin del programa principal
 })();
-
