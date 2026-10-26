@@ -4,7 +4,7 @@
 
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#321052">
 
 <title>Código Violeta | Tu voz, tu historia, tu red</title>
@@ -12,161 +12,294 @@
 <link rel="stylesheet" href="css/styles.css">
 
 <style>
-/* FLOR INTERACTIVA */
+/* =========================================
+   VIO: MASCOTA INTERACTIVA
+========================================= */
 
-.mascot #florPortada {
-  background: transparent;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  display: block;
-  max-width: 100%;
-  font: inherit;
+:root {
+  --vio-purple: #7531a8;
+  --vio-light: #f6edff;
 }
 
-.mascot #florPortada img {
+/* Flor de la portada */
+
+#vioPortada {
+  display: block;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  max-width: 100%;
+}
+
+#vioPortada img {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
-#florWidget {
+/* Mascota flotante */
+
+#vioWidget {
   position: fixed;
-  right: 16px;
-  bottom: 90px;
-  z-index: 900;
-  font-family: Arial, sans-serif;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  z-index: 950;
+  pointer-events: none;
 }
 
-#florButton {
+/* El movimiento se aplica a un contenedor
+   para que el chat permanezca independiente */
+
+#vioMover {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  width: 86px;
+  height: 100px;
+  pointer-events: auto;
+  animation: vioTravel 18s ease-in-out infinite alternate;
+}
+
+@keyframes vioTravel {
+  from {
+    transform: translateX(12px);
+  }
+  to {
+    transform: translateX(calc(100vw - 100px));
+  }
+}
+
+/* Imagen sin fondo ni círculo */
+
+#vioButton {
+  width: 86px;
+  height: 100px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 70px;
-  height: 70px;
-  padding: 5px;
-  border: 3px solid #a76bd0;
-  border-radius: 50%;
-  background: #fff;
-  cursor: pointer;
-  box-shadow: 0 5px 20px rgba(65,15,95,.25);
-  animation: florFloat 3s ease-in-out infinite;
 }
 
-#florButton img {
+#vioButton img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 5px 5px rgba(62,15,85,.3));
+  animation: vioBounce 1.7s ease-in-out infinite;
 }
 
-@keyframes florFloat {
+@keyframes vioBounce {
   0%,100% {
-    transform: translateY(0) rotate(-4deg);
+    transform: translateY(0) rotate(-5deg);
   }
   50% {
-    transform: translateY(-8px) rotate(4deg);
+    transform: translateY(-10px) rotate(5deg);
   }
 }
 
-#florChat {
-  position: absolute;
-  right: 0;
-  bottom: 82px;
-  width: min(330px,calc(100vw - 32px));
-  max-height: min(490px,65dvh);
-  overflow: auto;
-  box-sizing: border-box;
-  background: #fff;
-  color: #351451;
-  border: 2px solid #e6d3f4;
-  border-radius: 20px;
-  box-shadow: 0 10px 35px rgba(40,10,70,.25);
-  padding: 18px;
+/* Detener movimiento al interactuar */
+
+#vioMover.paused,
+#vioMover:hover,
+#vioMover:focus-within {
+  animation-play-state: paused;
 }
 
-#florChat[hidden] {
+#vioMover.paused img,
+#vioMover:hover img,
+#vioMover:focus-within img {
+  animation-play-state: paused;
+}
+
+/* Etiqueta flotante */
+
+#vioLabel {
+  position: absolute;
+  top: -27px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  color: #7130a3;
+  border-radius: 18px;
+  padding: 5px 10px;
+  font: bold 12px Arial,sans-serif;
+  white-space: nowrap;
+  box-shadow: 0 3px 12px rgba(30,0,50,.15);
+  pointer-events: none;
+}
+
+/* Chat independiente */
+
+#vioChat {
+  position: fixed;
+  right: 15px;
+  bottom: 95px;
+  width: min(350px, calc(100vw - 30px));
+  max-height: min(550px, 75dvh);
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 20px;
+  border: 2px solid #e8d2f7;
+  border-radius: 22px;
+  background: white;
+  color: #351451;
+  box-shadow: 0 12px 40px rgba(55,15,80,.28);
+  pointer-events: auto;
+  font-family: Arial,sans-serif;
+}
+
+#vioChat[hidden] {
   display: none !important;
 }
 
-#florChat h3 {
-  color: #7430a5;
-  margin: 0 0 10px;
-  font-size: 20px;
+.vioHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-#florChat p {
-  font-size: 14px;
-  line-height: 1.5;
-  margin: 10px 0;
+.vioHeader img {
+  width: 56px;
+  height: 64px;
+  object-fit: contain;
 }
 
-#florClose {
-  float: right;
+.vioHeader h3 {
+  color: var(--vio-purple);
+  font-size: 22px;
+  margin: 0;
+}
+
+.vioHeader p {
+  margin: 4px 0;
+  font-size: 12px;
+}
+
+#vioClose {
+  margin-left: auto;
+  align-self: flex-start;
   border: 0;
   background: transparent;
+  font-size: 27px;
   color: #351451;
-  font-size: 26px;
   cursor: pointer;
-  padding: 0 5px;
 }
 
-.florOption {
+#vioChat > p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.vioOption {
   display: block;
   width: 100%;
-  margin: 8px 0;
-  padding: 12px;
-  background: #f5ebff;
-  border: 1px solid #dec6f0;
-  border-radius: 12px;
+  margin: 9px 0;
+  padding: 13px;
+  border: 1px solid #dec5f2;
+  border-radius: 13px;
+  background: var(--vio-light);
   color: #40165f;
+  font-size: 14px;
   font-weight: bold;
   text-align: left;
   cursor: pointer;
-  font-size: 14px;
+  min-height: 45px;
 }
 
-.florOption:hover,
-.florOption:focus-visible {
-  background: #e8d4f8;
-  outline: 2px solid #9958c6;
+.vioOption:hover,
+.vioOption:focus-visible {
+  background: #e8d3fa;
 }
 
-#florReply {
-  background: #f7f1fb;
-  border-radius: 12px;
-  padding: 12px;
+#vioReply {
   margin-top: 12px;
+  padding: 13px;
+  border-radius: 13px;
+  background: #f7f1fb;
   font-size: 14px;
   line-height: 1.5;
 }
 
-#florButton:focus-visible,
-#florPortada:focus-visible,
-#florClose:focus-visible {
-  outline: 3px solid #b76be7;
-  outline-offset: 4px;
+.vioControls {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
 }
+
+.vioControls button {
+  flex: 1;
+  padding: 10px 8px;
+  border-radius: 11px;
+  border: 1px solid #cba7e6;
+  background: #fff;
+  color: #542078;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#vioStatus {
+  font-size: 12px;
+  color: #68447c;
+  margin-top: 10px;
+}
+
+#vioButton:focus-visible,
+#vioPortada:focus-visible,
+#vioChat button:focus-visible {
+  outline: 3px solid #a65cdb;
+  outline-offset: 3px;
+}
+
+/* Celulares */
 
 @media(max-width:600px) {
-  #florWidget {
-    right: 12px;
-    bottom: 88px;
+  #vioMover {
+    width: 70px;
+    height: 82px;
+    animation-name: vioTravelMobile;
   }
 
-  #florButton {
-    width: 60px;
-    height: 60px;
+  #vioButton {
+    width: 70px;
+    height: 82px;
   }
 
-  #florChat {
-    bottom: 72px;
-    max-height: 60dvh;
+  @keyframes vioTravelMobile {
+    from {
+      transform: translateX(8px);
+    }
+    to {
+      transform: translateX(calc(100vw - 80px));
+    }
+  }
+
+  #vioChat {
+    right: 10px;
+    bottom: 80px;
+    max-height: 68dvh;
   }
 }
 
+/* Accesibilidad */
+
 @media(prefers-reduced-motion:reduce) {
-  #florButton {
-    animation: none;
+  #vioMover,
+  #vioButton img {
+    animation: none !important;
+  }
+
+  #vioMover {
+    transform: translateX(12px);
   }
 }
 </style>
@@ -174,26 +307,30 @@
 
 <body>
 
-<!-- MENSAJES SUPERIORES -->
+<!-- MENSAJE SUPERIOR -->
 
 <div class="ticker">
   <div>
-    💜 Tu voz importa　✦　Reconoce la señal, protege tu historia　
-    🌷 No estás sola　✦　Tus límites merecen respeto　
-    💜 Tu seguridad también es tu poder　✦　Aprende a tu ritmo　
-    💜 Tu voz importa　✦　Reconoce la señal, protege tu historia
+    💜 Tu voz importa　✦　Reconoce la señal,
+    protege tu historia　🌷 No estás sola　
+    ✦　Tus límites merecen respeto　
+    💜 Tu seguridad también es tu poder　
+    ✦　Aprende a tu ritmo
   </div>
 </div>
 
-<!-- NAVEGACIÓN -->
+<!-- MENÚ -->
 
 <header>
+
   <a class="logo" href="#inicio">
     <span>✿</span>
     <b>CÓDIGO<br>VIOLETA</b>
   </a>
 
-  <button id="menubtn" aria-label="Abrir menú">☰</button>
+  <button id="menubtn" aria-label="Abrir menú">
+    ☰
+  </button>
 
   <nav id="nav">
     <a href="#inicio">Inicio</a>
@@ -206,6 +343,7 @@
   <button class="exit" id="exit">
     Salida rápida ↗
   </button>
+
 </header>
 
 <main>
@@ -217,7 +355,10 @@
   <div class="shade"></div>
 
   <div class="heroText">
-    <small>✦ LABORATORIO VIRTUAL · ÁNCASH</small>
+
+    <small>
+      ✦ LABORATORIO VIRTUAL · ÁNCASH
+    </small>
 
     <h1>
       Tu historia.<br>
@@ -251,19 +392,20 @@
       <span>♡ Construye tu red</span>
       <span>✦ Tu seguridad importa</span>
     </div>
+
   </div>
 
-  <!-- FLOR DE LA PORTADA: AHORA INTERACTIVA -->
+  <!-- VIO EN LA PORTADA -->
 
   <div class="mascot">
     <button
+      id="vioPortada"
       type="button"
-      id="florPortada"
-      aria-label="Hablar con Flor, tu asistente"
+      aria-label="Hablar con Vio"
     >
       <img
         src="assets/flor-mascota.png"
-        alt="Flor, la mascota violeta"
+        alt="Vio, mascota de Código Violeta"
       >
     </button>
 
@@ -277,7 +419,7 @@
 
 </section>
 
-<!-- INTRODUCCIÓN Y PROGRESO -->
+<!-- INTRODUCCIÓN -->
 
 <section class="intro">
 
@@ -297,6 +439,7 @@
   </article>
 
   <article class="progress">
+
     <div class="phead">
       <b>Tu progreso</b>
       <strong id="percent">0%</strong>
@@ -313,11 +456,12 @@
     <i>
       “Avanzar a tu ritmo también es avanzar.”
     </i>
+
   </article>
 
 </section>
 
-<!-- CUATRO MÓDULOS -->
+<!-- RUTA EDUCATIVA -->
 
 <section class="section" id="ruta">
 
@@ -343,8 +487,8 @@
       <h3>Reconoce las señales</h3>
 
       <p>
-        Identifica control, manipulación, celos,
-        culpa y otras formas de violencia.
+        Identifica control, manipulación,
+        celos, culpa y otras formas de violencia.
       </p>
 
       <button data-module="signals">
@@ -483,6 +627,7 @@
 <section class="help" id="ayuda">
 
   <div>
+
     <small>NO ESTÁS SOLA</small>
 
     <h2>Pedir ayuda también es valentía.</h2>
@@ -496,6 +641,7 @@
     <button data-tool="help">
       Ver rutas de ayuda →
     </button>
+
   </div>
 
   <div class="helpCards">
@@ -534,6 +680,7 @@
   <h2>Frases para llevar contigo</h2>
 
   <div class="quotes">
+
     <blockquote>
       “Mis límites merecen respeto.”
     </blockquote>
@@ -550,8 +697,8 @@
     <blockquote>
       “Mi historia me pertenece.”
     </blockquote>
-  </div>
 
+  </div>
 </section>
 
 </main>
@@ -577,7 +724,7 @@
   ↗ Salir rápido
 </button>
 
-<!-- VENTANA DE HERRAMIENTAS -->
+<!-- MODAL PRINCIPAL -->
 
 <div class="backdrop" id="backdrop" hidden>
   <section
@@ -598,87 +745,194 @@
 
 <div id="toast" class="toast" role="status"></div>
 
-<!-- FLOR FLOTANTE -->
+<!-- =====================================
+     VIO: ASISTENTE INTERACTIVA
+===================================== -->
 
-<div id="florWidget">
+<div id="vioWidget">
+
+  <!-- VIO CAMINANDO -->
+
+  <div id="vioMover">
+
+    <button
+      id="vioButton"
+      type="button"
+      aria-label="Hablar con Vio"
+      aria-expanded="false"
+      aria-controls="vioChat"
+    >
+      <span id="vioLabel">¡Soy Vio! 💜</span>
+
+      <img
+        src="assets/flor-mascota.png"
+        alt=""
+      >
+    </button>
+
+  </div>
+
+  <!-- CHAT DE VIO -->
 
   <section
-    id="florChat"
+    id="vioChat"
     role="dialog"
-    aria-label="Asistente Flor"
+    aria-label="Vio, tu guía violeta"
     hidden
   >
-    <button
-      id="florClose"
-      type="button"
-      aria-label="Cerrar asistente"
-    >×</button>
 
-    <h3>🌷 ¡Hola! Soy Flor</h3>
+    <div class="vioHeader">
+
+      <img
+        src="assets/flor-mascota.png"
+        alt=""
+      >
+
+      <div>
+        <h3>¡Hola! Soy Vio 🌷</h3>
+        <p>Tu guía de Código Violeta</p>
+      </div>
+
+      <button
+        id="vioClose"
+        type="button"
+        aria-label="Cerrar asistente"
+      >×</button>
+
+    </div>
 
     <p>
-      Soy tu guía de Código Violeta.
-      ¿Qué te gustaría hacer?
+      ¡Hola! Estoy aquí para ayudarte a explorar
+      Código Violeta. ¿Qué te gustaría hacer?
     </p>
 
-    <button class="florOption" data-flor="route">
+    <button class="vioOption" data-vio="route">
       📚 Empezar mi ruta
     </button>
 
-    <button class="florOption" data-flor="progress">
+    <button class="vioOption" data-vio="progress">
       📊 Ver mi progreso
     </button>
 
-    <button class="florOption" data-flor="quiz">
+    <button class="vioOption" data-vio="quiz">
       🧠 Hacer mi evaluación
     </button>
 
-    <button class="florOption" data-flor="simulator">
+    <button class="vioOption" data-vio="simulator">
       🎭 Practicar decisiones
     </button>
 
-    <button class="florOption" data-flor="help">
+    <button class="vioOption" data-vio="help">
       💜 Necesito orientación
     </button>
 
-    <div id="florReply" aria-live="polite">
-      Elige una opción para comenzar. 💜
+    <div id="vioReply" aria-live="polite">
+      Elige una opción y te acompaño. 💜
     </div>
+
+    <div class="vioControls">
+
+      <button id="vioVoice" type="button" aria-pressed="false">
+        🔇 Activar voz
+      </button>
+
+      <button id="vioSpeak" type="button">
+        🔊 Escuchar mensaje
+      </button>
+
+    </div>
+
+    <p id="vioStatus" role="status">
+      La voz está desactivada.
+    </p>
 
   </section>
 
-  <button
-    id="florButton"
-    type="button"
-    aria-label="Hablar con Flor"
-    aria-expanded="false"
-    aria-controls="florChat"
-  >
-    <img
-      src="assets/flor-mascota.png"
-      alt=""
-    >
-  </button>
-
 </div>
 
-<!-- FUNCIONES PRINCIPALES -->
+<!-- JAVASCRIPT ORIGINAL -->
 
 <script src="js/app.js"></script>
 
-<!-- FUNCIONAMIENTO DE FLOR -->
+<!-- JAVASCRIPT DE VIO -->
 
 <script>
 (() => {
+  "use strict";
 
-  const button = document.getElementById("florButton");
-  const portada = document.getElementById("florPortada");
-  const chat = document.getElementById("florChat");
-  const close = document.getElementById("florClose");
-  const reply = document.getElementById("florReply");
+  const button = document.getElementById("vioButton");
+  const portada = document.getElementById("vioPortada");
+  const mover = document.getElementById("vioMover");
+  const chat = document.getElementById("vioChat");
+  const closeButton = document.getElementById("vioClose");
+  const reply = document.getElementById("vioReply");
+  const voiceButton = document.getElementById("vioVoice");
+  const speakButton = document.getElementById("vioSpeak");
+  const status = document.getElementById("vioStatus");
+
+  let voiceEnabled = false;
+
+  const speechSupported =
+    "speechSynthesis" in window &&
+    "SpeechSynthesisUtterance" in window;
+
+  const welcome =
+    "¡Hola! Soy Vio, tu guía violeta. " +
+    "Estoy aquí para ayudarte a explorar Código Violeta. " +
+    "¿Qué te gustaría hacer?";
+
+  const messages = {
+    route:
+      "¡Vamos! Te llevaré a los cuatro módulos educativos.",
+
+    progress:
+      "Aquí puedes revisar los módulos que has completado.",
+
+    quiz:
+      "Vamos a comprobar lo que has aprendido.",
+
+    simulator:
+      "Practiquemos decisiones con situaciones ficticias.",
+
+    help:
+      "Te mostraré las rutas de orientación disponibles en Perú."
+  };
+
+  function stopSpeaking() {
+    if (speechSupported) {
+      window.speechSynthesis.cancel();
+    }
+  }
+
+  function speak(message, force = false) {
+    if (!speechSupported) return;
+    if (!voiceEnabled && !force) return;
+
+    stopSpeaking();
+
+    const utterance = new SpeechSynthesisUtterance(message);
+
+    utterance.lang = "es-PE";
+    utterance.rate = 0.94;
+    utterance.pitch = 1.12;
+    utterance.volume = 0.9;
+
+    const voices = window.speechSynthesis.getVoices();
+
+    const spanishVoice =
+      voices.find(v => v.lang.toLowerCase() === "es-pe") ||
+      voices.find(v => v.lang.toLowerCase().startsWith("es"));
+
+    if (spanishVoice) {
+      utterance.voice = spanishVoice;
+    }
+
+    window.speechSynthesis.speak(utterance);
+  }
 
   function toggle(open) {
     chat.hidden = !open;
+    mover.classList.toggle("paused", open);
 
     button.setAttribute(
       "aria-expanded",
@@ -686,27 +940,23 @@
     );
 
     if (open) {
-      close.focus();
+      closeButton.focus();
+      speak(welcome);
     } else {
+      stopSpeaking();
       button.focus();
     }
   }
-
-  // FLOR FLOTANTE
 
   button.addEventListener("click", () => {
     toggle(chat.hidden);
   });
 
-  // FLOR DE LA PORTADA
-
   portada.addEventListener("click", () => {
     toggle(true);
   });
 
-  // CERRAR CHAT
-
-  close.addEventListener("click", () => {
+  closeButton.addEventListener("click", () => {
     toggle(false);
   });
 
@@ -716,26 +966,43 @@
     }
   });
 
-  // MENSAJES DE FLOR
+  /* ACTIVAR Y DESACTIVAR VOZ */
 
-  const messages = {
-    route:
-      "¡Vamos! Te llevaré a los cuatro módulos educativos.",
+  if (!speechSupported) {
+    voiceButton.disabled = true;
+    speakButton.disabled = true;
+    status.textContent =
+      "La voz no está disponible en este navegador.";
+  } else {
+    voiceButton.addEventListener("click", () => {
+      voiceEnabled = !voiceEnabled;
 
-    progress:
-      "Aquí puedes revisar tus módulos completados.",
+      voiceButton.textContent = voiceEnabled
+        ? "🔊 Desactivar voz"
+        : "🔇 Activar voz";
 
-    quiz:
-      "Vamos a comprobar lo que has aprendido.",
+      voiceButton.setAttribute(
+        "aria-pressed",
+        String(voiceEnabled)
+      );
 
-    simulator:
-      "Practiquemos con historias ficticias.",
+      status.textContent = voiceEnabled
+        ? "Voz activada."
+        : "La voz está desactivada.";
 
-    help:
-      "Te mostraré recursos de orientación disponibles en Perú."
-  };
+      if (voiceEnabled) {
+        speak(welcome);
+      } else {
+        stopSpeaking();
+      }
+    });
 
-  // DESTINOS
+    speakButton.addEventListener("click", () => {
+      speak(reply.textContent.trim(), true);
+    });
+  }
+
+  /* DESTINOS */
 
   const targets = {
     route: "#ruta",
@@ -745,25 +1012,18 @@
     help: '[data-tool="help"]'
   };
 
-  // INTERACCIONES
-
-  document.querySelectorAll("[data-flor]").forEach(option => {
-
+  document.querySelectorAll("[data-vio]").forEach(option => {
     option.addEventListener("click", () => {
 
-      const action = option.dataset.flor;
+      const action = option.dataset.vio;
 
       let target = document.querySelector(
         targets[action]
       );
 
-      // ALTERNATIVA SI NO EXISTE PANEL NUEVO
-
       if (!target && action === "progress") {
         target = document.querySelector(".progress");
       }
-
-      // ALTERNATIVA SI NO EXISTE SIMULADOR NUEVO
 
       if (!target && action === "simulator") {
         target = document.querySelector(
@@ -774,29 +1034,54 @@
       if (!target) {
         reply.textContent =
           "Esta opción todavía no está disponible.";
+
+        speak(reply.textContent);
         return;
       }
 
       reply.textContent = messages[action];
+      speak(messages[action]);
 
-      toggle(false);
+      /* NAVEGACIÓN */
 
-      if (
-        action === "route" ||
-        action === "progress"
-      ) {
+      if (action === "route" || action === "progress") {
+
+        chat.hidden = true;
+        mover.classList.remove("paused");
+        button.setAttribute("aria-expanded", "false");
+
+        const reduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+
         target.scrollIntoView({
-          behavior: window.matchMedia(
-            "(prefers-reduced-motion: reduce)"
-          ).matches ? "auto" : "smooth"
+          behavior: reduced ? "auto" : "smooth"
         });
 
       } else {
+
+        chat.hidden = true;
+        mover.classList.remove("paused");
+        button.setAttribute("aria-expanded", "false");
+
         target.click();
       }
 
     });
+  });
 
+  /* NO REPRODUCIR VOZ AL SALIR */
+
+  ["exit", "exit2"].forEach(id => {
+    const element = document.getElementById(id);
+
+    if (element) {
+      element.addEventListener("click", () => {
+        stopSpeaking();
+        chat.hidden = true;
+        mover.classList.remove("paused");
+      });
+    }
   });
 
 })();
