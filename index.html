@@ -112,6 +112,191 @@
   }
 </style>
 
+<style>
+  /* JARDÍN DE LOGROS VIOLETA */
+  #jardin-violeta {
+    background: linear-gradient(
+      145deg, #f9f1ff, #f3e5ff, #fff6fb
+    );
+    color: #351451;
+  }
+
+  .jardin-encabezado {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 28px;
+  }
+
+  .jardin-encabezado h2 {
+    color: #65248d;
+  }
+
+  .jardin-encabezado p {
+    line-height: 1.7;
+  }
+
+  .jardin-panel {
+    max-width: 950px;
+    margin: auto;
+    padding: 28px;
+    background: white;
+    border-radius: 26px;
+    border: 1px solid #e6d1f4;
+    box-shadow: 0 12px 35px rgba(72,25,98,.09);
+  }
+
+  .jardin-progreso {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  #jardinPorcentaje {
+    font-size: 30px;
+    color: #722ba4;
+  }
+
+  #jardinEstado {
+    font-size: 14px;
+    color: #654a76;
+  }
+
+  .jardin-barra {
+    height: 13px;
+    background: #ebddf5;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 30px;
+  }
+
+  #jardinBarra {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg,#ae6bd4,#6e29a4);
+    border-radius: 20px;
+    transition: width .5s ease;
+  }
+
+  .jardin-flores {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 14px;
+  }
+
+  .jardin-flor {
+    text-align: center;
+    padding: 22px 12px;
+    border: 1px solid #e5d6ee;
+    border-radius: 20px;
+    background: #faf6fd;
+    transition: transform .3s ease,background .3s ease;
+  }
+
+  .jardin-flor span {
+    display: block;
+    font-size: 55px;
+    margin-bottom: 14px;
+  }
+
+  .jardin-flor b {
+    display: block;
+    color: #4b2565;
+    font-size: 14px;
+    min-height: 38px;
+  }
+
+  .jardin-flor small {
+    display: block;
+    margin-top: 10px;
+    color: #765f87;
+  }
+
+  .jardin-flor.desbloqueada {
+    background: #f2e1ff;
+    border-color: #b47cdb;
+  }
+
+  .jardin-flor.desbloqueada span {
+    animation: jardinFlorecer .6s ease;
+  }
+
+  @keyframes jardinFlorecer {
+    0% { transform: scale(.6); opacity: .4; }
+    70% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .jardin-mensaje {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 26px;
+    padding: 14px 18px;
+    background: #f6edff;
+    border-radius: 18px;
+  }
+
+  .jardin-mensaje img {
+    width: 65px;
+    height: 70px;
+    object-fit: contain;
+  }
+
+  .jardin-mensaje p {
+    margin: 0;
+    line-height: 1.6;
+    color: #512374;
+  }
+
+  .jardin-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 25px;
+  }
+
+  .jardin-boton,
+  #jardinReconocimiento {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 18px;
+    border: 0;
+    border-radius: 13px;
+    background: #722ba4;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  #jardinReconocimiento:disabled {
+    background: #d8c5e4;
+    color: #604d6e;
+    cursor: not-allowed;
+  }
+
+  @media(max-width:650px) {
+    .jardin-panel { padding: 16px; }
+    .jardin-flores {
+      grid-template-columns: repeat(2,minmax(0,1fr));
+    }
+    .jardin-flor span { font-size: 42px; }
+    .jardin-progreso {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media(prefers-reduced-motion:reduce) {
+    #jardinBarra { transition: none; }
+    .jardin-flor.desbloqueada span { animation: none; }
+  }
+</style>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -442,6 +627,75 @@
     </section>
 
     <!-- RUTA EDUCATIVA -->
+    
+<!-- JARDÍN DE LOGROS VIOLETA -->
+<section class="section" id="jardin-violeta">
+  <div class="jardin-encabezado">
+    <small>✦ TUS LOGROS FLORECEN</small>
+    <h2>🌷 Mi Jardín Violeta</h2>
+    <p>
+      Cada módulo completado hace florecer una planta.
+      Aprende a tu ritmo y descubre cómo crece tu jardín.
+    </p>
+  </div>
+
+  <div class="jardin-panel">
+    <div class="jardin-progreso">
+      <strong id="jardinPorcentaje">0%</strong>
+      <span id="jardinEstado">Tu jardín está comenzando.</span>
+    </div>
+
+    <div class="jardin-barra"
+         role="progressbar"
+         aria-label="Progreso del Jardín Violeta"
+         aria-valuemin="0"
+         aria-valuemax="100"
+         aria-valuenow="0">
+      <div id="jardinBarra"></div>
+    </div>
+
+    <div class="jardin-flores" id="jardinFlores">
+      <div class="jardin-flor">
+        <span>🌱</span>
+        <b>Reconoce las señales</b>
+        <small>Pendiente</small>
+      </div>
+      <div class="jardin-flor">
+        <span>🌱</span>
+        <b>Escudo Digital</b>
+        <small>Pendiente</small>
+      </div>
+      <div class="jardin-flor">
+        <span>🌱</span>
+        <b>Mi voz pone límites</b>
+        <small>Pendiente</small>
+      </div>
+      <div class="jardin-flor">
+        <span>🌱</span>
+        <b>Activa tu red</b>
+        <small>Pendiente</small>
+      </div>
+    </div>
+
+    <div class="jardin-mensaje" aria-live="polite">
+      <img src="assets/flor-mascota.png" alt="Vio">
+      <p id="jardinMensaje">
+        ¡Hola! Soy Vio. Cada paso que das
+        ayuda a que tu jardín florezca. 💜
+      </p>
+    </div>
+
+    <div class="jardin-acciones">
+      <a href="#ruta" class="jardin-boton">
+        🌱 Continuar aprendiendo
+      </a>
+      <button id="jardinReconocimiento" type="button" disabled>
+        🏆 Ver mi reconocimiento
+      </button>
+    </div>
+  </div>
+</section>
+
     <section class="section" id="ruta">
       <small>✦ TU CAMINO, A TU RITMO</small>
       <h2>Ruta Código Violeta</h2>
