@@ -347,6 +347,18 @@
       document.getElementById("jardinReconocimiento");
 
     reconocimiento.disabled = completados !== 4;
+    jardin.classList.toggle("cv-garden-complete", completados===4);
+    let celebration = document.getElementById("cvGardenCelebration");
+    if (!celebration) {
+      celebration = document.createElement("p");
+      celebration.id = "cvGardenCelebration";
+      celebration.setAttribute("role","status");
+      jardin.appendChild(celebration);
+    }
+    celebration.textContent = completados===4
+      ? "🌺 🌷 🌸 🌻 ¡Tu jardín floreció! Completaste los 20 casos educativos. Vio te invita a seguir practicando."
+      : "🌱 Cada módulo completado hace florecer una nueva planta. ¡Continúa a tu ritmo!";
+
   }
 
   
@@ -660,20 +672,33 @@
         <hr style="border:0;border-top:1px solid #dbc5ed;margin:18px 0">
         <p><b>Evaluación inicial:</b> ${initial && Number.isInteger(initial.score) ? initial.score + "/10" : "Pendiente"}</p>
         <p><b>Evaluación final:</b> ${final && Number.isInteger(final.score) ? final.score + "/10" : allDone() ? "Disponible" : "Bloqueada hasta completar los módulos"}</p>
+        <div class="cv-badges" aria-label="Insignias educativas">
+          ${IDS.map((id,i)=>`<div class="cv-badge ${state[id]?"earned":""}"><span aria-hidden="true">${["🌹","🔐","🗣️","🤝"][i]}</span><b>${["Detective de señales","Guardiana digital","Voz con límites","Tejedora de redes"][i]}</b><small>${state[id]?"Conseguida":"Por descubrir"}</small></div>`).join("")}
+        </div>
+        <div class="cv-next-tip" role="status">
+          <b>💡 Tu siguiente paso</b>
+          <p>${!initial?"Comienza con la evaluación inicial para conocer tu punto de partida.":!allDone()?"Continúa con «"+mods[IDS.find(id=>!state[id])].title+"» y descubre más situaciones educativas.":!final?"¡Ya completaste los módulos! Haz la evaluación final para comparar tus conocimientos.":"¡Excelente! Puedes repasar módulos, explorar la biblioteca y practicar conversaciones."}</p>
+        </div>
         <button id="dashboardNext" class="action">
-          ${!initial ? "Hacer evaluación inicial" : !allDone() ? "Continuar mi ruta →" : "Ver evaluación final →"}
+          ${!initial ? "Hacer evaluación inicial" : !allDone() ? "Continuar mi ruta →" : final?"Revisar mi ruta →":"Hacer evaluación final →"}
         </button>
+        <button id="dashboardGarden" class="action cv-secondary-action" type="button">🌷 Ver mi jardín</button>
+        <button id="dashboardLibrary" class="action cv-secondary-action" type="button">📚 Buscar recursos</button>
       </div>
     `;
 
     $("#dashboardNext").onclick = () => {
-      if (!initial || allDone()) {
+      if (!initial || (allDone() && !final)) {
         tool("quiz");
-      } else {
+      } else if (!allDone()) {
         const next = IDS.find(id => !state[id]);
         runModule(next);
+      } else {
+        $("#jardin-violeta").scrollIntoView({behavior:"smooth"});
       }
     };
+    $("#dashboardGarden").onclick = () => $("#jardin-violeta").scrollIntoView({behavior:"smooth"});
+    $("#dashboardLibrary").onclick = () => library();
   }
 
   // =====================================
@@ -1179,53 +1204,50 @@ h1{font-family:Georgia,serif;font-size:38px;line-height:1.2;color:#44145e;margin
 
   function plan() {
     modal(`
-      <small>PLAN PERSONAL · NO SE ENVÍA A SERVIDORES</small>
-      <h2 id="modalTitle">💜 Mi Código Violeta</h2>
-      <p>Escribe solo información que sea seguro conservar.</p>
-      <form id="planForm">
-        ${[
-          ["p1","Persona de confianza 1"],
-          ["p2","Persona de confianza 2"],
-          ["p3","Persona de confianza 3"],
-          ["word","Palabra clave"],
-          ["route","Servicio o lugar seguro"]
-        ].map(([key,label]) => `
-          <div class="field"><label>${label}</label><input name="${key}"></div>
-        `).join("")}
-        <div class="field">
-          <label>Frase o límite que quiero recordar</label>
-          <textarea name="limit"></textarea>
-        </div>
-        <button class="action">Preparar documento imprimible</button>
+      <small>🛡️ PLAN PERSONAL DE APOYO · PRIVADO</small>
+      <h2 id="modalTitle">Mi plan de apoyo</h2>
+      <p>Esta herramienta no guarda ni envía tus respuestas. No escribas contraseñas, direcciones ni información que pueda ponerte en riesgo.</p>
+      <form id="planForm" autocomplete="off">
+        <div class="field"><label for="cvPlanTrusted">¿A qué persona de confianza puedo acudir? (opcional)</label>
+          <input id="cvPlanTrusted" name="trusted" maxlength="100" placeholder="Nombre o relación, sin datos de contacto"></div>
+        <div class="field"><label for="cvPlanService">¿Qué servicio oficial puedo consultar?</label>
+          <select id="cvPlanService" name="service">
+            <option>Línea 100 — orientación sobre violencia</option>
+            <option>Policía 105 — emergencias</option>
+            <option>Salud 113, opción 5 — orientación en salud mental</option>
+            <option>Centro Emergencia Mujer y Familia</option>
+            <option>Otro servicio oficial que conozca</option>
+          </select></div>
+        <fieldset class="cv-plan-checks"><legend><b>Acciones que puedo considerar</b></legend>
+          <label><input type="checkbox" name="steps" value="Hablar con una persona de confianza"> Hablar con alguien de confianza</label>
+          <label><input type="checkbox" name="steps" value="Revisar recursos oficiales"> Revisar recursos oficiales</label>
+          <label><input type="checkbox" name="steps" value="Priorizar mi privacidad digital"> Priorizar mi privacidad digital</label>
+          <label><input type="checkbox" name="steps" value="Buscar orientación profesional"> Buscar orientación profesional</label>
+        </fieldset>
+        <div class="field"><label for="cvPlanNote">Algo que quiero recordar (opcional)</label>
+          <textarea id="cvPlanNote" name="note" maxlength="250" rows="3" placeholder="Ej.: Tengo derecho a pedir orientación"></textarea></div>
+        <label class="cv-plan-confirm"><input type="checkbox" id="cvPlanSafe"> Confirmo que es seguro abrir un documento imprimible en este dispositivo.</label>
+        <button class="action" id="cvPlanPrint" type="submit" disabled>🖨️ Crear versión para imprimir / guardar como PDF</button>
       </form>
-      <p><small>Guarda o imprime el documento solo si es seguro hacerlo.</small></p>
+      <p><small>Guardar un PDF o imprimir puede dejar rastros en el dispositivo. Puedes cerrar esta ventana sin guardar nada. Si hay peligro inmediato, contacta los servicios de emergencia.</small></p>
     `);
-
-    $("#planForm").onsubmit = e => {
+    $("#cvPlanSafe").onchange=e=>$("#cvPlanPrint").disabled=!e.target.checked;
+    $("#planForm").onsubmit=e=>{
       e.preventDefault();
-      const data = Object.fromEntries(new FormData(e.target));
-      const fields = [
-        ["Persona de confianza 1",data.p1],
-        ["Persona de confianza 2",data.p2],
-        ["Persona de confianza 3",data.p3],
-        ["Palabra clave",data.word],
-        ["Servicio o lugar seguro",data.route],
-        ["Mi frase o límite",data.limit]
-      ];
-      const w = window.open("", "_blank");
-      if (!w) return toast("Permite ventanas emergentes.");
-      w.document.write(`
-        <meta charset="utf-8"><title>Mi Código Violeta</title>
-        <style>body{font:17px Arial;max-width:750px;margin:40px auto;color:#36134f}section{border:1px solid #ddd;padding:12px;margin:12px 0}</style>
-        <h1>💜 Mi Código Violeta</h1>
-        ${fields.map(([label,value]) => `
-          <section><b>${label}</b><p>${esc(value || "No completado")}</p></section>
-        `).join("")}
-        <p>Conserva este documento solo si es seguro.</p>
-      `);
-      w.document.close();
-      w.focus();
-      w.print();
+      const data=new FormData(e.target);
+      const steps=data.getAll("steps");
+      const doc=`<!doctype html><html lang="es"><head><meta charset="utf-8"><title>Mi plan de apoyo · Código Violeta</title>
+        <style>body{font:16px Arial,sans-serif;color:#391952;max-width:800px;margin:35px auto;padding:20px}h1{color:#7433a5}section{border:1px solid #d9bfe9;border-radius:12px;padding:14px;margin:14px 0}button{background:#7533a5;color:#fff;border:0;border-radius:8px;padding:12px 20px}@media print{button{display:none}}</style></head><body>
+        <button onclick="window.print()">Imprimir o guardar como PDF</button>
+        <h1>💜 Mi plan de apoyo</h1><p>Documento personal, no enviado a ningún servidor.</p>
+        <section><b>Persona de confianza:</b><p>${esc(data.get("trusted")||"No indicada")}</p></section>
+        <section><b>Servicio para consultar:</b><p>${esc(data.get("service"))}</p></section>
+        <section><b>Acciones a considerar:</b><ul>${steps.length?steps.map(x=>`<li>${esc(x)}</li>`).join(""):"<li>Por definir</li>"}</ul></section>
+        <section><b>Recordatorio personal:</b><p>${esc(data.get("note")||"No indicado")}</p></section>
+        <p>Conserva o elimina este documento según lo que sea seguro para ti. En emergencias, llama al 105.</p></body></html>`;
+      const w=window.open("","_blank");
+      if(!w){toast("El navegador bloqueó la ventana. Permite ventanas emergentes si es seguro.");return;}
+      w.document.open();w.document.write(doc);w.document.close();w.focus();
     };
   }
 
@@ -1308,23 +1330,54 @@ h1{font-family:Georgia,serif;font-size:38px;line-height:1.2;color:#44145e;margin
     `);
   }
 
+  const cvLibraryItems = [
+    {title:"Reconocer señales de control",category:"Relaciones",tag:"Señales",summary:"Diferencia entre cuidado, respeto y conductas de vigilancia.",body:"El respeto incluye libertad para mantener amistades, privacidad y decisiones propias. Exigir contraseñas, vigilar constantemente o aislar a alguien son señales que merecen atención."},
+    {title:"Límites y consentimiento",category:"Relaciones",tag:"Límites",summary:"Frases prácticas para expresar decisiones sin culpa.",body:"Puedes decir: «No quiero compartir esa información», «Necesito tiempo para decidir» o «Prefiero hablar en otro momento». Si expresar un límite puede ponerte en peligro, prioriza buscar apoyo."},
+    {title:"Protege tus cuentas",category:"Digital",tag:"Privacidad",summary:"Contraseñas únicas y verificación en dos pasos.",body:"Usa contraseñas distintas, activa la verificación en dos pasos y no compartas códigos recibidos por SMS o aplicaciones. Revisa las sesiones activas cuando sea seguro."},
+    {title:"Detectar suplantación de identidad",category:"Digital",tag:"Fraudes",summary:"Qué observar ante cuentas falsas y mensajes sospechosos.",body:"Verifica por un canal independiente. Evita enviar dinero, contraseñas, códigos o documentos a personas desconocidas. Usa las opciones de reporte de la plataforma."},
+    {title:"Acompañar sin juzgar",category:"Redes de apoyo",tag:"Escucha",summary:"Cómo apoyar a alguien que busca orientación.",body:"Escucha, pregunta qué necesita y ofrece acompañamiento sin divulgar su historia. Evita tomar decisiones por esa persona. Si hay peligro inmediato, contacta servicios de emergencia."},
+    {title:"Rutas de ayuda en Perú",category:"Redes de apoyo",tag:"Servicios",summary:"Dónde encontrar orientación y servicios oficiales.",body:"Línea 100: orientación sobre violencia. Policía 105: emergencias. Línea 113, opción 5: orientación en salud mental. Consulta el directorio de Código Violeta para enlaces oficiales."},
+    {title:"Glosario: autonomía",category:"Glosario",tag:"Conceptos",summary:"Qué significa decidir sobre tu propia vida.",body:"Autonomía es la capacidad y el derecho de participar en decisiones sobre tu vida, tus relaciones y tu información personal."},
+    {title:"Glosario: privacidad digital",category:"Glosario",tag:"Conceptos",summary:"El derecho a controlar tus datos personales.",body:"La privacidad digital se refiere al control sobre quién accede a tus cuentas, mensajes, ubicación, fotografías y demás información."},
+    {title:"Glosario: red de apoyo",category:"Glosario",tag:"Conceptos",summary:"Personas y servicios a los que puedes acudir.",body:"Una red de apoyo puede incluir personas de confianza y servicios profesionales que escuchan, orientan y acompañan sin juzgar."}
+  ];
+
   function library() {
-    const phrases = [
-      "Mi privacidad merece respeto.",
-      "Puedo expresar mis límites.",
-      "Puedo cambiar de opinión.",
-      "Merezco relaciones basadas en respeto.",
-      "Pedir apoyo es una decisión válida.",
-      "Mi historia me pertenece."
-    ];
+    let category = "Todos";
+    let query = "";
     modal(`
-      <h2 id="modalTitle">📚 Biblioteca violeta</h2>
-      <div class="quotes">
-        ${phrases.map(p => `<blockquote>${esc(p)}</blockquote>`).join("")}
+      <small>📚 BIBLIOTECA VIOLETA 2.0</small>
+      <h2 id="modalTitle">Aprende y encuentra recursos</h2>
+      <p>Busca conceptos, recomendaciones y rutas de orientación. Los textos son educativos y no sustituyen asesoramiento profesional.</p>
+      <label for="cvLibrarySearch"><b>Buscar un tema</b></label>
+      <input id="cvLibrarySearch" class="cv-library-search" type="search" placeholder="Ej.: contraseñas, límites, ayuda" autocomplete="off">
+      <div class="cv-library-filters" role="group" aria-label="Filtrar recursos">
+        ${["Todos","Relaciones","Digital","Redes de apoyo","Glosario"].map(c=>`<button type="button" class="cv-library-filter" data-category="${esc(c)}" aria-pressed="${c==="Todos"}">${esc(c)}</button>`).join("")}
       </div>
-      <button class="action" id="printLibrary">Imprimir frases</button>
+      <p id="cvLibraryCount" role="status"></p>
+      <div id="cvLibraryResults" class="cv-library-results"></div>
+      <button class="action cv-secondary-action" type="button" id="cvLibraryHelp">💜 Abrir directorio de ayuda</button>
     `);
-    $("#printLibrary").onclick = () => window.print();
+    function render() {
+      const term = query.toLocaleLowerCase("es").trim();
+      const items = cvLibraryItems.filter(x =>
+        (category==="Todos" || x.category===category) &&
+        [x.title,x.category,x.tag,x.summary,x.body].join(" ").toLocaleLowerCase("es").includes(term)
+      );
+      $("#cvLibraryCount").textContent = items.length+" recurso(s) encontrado(s)";
+      $("#cvLibraryResults").innerHTML = items.length
+        ? items.map(x=>`<article class="cv-library-card">
+          <small>${esc(x.category)} · ${esc(x.tag)}</small>
+          <h3>${esc(x.title)}</h3><p>${esc(x.summary)}</p>
+          <details><summary>Leer explicación</summary><p>${esc(x.body)}</p></details>
+        </article>`).join("")
+        : '<p>No encontramos recursos con ese término. Prueba con otra palabra.</p>';
+      $$(".cv-library-filter").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.category===category)));
+    }
+    $("#cvLibrarySearch").oninput = e => {query=e.target.value;render();};
+    $$(".cv-library-filter").forEach(b=>b.onclick=()=>{category=b.dataset.category;render();});
+    $("#cvLibraryHelp").onclick=()=>help();
+    render();
   }
 
   function stories() {
@@ -1343,10 +1396,66 @@ h1{font-family:Georgia,serif;font-size:38px;line-height:1.2;color:#44145e;margin
     `);
   }
 
+  const cvDecisionStories = [
+    {title:"Una amistad te pide un secreto",context:"Una persona quiere que le compartas la contraseña de otra amiga.",options:[
+      {label:"Decir que no y respetar la privacidad de mi amiga.",next:1,feedback:"Respetar la privacidad de otras personas es una decisión responsable."},
+      {label:"Compartirla para evitar problemas.",next:2,feedback:"Compartir contraseñas ajenas vulnera la privacidad y puede generar daños."}]},
+    {title:"Te presionan para cambiar de opinión",context:"La persona insiste y te dice que, si no accedes, dejará de hablarte.",options:[
+      {label:"Mantener mi decisión y hablar con alguien de confianza.",next:3,feedback:"Buscar apoyo y mantener límites puede ser útil, siempre que hacerlo sea seguro."},
+      {label:"Aceptar para que no se moleste.",next:4,feedback:"La presión emocional no convierte una petición en una obligación."}]},
+    {title:"La cuenta queda expuesta",context:"Después de compartir una clave, la cuenta podría estar en riesgo.",options:[
+      {label:"Avisar a la persona afectada y recomendar canales oficiales.",next:3,feedback:"Informar sin difundir la clave y buscar orientación puede ayudar."},
+      {label:"Ignorar la situación.",next:4,feedback:"Ignorar una posible exposición puede dejar a la persona sin información para proteger su cuenta."}]},
+    {title:"Una red de apoyo",context:"Tu amiga te agradece que hayas respetado sus decisiones.",options:[
+      {label:"Revisar recursos sobre privacidad y apoyo.",next:-1,feedback:"¡Buen cierre! La confianza se construye respetando límites y decisiones."},
+      {label:"Volver a practicar otro camino.",next:0,feedback:"Explorar otras rutas ayuda a comprender mejor las consecuencias."}]},
+    {title:"Aprender de una elección",context:"Puedes revisar lo ocurrido y elegir una alternativa diferente.",options:[
+      {label:"Repetir la historia y explorar otro camino.",next:0,feedback:"Equivocarse en una simulación también es parte del aprendizaje."},
+      {label:"Finalizar y consultar recursos educativos.",next:-1,feedback:"Reflexionar sobre las decisiones permite aplicar lo aprendido."}]}
+  ];
+
+  function decisionLab() {
+    let current=0, steps=0;
+    function show() {
+      const scene=cvDecisionStories[current];
+      modal(`
+        <small>🧭 LABORATORIO DE DECISIONES · HISTORIA FICTICIA</small>
+        <h2 id="modalTitle">${esc(scene.title)}</h2>
+        <p>${esc(scene.context)}</p>
+        <p><b>¿Qué harías?</b></p>
+        <div class="cv-lab-options">
+          ${scene.options.map((o,i)=>`<button type="button" class="cv-lab-choice" data-lab="${i}">${esc(o.label)}</button>`).join("")}
+        </div>
+        <div id="cvLabFeedback" aria-live="polite"></div>
+        <p class="cv-chat-note">Las historias son educativas. En situaciones reales, prioriza tu seguridad y busca apoyo confiable.</p>
+      `);
+      $$("[data-lab]").forEach(b=>b.onclick=()=>{
+        const opt=scene.options[Number(b.dataset.lab)];
+        steps++;
+        $$(".cv-lab-choice").forEach(el=>el.disabled=true);
+        $("#cvLabFeedback").innerHTML=`<div class="feedback good"><b>💜 Reflexionemos</b><p>${esc(opt.feedback)}</p></div>
+          <button class="action" id="cvLabNext">${opt.next===-1 || steps>=8?"Ver cierre":"Continuar historia →"}</button>`;
+        $("#cvLabNext").onclick=()=>{
+          if(opt.next===-1 || steps>=8)finish();
+          else {current=opt.next;show();}
+        };
+      });
+    }
+    function finish(){
+      modal(`<h2 id="modalTitle">🌷 ¡Completaste el laboratorio!</h2>
+        <p>Exploraste ${steps} decisiones en una historia ficticia. No hay una puntuación: el objetivo es reflexionar y aprender.</p>
+        <button class="action" id="cvLabAgain">↻ Explorar otra ruta</button>
+        <button class="action cv-secondary-action" id="cvLabResources">📚 Abrir biblioteca</button>`);
+      $("#cvLabAgain").onclick=decisionLab;
+      $("#cvLabResources").onclick=library;
+    }
+    show();
+  }
+
   function tool(name) {
     const actions = {
       quiz, simulator, help, certificate,
-      plan, offer, chat, evidence, library, stories
+      plan, offer, chat, evidence, library, stories, decisionLab
     };
     if (actions[name]) actions[name]();
   }
@@ -1377,7 +1486,9 @@ h1{font-family:Georgia,serif;font-size:38px;line-height:1.2;color:#44145e;margin
 
   if (grid) {
     const newTools = [
-      ["dashboard","📊","Mi panel de progreso","Revisa módulos y evaluaciones."]
+      ["dashboard","📊","Mi espacio Violeta","Insignias, resultados y siguiente paso."],
+      ["decisionLab","🧭","Laboratorio de decisiones","Explora historias con distintos caminos."],
+      ["library","🔎","Biblioteca con buscador","Encuentra temas, guías y glosario."]
     ];
 
     newTools.forEach(([id,icon,title,description]) => {
@@ -1515,6 +1626,88 @@ h1{font-family:Georgia,serif;font-size:38px;line-height:1.2;color:#44145e;margin
       certificate();
     });
   }
+
+  // Preferencias accesibles. Solo se guarda el tamaño y contraste elegidos.
+  const CV_A11Y="cv-accessibility-v2";
+  const a11y=read(CV_A11Y,{size:100,contrast:false,motion:false});
+  const a11yPanel=document.createElement("aside");
+  a11yPanel.id="cvAccessibility";
+  a11yPanel.className="cv-accessibility";
+  a11yPanel.innerHTML=`
+    <button type="button" id="cvA11yToggle" aria-expanded="false" aria-controls="cvA11yOptions">♿ Accesibilidad</button>
+    <div id="cvA11yOptions" hidden>
+      <b>Preferencias de lectura</b>
+      <label for="cvTextSize">Tamaño de texto: <output id="cvTextOutput"></output></label>
+      <input type="range" id="cvTextSize" min="100" max="140" step="10">
+      <label><input type="checkbox" id="cvContrast"> Alto contraste</label>
+      <label><input type="checkbox" id="cvReduceMotion"> Reducir animaciones</label>
+      <button type="button" id="cvA11yReset">Restablecer</button>
+    </div>`;
+  document.body.appendChild(a11yPanel);
+  function applyA11y(){
+    document.documentElement.style.fontSize=(a11y.size||100)+"%";
+    document.body.classList.toggle("cv-high-contrast",!!a11y.contrast);
+    document.body.classList.toggle("cv-reduced-motion",!!a11y.motion);
+    $("#cvTextSize").value=a11y.size||100;
+    $("#cvTextOutput").textContent=(a11y.size||100)+"%";
+    $("#cvContrast").checked=!!a11y.contrast;
+    $("#cvReduceMotion").checked=!!a11y.motion;
+    save(CV_A11Y,a11y);
+  }
+  $("#cvA11yToggle").onclick=()=>{
+    const panel=$("#cvA11yOptions");
+    panel.hidden=!panel.hidden;
+    $("#cvA11yToggle").setAttribute("aria-expanded",String(!panel.hidden));
+  };
+  $("#cvTextSize").oninput=e=>{a11y.size=Number(e.target.value);applyA11y();};
+  $("#cvContrast").onchange=e=>{a11y.contrast=e.target.checked;applyA11y();};
+  $("#cvReduceMotion").onchange=e=>{a11y.motion=e.target.checked;applyA11y();};
+  $("#cvA11yReset").onclick=()=>{a11y.size=100;a11y.contrast=false;a11y.motion=false;applyA11y();};
+  applyA11y();
+
+  const cvNewStyles=document.createElement("style");
+  cvNewStyles.textContent=`
+    .cv-badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px;margin:20px 0}
+    .cv-badge{border:1px solid #ddc7eb;background:#f7f0fa;border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:5px;opacity:.72}
+    .cv-badge.earned{opacity:1;border-color:#a06dc4;background:#efe0fa}
+    .cv-badge span{font-size:1.6rem}.cv-badge small{font-size:.78rem}
+    .cv-next-tip{padding:14px;background:#f3e9fb;border-left:4px solid #8a4cbb;border-radius:10px;margin:18px 0}
+    #cvGardenCelebration{margin-top:16px;text-align:center;font-weight:700;color:#5e2484}
+    .cv-garden-complete .jardin-flor.desbloqueada{animation:cvBloom .65s ease-out both}
+    .cv-garden-complete .jardin-flor.desbloqueada:nth-child(2){animation-delay:.12s}
+    .cv-garden-complete .jardin-flor.desbloqueada:nth-child(3){animation-delay:.24s}
+    .cv-garden-complete .jardin-flor.desbloqueada:nth-child(4){animation-delay:.36s}
+    @keyframes cvBloom{from{transform:scale(.92);opacity:.55}to{transform:scale(1);opacity:1}}
+    .cv-library-search{display:block;width:100%;padding:13px;border-radius:12px;border:1px solid #bba0d4;margin:10px 0}
+    .cv-library-filters{display:flex;flex-wrap:wrap;gap:8px;margin:15px 0}
+    #modalBody .cv-library-filter{border:1px solid #c8a6e2;border-radius:99px;padding:10px 12px;background:#f8efff;color:#542477;cursor:pointer}
+    #modalBody .cv-library-filter[aria-pressed="true"]{background:#6d2e9a;color:white}
+    .cv-library-results{display:grid;gap:12px}
+    .cv-library-card{background:#fff;border:1px solid #dfcbed;padding:16px;border-radius:15px;color:#3c2050}
+    .cv-library-card h3{margin:6px 0}.cv-library-card details{margin-top:12px}.cv-library-card summary{cursor:pointer;font-weight:700}
+    .cv-lab-options{display:grid;gap:10px;margin:15px 0}
+    #modalBody .cv-lab-choice{background:#fff;border:2px solid #d9c2e8;color:#4a2364;text-align:left;border-radius:13px;padding:15px;cursor:pointer;font:inherit}
+    #modalBody .cv-lab-choice:hover{background:#f6eaff;border-color:#7c3baa}
+    #modalBody .cv-lab-choice:disabled{opacity:.7;cursor:default}
+    .cv-plan-checks{border:1px solid #dcc7eb;border-radius:12px;padding:12px;display:grid;gap:10px;margin:15px 0}
+    .cv-plan-checks label,.cv-plan-confirm{display:flex;gap:9px;align-items:flex-start}
+    #modalBody .field select{width:100%;padding:12px;border:1px solid #cbb0e2;border-radius:10px}
+    .cv-accessibility{position:fixed;left:14px;bottom:14px;z-index:5000;max-width:min(340px,calc(100vw - 28px));font:inherit}
+    .cv-accessibility>button{background:#522477;color:white;border:2px solid #fff;padding:11px 14px;border-radius:99px;cursor:pointer;box-shadow:0 3px 16px #31134d55}
+    .cv-accessibility>div{background:white;color:#2e1644;padding:15px;border:2px solid #7a40a8;border-radius:14px;box-shadow:0 5px 30px #32104e44;display:grid;gap:12px;margin-bottom:8px}
+    .cv-accessibility>div[hidden]{display:none}
+    .cv-accessibility label{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+    .cv-accessibility input[type=range]{width:100%}
+    .cv-accessibility #cvA11yReset{padding:9px;border-radius:9px;border:1px solid #ad88c8;background:#f1e3fa;color:#3e1a5c}
+    body.cv-high-contrast{background:#fff!important;color:#181020!important}
+    body.cv-high-contrast .section,body.cv-high-contrast #mi-panel{background:#fff!important;color:#1b0b2a!important}
+    body.cv-high-contrast .cv-badge,body.cv-high-contrast .cv-next-tip{background:#fff!important;color:#1b0b2a!important;border:2px solid #24112d!important}
+    body.cv-high-contrast button:focus-visible,body.cv-high-contrast a:focus-visible{outline:4px solid #ffcc00!important}
+    body.cv-reduced-motion *,body.cv-reduced-motion *::before,body.cv-reduced-motion *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    @media(prefers-reduced-motion:reduce){.cv-garden-complete .jardin-flor.desbloqueada{animation:none}}
+    @media(max-width:600px){.cv-accessibility{left:8px;bottom:8px}.cv-badges{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  `;
+  document.head.appendChild(cvNewStyles);
 
   // =====================================
   // INICIALIZACIÓN DE CÓDIGO VIOLETA
