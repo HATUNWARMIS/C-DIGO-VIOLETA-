@@ -1,3 +1,4 @@
+
 (() => {
   "use strict";
 
@@ -900,37 +901,72 @@
   // =====================================
 
   function help() {
+    const resources = [
+      {id:"100",group:["violencia","menores"],icon:"📞",name:"Línea 100",tag:"Orientación especializada · 24 horas",detail:"Atención gratuita y confidencial para personas afectadas por violencia familiar o sexual, y para quienes conocen una situación de violencia.",number:"100",url:"https://www.gob.pe/479-reportar-casos-de-violencia-contra-las-mujeres-e-integrantes-del-grupo-familiar",label:"Información oficial"},
+      {id:"chat",group:["violencia","digital","menores"],icon:"💬",name:"Chat 100",tag:"Orientación por internet · 24 horas",detail:"Puedes conversar con profesionales sobre violencia en relaciones, señales de alerta y rutas de atención. Requiere conexión a internet.",url:"https://chat100.warminan.gob.pe/",label:"Abrir Chat 100"},
+      {id:"105",group:["emergencia"],icon:"🚨",name:"Policía Nacional",tag:"Emergencia policial",detail:"Si hay peligro inmediato, busca un lugar seguro y solicita ayuda de emergencia.",number:"105",url:"https://www.gob.pe/547",label:"Ver teléfonos oficiales"},
+      {id:"106",group:["emergencia"],icon:"🚑",name:"SAMU",tag:"Urgencia médica · según cobertura",detail:"Para emergencias médicas en zonas donde opera el SAMU. Si no está disponible, solicita ayuda a un servicio local de emergencia.",number:"106",url:"https://www.gob.pe/547",label:"Consultar cobertura"},
+      {id:"113",group:["emocional","menores"],icon:"🫶",name:"Línea 113 · opción 5",tag:"Orientación en salud mental · 24 horas",detail:"Apoyo y orientación sobre ansiedad, estrés, problemas familiares y otras situaciones de salud mental.",number:"113",url:"https://www.gob.pe/555-recibir-informacion-y-orientacion-en-salud-linea-113-salud",label:"Información del MINSA"},
+      {id:"1810",group:["menores"],icon:"🧒",name:"Línea ANNA 1810",tag:"Protección de niñas, niños y adolescentes",detail:"Servicio de orientación y protección para niñas, niños y adolescentes que necesitan ser escuchados y acompañados.",number:"1810",url:"https://www.gob.pe/institucion/mimp/noticias/1256300-el-peru-no-se-detiene-mimp-garantiza-atencion-ininterrumpida-de-servicios-para-victimas-de-violencia",label:"Información oficial"},
+      {id:"cem",group:["violencia","menores"],icon:"🏛️",name:"Centros Emergencia Mujer y Familia",tag:"Atención presencial especializada",detail:"Ofrecen orientación legal, psicológica y social. Consulta el directorio oficial para localizar un centro y verificar sus horarios.",url:"https://www.gob.pe/institucion/warmi%C3%B1an/informes-publicaciones/3487068-directorio-de-servicios-del-programa-nacional-warmi-nan",label:"Buscar un centro oficial"},
+      {id:"mental",group:["emocional"],icon:"🏥",name:"Centros de Salud Mental Comunitaria",tag:"Atención profesional presencial",detail:"Puedes acudir a un establecimiento de salud para recibir evaluación y orientación sobre atención especializada.",url:"https://www.gob.pe/saludmental",label:"Conocer cómo acceder"}
+    ];
+    const categories = [
+      ["todos","🌷 Todos"],["emergencia","🚨 Peligro inmediato"],
+      ["violencia","💜 Violencia o control"],["digital","📱 Violencia digital"],
+      ["emocional","🫶 Apoyo emocional"],["menores","🧒 Soy menor de edad"]
+    ];
     modal(`
-      <h2 id="modalTitle">🆘 Directorio de ayuda · Perú</h2>
-      <p>Estos recursos ofrecen orientación o atención. Verifica la información vigente en sus páginas oficiales.</p>
-
-      <div class="feedback">
-        <b>📞 Línea 100</b>
-        <p>Orientación frente a violencia familiar y sexual.</p>
-        <p><a href="tel:100">Llamar al 100</a></p>
+      <div class="cv-help-directory">
+        <small>💜 CÓDIGO VIOLETA · PERÚ</small>
+        <h2 id="modalTitle">Encuentra una ruta de ayuda</h2>
+        <p>Elige lo que necesitas. No tienes que contar aquí tu historia ni escribir datos personales.</p>
+        <div class="cv-help-urgent" role="note">
+          <strong>🚨 ¿Hay peligro inmediato?</strong>
+          <p>Busca un lugar seguro si puedes y contacta a emergencias. Si eres menor de edad, también puedes acudir a una persona adulta de confianza.</p>
+          <a class="cv-help-call" href="tel:105">📞 Llamar al 105 · Policía</a>
+        </div>
+        <h3>¿Qué tipo de apoyo buscas?</h3>
+        <div class="cv-help-filters" role="group" aria-label="Filtrar servicios de ayuda">
+          ${categories.map(([id,label]) => `<button type="button" class="cv-help-filter" data-help-filter="${id}" aria-pressed="${id === "todos"}">${label}</button>`).join("")}
+        </div>
+        <p class="cv-help-summary" id="helpSummary" aria-live="polite"></p>
+        <div class="cv-help-results" id="helpResults"></div>
+        <details class="cv-help-guide">
+          <summary>💬 ¿Qué puedo decir al pedir ayuda?</summary>
+          <p>Si no sabes cómo comenzar, puedes decir: «Necesito orientación sobre una situación que me preocupa. ¿Pueden explicarme qué opciones tengo?»</p>
+          <p>Comparte únicamente la información que el servicio oficial necesite para orientarte.</p>
+        </details>
+        <details class="cv-help-guide">
+          <summary>🔐 Privacidad y salida rápida</summary>
+          <p>Este directorio no pide tu nombre, no registra tu elección y no envía mensajes ni alertas automáticamente.</p>
+          <p>Los enlaces externos abren servicios independientes, que pueden aplicar sus propias políticas de privacidad. La salida rápida no borra el historial ni elimina rastros del navegador.</p>
+        </details>
+        <p class="cv-help-footnote">Información para Perú. Los servicios y su disponibilidad pueden cambiar: confirma los detalles en los enlaces oficiales. Código Violeta es educativo y no sustituye atención profesional ni servicios de emergencia.</p>
       </div>
-
-      <div class="feedback">
-        <b>🚨 Policía Nacional del Perú</b>
-        <p>Para situaciones de emergencia.</p>
-        <p><a href="tel:105">Llamar al 105</a></p>
-      </div>
-
-      <div class="feedback">
-        <b>🏛️ Programa Nacional Warmi Ñan</b>
-        <p>Consulta información oficial sobre servicios de prevención y atención de la violencia.</p>
-        <p><a href="https://www.gob.pe/aurora" target="_blank" rel="noopener noreferrer">Consultar información oficial</a></p>
-      </div>
-
-      <div class="feedback">
-        <b>🏥 Servicios públicos</b>
-        <p>Consulta el portal del Estado para localizar CEM, DEMUNA y servicios de salud mental.</p>
-        <p><a href="https://www.gob.pe/" target="_blank" rel="noopener noreferrer">Portal del Estado peruano</a></p>
-      </div>
-
-      <p><small>Esta página no detecta tu ubicación, no envía alertas automáticas y no sustituye los servicios de emergencia.</small></p>
-      <p><small>La salida rápida abre otra pestaña, pero no borra el historial.</small></p>
     `);
+    const resultBox = $("#helpResults");
+    const summary = $("#helpSummary");
+    function showResources(category) {
+      const list = category === "todos" ? resources : resources.filter(r => r.group.includes(category));
+      summary.textContent = list.length + (list.length === 1 ? " recurso disponible" : " recursos disponibles") + " para esta opción";
+      resultBox.innerHTML = list.map(r => `
+        <article class="cv-help-card">
+          <div class="cv-help-card-top"><span aria-hidden="true">${r.icon}</span><div><h4>${esc(r.name)}</h4><small>${esc(r.tag)}</small></div></div>
+          <p>${esc(r.detail)}</p>
+          <div class="cv-help-actions">
+            ${r.number ? `<a class="cv-help-call" href="tel:${r.number}" aria-label="Llamar al ${r.number}">📞 Llamar al ${r.number}</a>` : ""}
+            <a class="cv-help-link" href="${r.url}" target="_blank" rel="noopener noreferrer">${esc(r.label)} ↗</a>
+          </div>
+        </article>`).join("");
+      $$("[data-help-filter]").forEach(button => {
+        const selected = button.dataset.helpFilter === category;
+        button.setAttribute("aria-pressed", String(selected));
+        button.classList.toggle("cv-help-filter-active", selected);
+      });
+    }
+    $$("[data-help-filter]").forEach(button => button.onclick = () => showResources(button.dataset.helpFilter));
+    showResources("todos");
   }
 
   // =====================================
@@ -1228,6 +1264,37 @@
   // =====================================
   // ACCESIBILIDAD Y DISEÑO ADAPTATIVO
   // =====================================
+
+  // Estilos del directorio de ayuda, accesibles en celular y escritorio.
+  const helpStyle = document.createElement("style");
+  helpStyle.textContent = `
+    .cv-help-directory{color:#351451;line-height:1.55}
+    .cv-help-directory h2{margin:6px 0 10px}
+    .cv-help-directory h3{margin:20px 0 10px;font-size:1.05rem}
+    .cv-help-urgent{padding:16px;border:2px solid #e8b6c5;border-radius:17px;background:#fff1f4;margin:18px 0}
+    .cv-help-urgent p{margin:7px 0 12px}
+    .cv-help-filters{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+    #modalBody .cv-help-filter{border:1px solid #d6b9e8;background:#f8f0ff;color:#522575;border-radius:100px;padding:9px 13px;font-weight:700;cursor:pointer;min-height:44px}
+    #modalBody .cv-help-filter[aria-pressed="true"]{background:#6e2ca0;color:#fff;border-color:#6e2ca0}
+    .cv-help-summary{font-size:.9rem;color:#685075;margin:14px 0 8px}
+    .cv-help-results{display:grid;gap:12px}
+    .cv-help-card{border:1px solid #e6d4f1;border-radius:18px;background:#fff;padding:15px;box-shadow:0 2px 9px #5a26720b}
+    .cv-help-card-top{display:flex;align-items:center;gap:10px}
+    .cv-help-card-top>span{font-size:1.6rem}
+    .cv-help-card h4{margin:0;font-size:1.08rem;color:#512477}
+    .cv-help-card small{color:#745b84}
+    .cv-help-card p{margin:10px 0 12px}
+    .cv-help-actions{display:flex;flex-wrap:wrap;gap:8px}
+    #modalBody .cv-help-call,#modalBody .cv-help-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-weight:700;min-height:44px;padding:9px 13px;border-radius:12px;box-sizing:border-box}
+    #modalBody .cv-help-call{background:#7431a6;color:#fff}
+    #modalBody .cv-help-link{background:#f2e6fa;color:#522575;border:1px solid #dfc8ed}
+    .cv-help-guide{margin-top:12px;border:1px solid #e6d4f1;border-radius:13px;padding:12px 15px;background:#fbf7ff}
+    .cv-help-guide summary{font-weight:700;cursor:pointer}
+    .cv-help-footnote{font-size:.82rem;color:#685075;margin:20px 0 0}
+    @media(max-width:540px){.cv-help-actions>a{width:100%}.cv-help-filters{gap:6px}.cv-help-card{padding:12px}}
+    @media(prefers-reduced-motion:reduce){.cv-help-directory *{scroll-behavior:auto!important}}
+  `;
+  document.head.appendChild(helpStyle);
 
   // Estilos exclusivos para los cuestionarios dinámicos.
   const quizStyle = document.createElement("style");
