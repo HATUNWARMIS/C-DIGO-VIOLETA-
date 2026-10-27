@@ -457,67 +457,71 @@
   function runModule(id) {
     const mod = mods[id];
     if (!mod) return;
-
     let current = 0;
     let correct = 0;
 
     function showCase() {
       const item = mod.cases[current];
+      const pct = Math.round((current / mod.cases.length) * 100);
       modal(`
-        <small>CASO ${current + 1} DE ${mod.cases.length}</small>
+        <small>🌷 CASO ${current + 1} DE ${mod.cases.length}</small>
         <h2 id="modalTitle">${mod.title}</h2>
+        <div class="cv-quiz-progress" role="progressbar" aria-label="Progreso del módulo"
+          aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100">
+          <div style="width:${pct}%"></div>
+        </div>
+        <p class="cv-quiz-count">Has explorado ${current} de ${mod.cases.length} casos</p>
         <p>${mod.intro}</p>
-        <p><b>${esc(item.q)}</b></p>
+        <p class="cv-quiz-question"><b>${esc(item.q)}</b></p>
         <form id="caseForm">
           ${item.o.map((option, i) => `
-            <label class="choice">
+            <label class="choice cv-quiz-option">
               <input type="radio" name="answer" value="${i}" required>
-              ${esc(option)}
+              <span class="cv-quiz-letter">${String.fromCharCode(65+i)}</span>
+              <span>${esc(option)}</span>
             </label>
           `).join("")}
-          <button class="action">Comprobar respuesta</button>
+          <button class="action cv-quiz-submit" type="submit" disabled>Comprobar respuesta ✓</button>
         </form>
         <div id="caseFeedback" aria-live="polite"></div>
       `);
 
-      // Vio acompaña cada caso educativo.
       const tutora = agregarVioTutora({
-        mensaje:
-          "Vamos con el caso " + (current + 1) +
-          ". Lee la situación y elige la alternativa que consideres más adecuada.",
-        pista:
-          "Piensa qué respuesta protege mejor la autonomía, el respeto y la seguridad. No necesitas apresurarte.",
-        explicacion:
-          "Observa si alguna opción implica control, presión o pérdida de privacidad. Elige la que respete los derechos de la persona."
+        mensaje: "Caso " + (current + 1) + ". Lee con calma y selecciona una alternativa.",
+        pista: "Busca la alternativa que respete la autonomía, la privacidad y la seguridad.",
+        explicacion: "Piensa qué opción protege mejor los derechos de la persona."
       });
 
-      $("#caseForm").onsubmit = e => {
+      const form = $("#caseForm");
+      form.addEventListener("change", () => {
+        form.querySelector('button[type="submit"]').disabled = false;
+        form.querySelectorAll(".cv-quiz-option").forEach(label => {
+          label.classList.toggle("cv-selected", label.querySelector("input").checked);
+        });
+      });
+
+      form.onsubmit = e => {
         e.preventDefault();
-        const answer = Number(new FormData(e.target).get("answer"));
+        const selected = new FormData(form).get("answer");
+        if (selected === null) return;
+        const answer = Number(selected);
         const ok = answer === item.a;
         if (ok) correct++;
-        
         if (tutora) {
           tutora.bloquearPistas();
-
-          tutora.mostrar(
-            ok
-              ? "¡Muy bien! Elegiste la respuesta esperada. " +
-                item.e
-              : "Gracias por intentarlo. Revisemos la respuesta. " +
-                item.e
-          );
+          tutora.mostrar(ok
+            ? "¡Excelente! " + item.e
+            : "Gracias por intentarlo. La respuesta esperada es: " + item.o[item.a] + ". " + item.e);
         }
-
-        $("#caseForm").remove();
+        form.remove();
         $("#caseFeedback").innerHTML = `
-          <div class="feedback ${ok ? "good" : "warn"}">
-            <b>${ok ? "✓ ¡Correcto!" : "Revisemos este caso"}</b>
+          <div class="feedback ${ok ? "good" : "warn"}" role="status">
+            <b>${ok ? "🌟 ¡Respuesta correcta!" : "💜 Aprendamos de este caso"}</b>
             <p><b>Respuesta esperada:</b> ${esc(item.o[item.a])}</p>
             <p>${esc(item.e)}</p>
           </div>
           <button class="action" id="nextCase">
-            ${current === mod.cases.length - 1 ? "Ver resultados" : "Siguiente caso →"}
+            ${current === mod.cases.length - 1 ? "Ver mi resultado 🌸" : "Continuar al siguiente caso →"}
           </button>
         `;
         $("#nextCase").onclick = () => {
@@ -530,40 +534,40 @@
 
     function finish() {
       modal(`
-        <small>MÓDULO FINALIZADO</small>
-        <h2 id="modalTitle">💜 ¡Buen trabajo!</h2>
+        <small>🌷 MÓDULO FINALIZADO</small>
+        <h2 id="modalTitle">💜 ¡Has completado este recorrido!</h2>
         <h3>${mod.title}</h3>
-        <div class="feedback good">
-          <b>${correct} de 3 respuestas correctas</b>
-          <p>Revisaste los tres casos y sus explicaciones.</p>
-          <p>Puedes repetirlos cuando quieras.</p>
+        <div class="cv-quiz-progress" role="progressbar" aria-label="Módulo completado"
+          aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+          <div style="width:100%"></div>
         </div>
-        <button class="action" id="saveModule">Guardar módulo completado ✓</button>
+        <div class="feedback good">
+          <b>🌟 ${correct} de ${mod.cases.length} respuestas correctas</b>
+          <p>Has revisado las explicaciones de los tres casos.</p>
+          <p>Aprender también implica equivocarse y volver a intentarlo.</p>
+        </div>
+        <button class="action" id="saveModule">🌸 Guardar logro en mi Jardín Violeta</button>
+        <button class="action cv-secondary-action" id="repeatModule" type="button">↻ Practicar nuevamente</button>
       `);
-      
       agregarVioTutora({
-        mensaje:
-          "¡Terminaste este módulo! " +
-          "Respondiste correctamente " + correct +
-          " de " + mod.cases.length +
-          " casos. Lo importante es comprender las explicaciones y seguir aprendiendo.",
-        pista:
-          "Puedes repetir el módulo para reforzar tus conocimientos.",
-        explicacion:
-          "Cada caso te ayuda a reconocer situaciones y tomar decisiones más informadas."
+        mensaje: "¡Terminaste! Tu resultado es " + correct + " de " + mod.cases.length + ". Puedes guardar tu flor o practicar otra vez.",
+        pista: "Repetir los casos te ayudará a recordar lo aprendido.",
+        explicacion: "Cada caso presenta una situación cotidiana para practicar decisiones informadas."
       });
-
-
       $("#saveModule").onclick = () => {
         state[id] = true;
         progress();
         close();
         toast(allDone()
-          ? "¡Completaste los cuatro módulos! Evaluación final desbloqueada. 💜"
-          : "¡Progreso guardado! 💜");
+          ? "¡Los cuatro módulos están completos! Evaluación final desbloqueada. 💜"
+          : "¡Tu flor ha crecido en el Jardín Violeta! 🌷");
+      };
+      $("#repeatModule").onclick = () => {
+        current = 0;
+        correct = 0;
+        showCase();
       };
     }
-
     showCase();
   }
 
@@ -670,7 +674,7 @@
         <h2 id="modalTitle">🔒 Evaluación final pendiente</h2>
         <p>Tu evaluación inicial: <b>${initial.score}/10</b>.</p>
         <p>Has completado <b>${completed()} de 4 módulos</b>.</p>
-        <p>Completa los módulos para desbloquear la evaluación final.</p>
+        <p>Completa los cuatro módulos para desbloquear la evaluación final.</p>
         <button class="action" id="returnToRoute">Continuar mi ruta →</button>
       `);
       $("#returnToRoute").onclick = () => {
@@ -682,41 +686,72 @@
 
     const phase = validInitial ? "final" : "inicial";
     let current = 0;
-    const answers = [];
+    const answers = Array(questions.length).fill(null);
 
     function showQuestion() {
       const q = questions[current];
+      const pct = Math.round((current / questions.length) * 100);
       modal(`
-        <small>EVALUACIÓN ${phase.toUpperCase()} · ${current + 1} DE 10</small>
-        <h2 id="modalTitle">🧠 Quiz de aprendizaje</h2>
-        <p><b>${esc(q[0])}</b></p>
+        <small>🧠 EVALUACIÓN ${phase.toUpperCase()} · ${current + 1} DE ${questions.length}</small>
+        <h2 id="modalTitle">Mi desafío violeta 💜</h2>
+        <div class="cv-quiz-progress" role="progressbar" aria-label="Progreso de evaluación"
+          aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100">
+          <div style="width:${pct}%"></div>
+        </div>
+        <p class="cv-quiz-count">${current} preguntas respondidas · ${questions.length-current} pendientes</p>
+        <p class="cv-quiz-question"><b>${esc(q[0])}</b></p>
         <form id="quizForm">
           ${q[1].map((option,i) => `
-            <label class="choice">
-              <input type="radio" name="answer" value="${i}" required>
-              ${esc(option)}
+            <label class="choice cv-quiz-option">
+              <input type="radio" name="answer" value="${i}" ${answers[current] === i ? "checked" : ""} required>
+              <span class="cv-quiz-letter">${String.fromCharCode(65+i)}</span>
+              <span>${esc(option)}</span>
             </label>
           `).join("")}
-          <button class="action">${current === 9 ? "Ver resultados" : "Siguiente pregunta →"}</button>
+          <div class="cv-quiz-navigation">
+            ${current > 0 ? '<button class="action cv-secondary-action" id="prevQuestion" type="button">← Anterior</button>' : ""}
+            <button class="action cv-quiz-submit" type="submit" ${answers[current] === null ? "disabled" : ""}>
+              ${current === questions.length-1 ? "Terminar evaluación 🌟" : "Siguiente pregunta →"}
+            </button>
+          </div>
         </form>
-        <p><small>Pregunta ${current + 1} de 10. No se envían respuestas a un servidor.</small></p>
+        <p><small>Tu respuesta se puede cambiar antes de finalizar. No se envía a un servidor.</small></p>
       `);
-      
+
       agregarVioTutora({
-        mensaje:
-          "Pregunta " + (current + 1) +
-          " de 10. ¡Tómate tu tiempo!",
-        pista:
-          "Piensa en lo que aprendiste durante los módulos.",
-        explicacion:
-          "Lee todas las alternativas antes de decidir. En esta evaluación no revelaré las respuestas hasta el final."
+        mensaje: "¡Vas por la pregunta " + (current+1) + " de " + questions.length + "! Puedes cambiar tu respuesta antes de finalizar.",
+        pista: "Lee todas las opciones y piensa en la privacidad, el respeto y la seguridad.",
+        explicacion: "Las soluciones se mostrarán al finalizar, para que la evaluación sea justa."
       });
 
-      $("#quizForm").onsubmit = e => {
+      const form = $("#quizForm");
+      function paintSelection() {
+        form.querySelectorAll(".cv-quiz-option").forEach(label => {
+          label.classList.toggle("cv-selected", label.querySelector("input").checked);
+        });
+      }
+      paintSelection();
+      form.addEventListener("change", () => {
+        const value = new FormData(form).get("answer");
+        answers[current] = value === null ? null : Number(value);
+        form.querySelector('button[type="submit"]').disabled = answers[current] === null;
+        paintSelection();
+      });
+      if (current > 0) {
+        $("#prevQuestion").onclick = () => {
+          const value = new FormData(form).get("answer");
+          if (value !== null) answers[current] = Number(value);
+          current--;
+          showQuestion();
+        };
+      }
+      form.onsubmit = e => {
         e.preventDefault();
-        answers.push(Number(new FormData(e.target).get("answer")));
+        const value = new FormData(form).get("answer");
+        if (value === null) return;
+        answers[current] = Number(value);
         current++;
-        if (current < 10) showQuestion();
+        if (current < questions.length) showQuestion();
         else results();
       };
     }
@@ -725,42 +760,50 @@
       const score = answers.reduce(
         (sum, answer, i) => sum + Number(answer === questions[i][2]), 0
       );
-      const result = {score, total:10, date:new Date().toISOString()};
+      const result = {score, total:questions.length, date:new Date().toISOString()};
       save(validInitial ? FINAL : INITIAL, result);
       renderDashboard();
 
       const comparison = validInitial
         ? `<div class="feedback good">
-            <b>📊 Comparación del aprendizaje</b>
-            <p>Inicial: ${initial.score}/10</p>
-            <p>Final: ${score}/10</p>
-            <p><b>Diferencia: ${score - initial.score > 0 ? "+" : ""}${score - initial.score} respuestas correctas</b></p>
+            <b>📊 Comparación de aprendizaje</b>
+            <p>Evaluación inicial: ${initial.score}/10 · Evaluación final: ${score}/10</p>
+            <p>Diferencia: <b>${score-initial.score > 0 ? "+" : ""}${score-initial.score}</b> respuestas correctas</p>
           </div>`
         : `<div class="feedback good">
-            <b>Evaluación inicial registrada</b>
-            <p>Completa los cuatro módulos para desbloquear la evaluación final.</p>
+            <b>🌷 Evaluación inicial registrada</b>
+            <p>Ahora puedes recorrer los cuatro módulos para desbloquear la evaluación final.</p>
           </div>`;
 
       modal(`
-        <small>RESULTADOS · EVALUACIÓN ${phase.toUpperCase()}</small>
+        <small>🌟 RESULTADOS · EVALUACIÓN ${phase.toUpperCase()}</small>
         <h2 id="modalTitle">💜 ¡Tu aprendizaje cuenta!</h2>
-        <p>Obtuviste <b>${score} de 10</b> respuestas correctas.</p>
-        <p><b>Porcentaje: ${score * 10}%</b></p>
+        <p class="cv-result-number">${score} <span>/ ${questions.length}</span></p>
+        <p><b>${score*10}% de respuestas correctas</b></p>
+        <div class="cv-quiz-progress" role="progressbar" aria-label="Porcentaje de aciertos"
+          aria-valuenow="${score*10}" aria-valuemin="0" aria-valuemax="100">
+          <div style="width:${score*10}%"></div>
+        </div>
         ${comparison}
-        <h3>Revisión de respuestas</h3>
+        <h3>📖 Revisa tus respuestas y aprende</h3>
         ${questions.map((q,i) => `
           <div class="feedback ${answers[i] === q[2] ? "good" : "warn"}">
-            <b>${i + 1}. ${esc(q[0])}</b>
-            <p>${answers[i] === q[2] ? "✓ Respuesta correcta" : "Respuesta para revisar"}</p>
+            <b>${i+1}. ${esc(q[0])}</b>
+            <p>${answers[i] === q[2] ? "✓ ¡Correcta!" : "💡 Para reforzar"}</p>
+            <p><b>Tu respuesta:</b> ${esc(q[1][answers[i]] ?? "Sin respuesta")}</p>
             <p><b>Respuesta esperada:</b> ${esc(q[1][q[2]])}</p>
             <p>${esc(q[3])}</p>
           </div>
         `).join("")}
         <button class="action" id="finishQuiz">Continuar mi ruta →</button>
       `);
+      agregarVioTutora({
+        mensaje: "¡Terminaste! Lograste " + score + " de " + questions.length + ". Revisa las explicaciones y sigue aprendiendo.",
+        pista: "Observa las preguntas que quieres reforzar.",
+        explicacion: "Cada explicación muestra el motivo de la respuesta esperada."
+      });
       $("#finishQuiz").onclick = close;
     }
-
     showQuestion();
   }
 
@@ -1185,6 +1228,28 @@
   // =====================================
   // ACCESIBILIDAD Y DISEÑO ADAPTATIVO
   // =====================================
+
+  // Estilos exclusivos para los cuestionarios dinámicos.
+  const quizStyle = document.createElement("style");
+  quizStyle.textContent = `
+    .cv-quiz-progress{height:13px;background:#eee1f7;border-radius:20px;overflow:hidden;margin:16px 0 5px}
+    .cv-quiz-progress>div{height:100%;background:linear-gradient(90deg,#ae6bd9,#7330a5);border-radius:20px;transition:width .3s ease}
+    .cv-quiz-count{font-size:.9rem;color:#725887;margin:4px 0 20px}
+    .cv-quiz-question{font-size:1.16rem;line-height:1.5;margin:16px 0}
+    #modalBody .cv-quiz-option{display:flex;align-items:center;gap:12px;padding:14px 16px;margin:10px 0;border:2px solid #e8d8f4;border-radius:15px;background:#fff;transition:border-color .15s,background .15s;cursor:pointer}
+    #modalBody .cv-quiz-option:hover{border-color:#a56cd0;background:#faf5ff}
+    #modalBody .cv-quiz-option.cv-selected{border-color:#8a42b8;background:#f4e8ff}
+    .cv-quiz-letter{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;min-width:32px;border-radius:50%;background:#efe1f8;color:#542578;font-weight:800}
+    #modalBody .cv-quiz-option input{accent-color:#8135b5;flex-shrink:0}
+    #modalBody .cv-quiz-submit:disabled{opacity:.55;cursor:not-allowed}
+    .cv-quiz-navigation{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:18px}
+    #modalBody .cv-secondary-action{background:#f0e4fa;color:#512476;border:1px solid #cfb1e5}
+    .cv-result-number{font-size:clamp(2.5rem,7vw,4rem);font-weight:900;color:#7633ab;margin:8px 0}
+    .cv-result-number span{font-size:1.35rem;color:#766085}
+    @media(max-width:600px){#modalBody .cv-quiz-option{padding:12px 10px}.cv-quiz-navigation .action{flex:1}}
+    @media(prefers-reduced-motion:reduce){.cv-quiz-progress>div{transition:none}}
+  `;
+  document.head.appendChild(quizStyle);
 
   const style = document.createElement("style");
   style.textContent = `
