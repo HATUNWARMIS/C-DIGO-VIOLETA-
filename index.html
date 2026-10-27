@@ -793,16 +793,6 @@
     </div>
   </div>
 
-<style>
-.cv-language-wrap{display:flex;flex-direction:column;gap:3px;align-items:flex-start;margin:0 10px}
-.cv-language-wrap label{font-size:11px;font-weight:700;color:inherit}
-#cvLanguageSelect{padding:9px 12px;border:2px solid #b58acf;border-radius:10px;background:#fff;color:#39134f;font:inherit;max-width:180px;cursor:pointer}
-#cvLanguageSelect:focus-visible{outline:3px solid #ffca50;outline-offset:2px}
-.cv-language-notice{margin:0;padding:9px 18px;text-align:center;background:#f4e8fc;color:#532676;font-size:13px;line-height:1.5}
-.cv-language-notice[hidden]{display:none}
-@media(max-width:800px){header .cv-language-wrap{margin:6px 4px}.cv-language-wrap label{font-size:10px}#cvLanguageSelect{max-width:135px;padding:7px}}
-</style>
-
   <!-- ENCABEZADO -->
   <header>
     <a class="logo" href="#inicio">
@@ -821,21 +811,11 @@
       <a href="#biblioteca">Biblioteca</a>
     </nav>
 
-    <div class="cv-language-wrap">
-      <label for="cvLanguageSelect">🌐 Idioma / Language / Simi</label>
-      <select id="cvLanguageSelect" aria-label="Seleccionar idioma">
-        <option value="es">Español</option>
-        <option value="en">English</option>
-        <option value="qu">Quechua (Qhichwa)</option>
-      </select>
-    </div>
-
     <button class="exit" id="exit" type="button">
       Salida rápida ↗
     </button>
   </header>
 
-  <p id="cvLanguageNotice" class="cv-language-notice" role="status" hidden></p>
   <main>
 
     <!-- PORTADA -->
@@ -1372,84 +1352,8 @@
   <!-- MENSAJE DE ACOMPAÑAMIENTO -->
   <div id="vioCompanion" role="status" aria-live="polite" hidden></div>
 
-
-<script>
-(() => {
-  "use strict";
-  const dict={"en": {"Inicio": "Home", "Ruta educativa": "Learning path", "Mujeres que inspiran": "Inspiring women", "Herramientas": "Tools", "Rutas de ayuda": "Help resources", "Biblioteca": "Library", "Salida rápida ↗": "Quick exit ↗", "✦ LABORATORIO VIRTUAL · ÁNCASH": "✦ VIRTUAL LEARNING LAB · ÁNCASH", "Tu historia.": "Your story.", "Tu voz.": "Your voice.", "Tu red.": "Your support network.", "Reconoce la señal, protege tu historia y activa tu red.": "Recognize warning signs, protect your story and build your support network.", "Iniciar mi ruta →": "Start learning →", "Explorar herramientas ↓": "Explore tools ↓", "🛡 Aprende y decide": "🛡 Learn and decide", "♡ Construye tu red": "♡ Build your support network", "✦ Tu seguridad importa": "✦ Your safety matters", "Un paso a la vez 💜": "One step at a time 💜", "BIENVENIDA A TU ESPACIO": "WELCOME TO YOUR SPACE", "Un laboratorio para elegir con más información": "A place to make informed choices", "Mi espacio Violeta": "My Violet Space", "Mi panel de progreso": "My progress dashboard", "Mi Jardín Violeta": "My Violet Garden", "Jardín Violeta": "Violet Garden", "Evaluación inicial": "Initial assessment", "Evaluación final": "Final assessment", "Mi desafío violeta 💜": "My Violet Challenge 💜", "Comprobar respuesta ✓": "Check answer ✓", "Siguiente pregunta →": "Next question →", "← Anterior": "← Previous", "Terminar evaluación 🌟": "Finish assessment 🌟", "Ver mi resultado 🌸": "See my result 🌸", "Continuar al siguiente caso →": "Continue to the next case →", "Continuar mi ruta →": "Continue learning →", "Practicar nuevamente": "Practice again", "Mi constancia educativa": "My learning certificate", "Reconocimiento": "Recognition", "Crear constancia imprimible": "Create printable certificate", "Imprimir o guardar como PDF": "Print or save as PDF", "Simulador de conversaciones": "Conversation simulator", "Laboratorio de decisiones": "Decision lab", "Mi plan de apoyo": "My support plan", "Biblioteca con buscador": "Searchable library", "Buscar un tema": "Search for a topic", "Leer explicación": "Read explanation", "Pedir ayuda también es valentía.": "Asking for help is also an act of courage.", "Peligro inmediato": "Immediate danger", "Violencia o control": "Violence or control", "Violencia digital": "Digital abuse", "Apoyo emocional": "Emotional support", "Soy menor de edad": "I am under 18", "Explorar directorio de ayuda": "Explore help directory", "Línea 100": "Helpline 100", "Policía 105": "Police 105", "Salud mental 113": "Mental health 113", "Accesibilidad": "Accessibility", "♿ Accesibilidad": "♿ Accessibility", "Preferencias de lectura": "Reading preferences", "Tamaño de texto:": "Text size:", "Alto contraste": "High contrast", "Reducir animaciones": "Reduce animations", "Restablecer": "Reset", "Cerrar": "Close", "Cerrar asistente": "Close assistant", "Ahora no": "Not now", "Activar voz": "Enable voice", "La voz está desactivada.": "Voice is off.", "Creado por": "Created by", "Tu respuesta:": "Your answer:", "Respuesta esperada:": "Expected answer:", "¡Respuesta correcta!": "Correct answer!", "Lo importante es aprender": "What matters is learning", "Tu siguiente paso": "Your next step", "Ver mi jardín": "See my garden", "Buscar recursos": "Search resources", "Aprende y encuentra recursos": "Learn and find resources", "Todos": "All", "Relaciones": "Relationships", "Digital": "Digital", "Redes de apoyo": "Support networks", "Glosario": "Glossary", "Tu aprendizaje cuenta": "Your learning matters", "CÓDIGO VIOLETA": "VIOLET CODE"}, "qu": {"Inicio": "Qallariy", "Ruta educativa": "Yachay ñan", "Mujeres que inspiran": "Kallpachaq warmikuna", "Herramientas": "Yanapakuykuna", "Rutas de ayuda": "Yanapakuy ñankuna", "Biblioteca": "Ñawinchana wasi", "Salida rápida ↗": "Utqay lluqsiy ↗", "✦ LABORATORIO VIRTUAL · ÁNCASH": "✦ INTERNETPI YACHAY WASI · ÁNCASH", "Tu historia.": "Qampa willakuyniyki.", "Tu voz.": "Qampa rimayniyki.", "Tu red.": "Qampa yanapakuqniykikuna.", "Reconoce la señal, protege tu historia y activa tu red.": "Unanchakunata riqsiy, willakuyniykita waqaychay, yanapakuqniykikunata maskay.", "Iniciar mi ruta →": "Yachayta qallariy →", "Explorar herramientas ↓": "Yanapakuykunata qhaway ↓", "🛡 Aprende y decide": "🛡 Yachay, akllay", "♡ Construye tu red": "♡ Yanapakuqniykikunata huñuy", "✦ Tu seguridad importa": "✦ Allin kayniyki ancha chaninniyuq", "Un paso a la vez 💜": "Huk thatki huk thatkimanta 💜", "BIENVENIDA A TU ESPACIO": "KAYPI ALLIN HAMUSQA KAY", "Un laboratorio para elegir con más información": "Yachaywan allin akllanapaq", "Mi espacio Violeta": "Violeta kawsayniy", "Mi panel de progreso": "Yachasqaypa rikuchiqnin", "Mi Jardín Violeta": "Violeta sach'a huertay", "Jardín Violeta": "Violeta huerta", "Evaluación inicial": "Qallariy chaninchay", "Evaluación final": "Tukuy chaninchay", "Mi desafío violeta 💜": "Violeta sasachakuyniy 💜", "Comprobar respuesta ✓": "Kutichiyta qhaway ✓", "Siguiente pregunta →": "Hamuq tapuy →", "← Anterior": "← Ñawpaq", "Terminar evaluación 🌟": "Chaninchayta tukuy 🌟", "Ver mi resultado 🌸": "Imayna ruwasqayta qhaway 🌸", "Continuar al siguiente caso →": "Hamuq kasuman riy →", "Continuar mi ruta →": "Yachay ñanta qatipay →", "Practicar nuevamente": "Yapamanta yachay", "Mi constancia educativa": "Yachasqaypa qillqan", "Reconocimiento": "Riqsisqa kay", "Crear constancia imprimible": "Qillqata ruwariy", "Imprimir o guardar como PDF": "Papelman urquy utaq PDF hina waqaychay", "Simulador de conversaciones": "Rimanakuy yachachiq", "Laboratorio de decisiones": "Akllay yachay wasi", "Mi plan de apoyo": "Yanapakuyniypa wakichiynin", "Biblioteca con buscador": "Maskana ñawinchana wasi", "Buscar un tema": "Huk yachayta maskay", "Leer explicación": "Sut'inchayta ñawinchay", "Pedir ayuda también es valentía.": "Yanapakuyta mañakuyqa kallpayuq kaymi.", "Peligro inmediato": "Kunanlla sasachakuy", "Violencia o control": "Maqanakuy utaq kamachiy", "Violencia digital": "Internetpi maqanakuy", "Apoyo emocional": "Sunqu yanapakuy", "Soy menor de edad": "Manaraq 18 watayuqchu kani", "Explorar directorio de ayuda": "Yanapakuy ñankunata qhaway", "Línea 100": "Yanapakuy 100", "Policía 105": "Policía 105", "Salud mental 113": "Sunqu allin kay 113", "Accesibilidad": "Llapapaq yaykuy", "♿ Accesibilidad": "♿ Llapapaq yaykuy", "Preferencias de lectura": "Ñawinchaypa akllaynin", "Tamaño de texto:": "Qillqapa hatun kaynin:", "Alto contraste": "Aswan sut'i rikuy", "Reducir animaciones": "Kuyuchiykunata pisiyachiy", "Restablecer": "Yapamanta qallariy", "Cerrar": "Wisqay", "Cerrar asistente": "Yanapakuqta wisqay", "Ahora no": "Manaraq", "Activar voz": "Rimayta kichay", "La voz está desactivada.": "Rimayqa wañusqam.", "Creado por": "Ruwasqan", "Tu respuesta:": "Kutichiyniyki:", "Respuesta esperada:": "Suyasqa kutichiy:", "¡Respuesta correcta!": "Allin kutichiy!", "Lo importante es aprender": "Yachaymi ancha chaninniyuq", "Tu siguiente paso": "Hamuq thatkiyki", "Ver mi jardín": "Huertayta qhaway", "Buscar recursos": "Yanapakuykunata maskay", "Aprende y encuentra recursos": "Yachay, yanapakuykunata tariy", "Todos": "Llapan", "Relaciones": "Rimanakuykuna", "Digital": "Internetpi", "Redes de apoyo": "Yanapakuqkuna", "Glosario": "Simikunapa sut'inchaynin", "Tu aprendizaje cuenta": "Yachasqayki ancha chaninniyuq", "CÓDIGO VIOLETA": "CÓDIGO VIOLETA"}};
-  const key="cv-language-v1";
-  const supported=["es","en","qu"];
-  let lang="es";
-  try {lang=localStorage.getItem(key)||"es";}catch{}
-  if(!supported.includes(lang))lang="es";
-  const originals=new WeakMap();
-  const rendered=new WeakMap();
-  let busy=false;
-  const lookup=value=>{
-    if(lang==="es")return value;
-    const t=dict[lang][value.trim()];
-    if(!t)return value;
-    return value.match(/^\s*/)[0]+t+value.match(/\s*$/)[0];
-  };
-  function translate(root){
-    if(!root||busy)return;
-    busy=true;
-    try{
-      const nodes=[];
-      if(root.nodeType===Node.TEXT_NODE)nodes.push(root);
-      if(root.nodeType===Node.ELEMENT_NODE||root.nodeType===Node.DOCUMENT_NODE){
-        const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
-        while(walker.nextNode())nodes.push(walker.currentNode);
-      }
-      for(const node of nodes){
-        const parent=node.parentElement;
-        if(!parent||parent.closest("script,style,textarea,code,pre,option"))continue;
-        const current=node.nodeValue;
-        let source=originals.get(node);
-        if(source===undefined){source=current;originals.set(node,source);}
-        else if(current!==source&&current!==rendered.get(node)){
-          source=current;originals.set(node,source);
-        }
-        const desired=lookup(source);
-        rendered.set(node,desired);
-        if(current!==desired)node.nodeValue=desired;
-      }
-      document.documentElement.lang=lang;
-      const selector=document.getElementById("cvLanguageSelect");
-      if(selector)selector.value=lang;
-      const notice=document.getElementById("cvLanguageNotice");
-      if(notice){
-        notice.hidden=lang==="es";
-        notice.textContent=lang==="en"
-          ?"Some educational activities remain in Spanish. Emergency numbers and official resources are for Peru."
-          :"Kayqa qhichwa simipi qallariy tikraymi. Wak yachaykunaqa kastilla simipiraq kachkan. Qhichwa simikuna suyuman hina hukniraymi.";
-      }
-    }finally{busy=false;}
-  }
-  function setLanguage(next){
-    if(!supported.includes(next))return;
-    lang=next;
-    try{localStorage.setItem(key,lang);}catch{}
-    translate(document.body);
-    window.dispatchEvent(new CustomEvent("cv-language-change",{detail:{language:lang}}));
-  }
-  window.cvLanguage={get:()=>lang,set:setLanguage,translate:()=>translate(document.body)};
-  document.addEventListener("DOMContentLoaded",()=>{
-    const selector=document.getElementById("cvLanguageSelect");
-    if(selector)selector.addEventListener("change",e=>setLanguage(e.target.value));
-    translate(document.body);
-    const observer=new MutationObserver(changes=>{
-      if(busy)return;
-      if(changes.some(x=>x.type==="childList"||x.type==="characterData"))
-        queueMicrotask(()=>translate(document.body));
-    });
-    observer.observe(document.body,{subtree:true,childList:true,characterData:true});
-  });
-})();
-</script>
-
   <!-- LÓGICA ORIGINAL DE MÓDULOS -->
-  <script src="js/app.js?v=20261027-3"></script>
+  <script src="js/app.js?v=20261027-2"></script>
 
   <!-- VIO: UN SOLO SISTEMA DE VOZ Y ACOMPAÑAMIENTO -->
   <script>
