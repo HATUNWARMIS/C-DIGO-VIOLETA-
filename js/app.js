@@ -1,4 +1,3 @@
-
 (() => {
   "use strict";
 
@@ -103,7 +102,7 @@
   $("#exit").onclick = $("#exit2").onclick = exit;
 
   // =====================================
-  // MÓDULOS: 12 CASOS EDUCATIVOS
+  // MÓDULOS: 20 CASOS EDUCATIVOS
   // =====================================
 
   const mods = {
@@ -128,6 +127,18 @@
           o: ["Vigilancia", "Amenazas", "Respeto de límites", "Control de horarios"],
           a: 2,
           e: "Una relación saludable respeta las decisiones, los límites y la autonomía."
+        },
+        {
+          q: "Una persona se burla de tus decisiones y luego dice que solo era una broma. ¿Qué conviene reconocer?",
+          o: ["Que las burlas siempre son inofensivas", "Que el respeto importa incluso en las bromas", "Que debes aceptar todo", "Que el malestar no importa"],
+          a: 1,
+          e: "Las burlas repetidas que desvalorizan tus decisiones pueden ser una señal de falta de respeto."
+        },
+        {
+          q: "Alguien revisa constantemente dónde estás y con quién hablas. ¿Qué puede indicar?",
+          o: ["Apoyo sin condiciones", "Una muestra obligatoria de cariño", "Vigilancia y control", "Una regla universal"],
+          a: 2,
+          e: "La vigilancia constante puede limitar la autonomía y la privacidad."
         }
       ]
     },
@@ -152,6 +163,18 @@
           o: ["Aceptar", "Enviar más datos", "Ignorar tu incomodidad", "Negarte y buscar orientación"],
           a: 3,
           e: "Tienes derecho a la privacidad. Busca apoyo si la situación te preocupa."
+        },
+        {
+          q: "Un desconocido te pide un código de verificación recibido por mensaje. ¿Qué haces?",
+          o: ["No compartir el código y verificar por canales oficiales", "Enviarlo para resolver rápido", "Publicarlo", "Usarlo en el enlace recibido"],
+          a: 0,
+          e: "Los códigos de verificación son privados y no deben compartirse con terceros."
+        },
+        {
+          q: "Descubres que alguien creó una cuenta falsa con tus fotos. ¿Qué opción es más segura?",
+          o: ["Responder con amenazas", "Enviar más fotos", "Ignorar siempre sin pedir apoyo", "Reportar la suplantación y pedir ayuda a una persona de confianza"],
+          a: 3,
+          e: "Reportar la suplantación a la plataforma y buscar apoyo permite actuar sin exponerte más."
         }
       ]
     },
@@ -176,6 +199,18 @@
           o: ["Tu seguridad y apoyo confiable", "Confrontar inmediatamente", "Responder con amenazas", "Quedarte sin orientación"],
           a: 0,
           e: "No siempre es seguro confrontar. Puedes buscar orientación y apoyo."
+        },
+        {
+          q: "Una persona insiste en que aceptes una invitación pese a que ya dijiste que no. ¿Qué es válido?",
+          o: ["Cambiar tu respuesta por presión", "Reafirmar tu decisión y buscar apoyo si te incomoda", "Pedir permiso para tener límites", "Aceptar por obligación"],
+          a: 1,
+          e: "Tu negativa debe ser respetada. Si insistir o confrontar puede ser riesgoso, prioriza tu seguridad."
+        },
+        {
+          q: "¿Cuál es una forma respetuosa de expresar una preferencia?",
+          o: ["Si no haces esto, te castigo", "No tienes derecho a opinar", "Prefiero no compartir esa información", "Tienes que adivinar lo que quiero"],
+          a: 2,
+          e: "Una frase clara en primera persona ayuda a expresar límites sin imponer decisiones a otras personas."
         }
       ]
     },
@@ -200,6 +235,18 @@
           o: ["Un perfil desconocido", "Un enlace no verificado", "Un chat que pide contraseñas", "Línea 100"],
           a: 3,
           e: "La Línea 100 ofrece orientación frente a violencia familiar y sexual en Perú."
+        },
+        {
+          q: "Una compañera dice que necesita ayuda, pero teme que la juzguen. ¿Qué haces?",
+          o: ["Escucharla y ofrecer acompañarla a un servicio de orientación", "Compartir su historia en redes", "Exigirle detalles", "Prometer resolver todo tú sola"],
+          a: 0,
+          e: "Escuchar sin juzgar y ofrecer opciones de apoyo puede fortalecer su seguridad y autonomía."
+        },
+        {
+          q: "Si un recurso que encuentras en redes pide datos personales antes de orientarte, ¿qué conviene?",
+          o: ["Entregar los datos inmediatamente", "Compartir tus contraseñas", "Difundirlo sin revisar", "Verificar si pertenece a un servicio oficial"],
+          a: 3,
+          e: "Verificar la fuente oficial reduce el riesgo de fraudes y exposición de información personal."
         }
       ]
     }
@@ -812,88 +859,141 @@
   // SIMULADOR DE DECISIONES
   // =====================================
 
-  const scenarios = [
+  const chatScenarios = [
     {
-      title:"Una oferta inesperada",
-      story:"Recibes una oferta de trabajo con un sueldo muy alto. Te piden un depósito para reservar el puesto.",
-      options:[
-        ["Pagar inmediatamente","Pedir dinero antes de contratar puede ser una señal de fraude.",false],
-        ["Verificar la empresa por canales oficiales","Comprobar la identidad y condiciones de la empresa es una decisión prudente.",true],
-        ["Enviar tus datos bancarios","Compartir datos sensibles sin verificar aumenta los riesgos.",false]
+      title: "¿Dónde estás?",
+      context: "Una persona con la que sales insiste en saber tu ubicación todo el día.",
+      other: "Si confías en mí, mándame tu ubicación en tiempo real. No debería molestarte.",
+      options: [
+        {text:"Puedo compartirla si eso evita una discusión.", safe:false, reply:"¿Ves? Era fácil. Ahora mantenla activada.", lesson:"Compartir la ubicación bajo presión puede facilitar la vigilancia. La confianza no exige acceso permanente."},
+        {text:"Mi ubicación es privada. No quiero compartirla.", safe:true, reply:"No me gusta que me digas que no.", lesson:"Puedes poner límites sobre tu privacidad. Si temes una reacción peligrosa, no necesitas confrontar: busca apoyo."},
+        {text:"Voy a consultar con alguien de confianza.", safe:true, reply:"No hace falta que se lo cuentes a nadie.", lesson:"Hablar con alguien de confianza puede ayudarte a evaluar la situación sin quedarte aislada."}
       ]
     },
     {
-      title:"Una conversación incómoda",
-      story:"Una persona insiste en que le compartas tu ubicación en todo momento para demostrar confianza.",
-      options:[
-        ["Aceptar por obligación","La confianza no exige vigilancia permanente.",false],
-        ["Reconocer la presión y buscar apoyo si lo necesitas","Tienes derecho a la privacidad y a recibir orientación.",true],
-        ["Entregar todas tus contraseñas","Compartir contraseñas puede comprometer tu seguridad.",false]
+      title: "El código de acceso",
+      context: "Una cuenta desconocida te escribe diciendo que puede recuperar tu perfil.",
+      other: "Te acaba de llegar un código. Envíamelo para confirmar que eres tú.",
+      options: [
+        {text:"Te paso el código ahora.", safe:false, reply:"Gracias, ya puedo continuar.", lesson:"Un código de verificación es privado. Compartirlo puede permitir el acceso no autorizado a una cuenta."},
+        {text:"No comparto códigos. Consultaré la aplicación oficial.", safe:true, reply:"¡Pero tienes que hacerlo rápido!", lesson:"La urgencia es una señal frecuente de engaño. Verifica desde la aplicación o el sitio oficial."},
+        {text:"Voy a ignorar el mensaje y reportar la cuenta.", safe:true, reply:"...", lesson:"Bloquear o reportar una cuenta sospechosa puede reducir el contacto no deseado."}
       ]
     },
     {
-      title:"Una amiga pide orientación",
-      story:"Una amiga cuenta que alguien intenta controlar sus amistades. Te pide que la escuches.",
-      options:[
-        ["Compartir su historia con otras personas","Difundir información sin permiso puede afectar su privacidad.",false],
-        ["Escuchar sin juzgar y ofrecer acompañamiento","La escucha respetuosa puede ayudar a fortalecer su red de apoyo.",true],
-        ["Decidir todo por ella","Es importante respetar su autonomía.",false]
+      title: "Una amiga necesita hablar",
+      context: "Una amiga te cuenta que alguien intenta apartarla de su grupo.",
+      other: "Me siento sola. No sé si estoy exagerando, pero me preocupa.",
+      options: [
+        {text:"Seguro estás exagerando.", safe:false, reply:"Quizá no debería habértelo contado.", lesson:"Minimizar lo que siente una persona puede hacer que le resulte más difícil buscar ayuda."},
+        {text:"Te escucho. ¿Quieres que busquemos opciones juntas?", safe:true, reply:"Gracias, me ayudaría conocer opciones.", lesson:"Escuchar sin juzgar y ofrecer acompañamiento respeta la autonomía de tu amiga."},
+        {text:"Publicaré lo que me cuentas para que te ayuden.", safe:false, reply:"Por favor, no compartas eso.", lesson:"No difundas una historia privada sin consentimiento. Puede generar riesgos adicionales."}
+      ]
+    },
+    {
+      title: "La oferta demasiado buena",
+      context: "Recibes una supuesta oferta de empleo por mensaje directo.",
+      other: "Te contratamos hoy. Primero deposita una garantía y envía foto de tu DNI.",
+      options: [
+        {text:"Enviaré el dinero para asegurar el puesto.", safe:false, reply:"Perfecto, te paso una cuenta.", lesson:"Solicitar pagos o documentos sensibles sin verificar puede ser señal de fraude."},
+        {text:"Verificaré la empresa y no enviaré documentos todavía.", safe:true, reply:"Si no pagas hoy, pierdes la oportunidad.", lesson:"Verificar la empresa por canales independientes y no actuar bajo presión protege tu información."},
+        {text:"Reenviaré la oferta a todas mis amistades.", safe:false, reply:"¡Gracias por compartir!", lesson:"Antes de difundir una oferta, conviene verificar que sea auténtica."}
+      ]
+    },
+    {
+      title: "Una foto sin permiso",
+      context: "Una persona amenaza con publicar una foto privada de otra.",
+      other: "Si no haces lo que te pido, voy a publicar esa foto.",
+      options: [
+        {text:"Voy a responder con otra amenaza.", safe:false, reply:"Entonces esto empeorará.", lesson:"Responder con amenazas puede aumentar el riesgo. Busca apoyo seguro y orientación especializada."},
+        {text:"Buscaré apoyo de una persona adulta de confianza o un servicio oficial.", safe:true, reply:"No quiero que nadie se entere.", lesson:"Nadie tiene derecho a presionarte con amenazas. Pedir apoyo a alguien de confianza o a servicios oficiales es una opción válida."},
+        {text:"Compartiré la foto para explicar lo ocurrido.", safe:false, reply:"Ahora más personas la tienen.", lesson:"No difundas imágenes privadas. Puedes reportar la situación sin compartir el contenido."}
       ]
     }
   ];
 
   function simulator() {
     let current = 0;
+    let recommended = 0;
+    const history = [];
 
-    function show() {
-      const s = scenarios[current];
+    function render() {
+      const scenario = chatScenarios[current];
+      const progressPct = Math.round(current / chatScenarios.length * 100);
       modal(`
-        <small>SIMULADOR · HISTORIA ${current + 1} DE ${scenarios.length}</small>
-        <h2 id="modalTitle">🎭 ${esc(s.title)}</h2>
-        <div class="feedback"><p>${esc(s.story)}</p></div>
-        <p><b>¿Qué decisión tomarías?</b></p>
-        <div id="decisions">
-          ${s.options.map((option,i) => `
-            <button class="action" data-choice="${i}"
-              style="display:block;width:100%;margin:10px 0;text-align:left">
-              ${esc(option[0])}
-            </button>
-          `).join("")}
+        <div class="cv-chat-simulator">
+          <small>💬 SIMULADOR DE CONVERSACIONES · ${current + 1} DE ${chatScenarios.length}</small>
+          <h2 id="modalTitle">${esc(scenario.title)}</h2>
+          <div class="cv-quiz-progress" role="progressbar" aria-label="Progreso del simulador"
+            aria-valuemin="0" aria-valuemax="100" aria-valuenow="${progressPct}">
+            <div style="width:${progressPct}%"></div>
+          </div>
+          <p class="cv-chat-context">${esc(scenario.context)}</p>
+          <div class="cv-chat-screen" id="chatScreen" aria-live="polite">
+            <div class="cv-chat-bubble cv-chat-other"><small>Mensaje recibido</small><p>${esc(scenario.other)}</p></div>
+          </div>
+          <div id="chatChoices">
+            <p><b>¿Cómo responderías?</b></p>
+            ${scenario.options.map((option,i)=>`
+              <button type="button" class="cv-chat-choice" data-chat-choice="${i}">${esc(option.text)}</button>
+            `).join("")}
+          </div>
+          <div id="chatResult" aria-live="polite"></div>
+          <p class="cv-chat-note">Conversaciones ficticias para aprender. No envían mensajes a personas reales ni guardan tus respuestas.</p>
         </div>
-        <div id="decisionFeedback" aria-live="polite"></div>
       `);
-
-      $$("#decisions [data-choice]").forEach(button => {
+      $$("[data-chat-choice]").forEach(button => {
         button.onclick = () => {
-          const option = s.options[Number(button.dataset.choice)];
-          $("#decisions").remove();
-          $("#decisionFeedback").innerHTML = `
-            <div class="feedback ${option[2] ? "good" : "warn"}">
-              <b>${option[2] ? "Decisión recomendada" : "Reflexionemos sobre esta decisión"}</b>
-              <p>${esc(option[1])}</p>
+          const option = scenario.options[Number(button.dataset.chatChoice)];
+          if (option.safe) recommended++;
+          history.push({title:scenario.title, recommended:option.safe});
+          $("#chatChoices").remove();
+          $("#chatScreen").insertAdjacentHTML("beforeend", `
+            <div class="cv-chat-bubble cv-chat-mine"><small>Tu respuesta</small><p>${esc(option.text)}</p></div>
+            <div class="cv-chat-bubble cv-chat-other"><small>Respuesta simulada</small><p>${esc(option.reply)}</p></div>
+          `);
+          $("#chatResult").innerHTML = `
+            <div class="feedback ${option.safe?"good":"warn"}" role="status">
+              <b>${option.safe?"🌟 Una opción que ayuda a cuidarte":"💜 Analicemos esta elección"}</b>
+              <p>${esc(option.lesson)}</p>
             </div>
-            <button class="action" id="nextDecision">
-              ${current === scenarios.length - 1 ? "Finalizar simulador" : "Siguiente historia →"}
-            </button>
+            <button class="action" id="nextChat">${current+1===chatScenarios.length?"Ver mi resumen 🌷":"Continuar conversación →"}</button>
           `;
-          $("#nextDecision").onclick = () => {
+          $("#nextChat").onclick = () => {
             current++;
-            if (current < scenarios.length) show();
-            else {
-              modal(`
-                <h2 id="modalTitle">💜 Simulador completado</h2>
-                <p>Has explorado tres situaciones y sus consecuencias educativas.</p>
-                <p>Este simulador no sustituye la orientación profesional.</p>
-                <button class="action" id="closeSimulator">Volver a mi ruta</button>
-              `);
-              $("#closeSimulator").onclick = close;
-            }
+            if (current < chatScenarios.length) render();
+            else summary();
           };
         };
       });
     }
 
-    show();
+    function summary() {
+      modal(`
+        <small>🌷 RECORRIDO COMPLETADO</small>
+        <h2 id="modalTitle">💜 ¡Aprendiste a reconocer señales!</h2>
+        <p>Exploraste <b>${chatScenarios.length} conversaciones ficticias</b> y elegiste
+        <b>${recommended} de ${chatScenarios.length}</b> respuestas recomendadas.</p>
+        <div class="cv-quiz-progress" role="progressbar" aria-label="Opciones recomendadas"
+          aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(recommended/chatScenarios.length*100)}">
+          <div style="width:${Math.round(recommended/chatScenarios.length*100)}%"></div>
+        </div>
+        <div class="feedback good">
+          <b>Lo importante es aprender</b>
+          <p>No existe una única respuesta segura en todas las situaciones. Si algo te pone en peligro,
+          busca apoyo confiable o utiliza el directorio oficial de ayuda.</p>
+        </div>
+        <h3>Tu recorrido</h3>
+        ${history.map((h,i)=>`<p>${h.recommended?"🌟":"💜"} ${i+1}. ${esc(h.title)}</p>`).join("")}
+        <button class="action" id="repeatChat">↻ Volver a practicar</button>
+        <button class="action cv-secondary-action" id="helpAfterChat">💜 Ver rutas de ayuda</button>
+        <button class="action cv-secondary-action" id="closeChat">Terminar</button>
+      `);
+      $("#repeatChat").onclick = () => simulator();
+      $("#helpAfterChat").onclick = () => help();
+      $("#closeChat").onclick = close;
+    }
+    render();
   }
 
   // =====================================
@@ -977,74 +1077,99 @@
     const n = completed();
     const initial = read(INITIAL);
     const final = read(FINAL);
+    const eligible = allDone();
 
     modal(`
-      <h2 id="modalTitle">🏆 Mi constancia violeta</h2>
-      <p>Has completado <b>${n} de 4 módulos</b>.</p>
-      <p>${allDone()
-        ? "Puedes generar una constancia local de tu recorrido."
-        : "Completa los cuatro módulos para habilitarla."}</p>
-      <div class="field">
-        <label for="certName">Nombre o seudónimo (opcional)</label>
-        <input id="certName" maxlength="80" autocomplete="off">
+      <small>🏅 CÓDIGO VIOLETA · RECONOCIMIENTO EDUCATIVO</small>
+      <h2 id="modalTitle">Mi constancia de participación</h2>
+      <p>Has completado <b>${n} de 4 módulos</b> (${n*5} de 20 casos disponibles).</p>
+      <div class="cv-quiz-progress" role="progressbar" aria-label="Progreso para obtener constancia"
+        aria-valuemin="0" aria-valuemax="100" aria-valuenow="${n*25}">
+        <div style="width:${n*25}%"></div>
       </div>
-      <button class="action" id="makeCert" ${allDone() ? "" : "disabled"}>
-        Preparar constancia
-      </button>
-      <p><small>No es una certificación oficial. No se envía tu nombre a un servidor.</small></p>
+      ${eligible
+        ? '<div class="feedback good"><b>🌷 ¡Constancia desbloqueada!</b><p>Puedes crearla, imprimirla o guardarla como PDF desde el navegador.</p></div>'
+        : '<div class="feedback warn"><b>🔒 Aún no está desbloqueada</b><p>Completa los cuatro módulos. No necesitas obtener una nota mínima.</p></div>'}
+      <div class="field">
+        <label for="certName">Nombre o seudónimo para la constancia (opcional)</label>
+        <input id="certName" maxlength="80" autocomplete="off" placeholder="Ej.: Participante Violeta">
+      </div>
+      <button class="action" id="makeCert" ${eligible?"":"disabled"}>🌸 Crear constancia imprimible</button>
+      <p><small>Tu nombre solo se usa en el documento que generas. No se envía a servidores. La constancia acredita la participación en esta web, no una certificación académica u oficial.</small></p>
     `);
 
     $("#makeCert").onclick = () => {
-      const name = esc($("#certName").value.trim() || "Participante");
-      const date = new Date().toLocaleDateString("es-PE");
-      const w = window.open("", "_blank");
-
-      if (!w) {
-        toast("Permite ventanas emergentes para imprimir.");
+      const name = esc($("#certName").value.trim() || "Participante Violeta");
+      const date = new Date().toLocaleDateString("es-PE", {day:"2-digit",month:"long",year:"numeric"});
+      const initScore = initial && Number.isInteger(initial.score) && initial.total===10 ? initial.score+"/10" : "No registrada";
+      const finalScore = final && Number.isInteger(final.score) && final.total===10 ? final.score+"/10" : "No registrada";
+      const win = window.open("", "_blank");
+      if (!win) {
+        toast("El navegador bloqueó la ventana. Permite ventanas emergentes para crear tu constancia.");
         return;
       }
-
-      w.document.write(`
-        <!doctype html>
-        <html lang="es">
-        <head>
-          <meta charset="utf-8">
-          <title>Constancia Código Violeta</title>
-          <style>
-            body{font-family:Arial,sans-serif;background:#fff;color:#36134f;padding:35px}
-            main{max-width:850px;margin:auto;border:9px double #8738bb;border-radius:18px;padding:45px;text-align:center}
-            h1{color:#7430a5;font-size:40px}
-            h2{font-size:29px}
-            .tag{color:#744a91}
-            .data{background:#f6edfc;padding:20px;border-radius:12px;margin:24px 0}
-            small{color:#555}
-            @media print{body{padding:0}main{border-width:7px}}
-          </style>
-        </head>
-        <body>
-          <main>
-            <h1>✿ CÓDIGO VIOLETA</h1>
-            <p class="tag">CONSTANCIA DE RECORRIDO EDUCATIVO</p>
-            <h2>${name}</h2>
-            <p>Completó los cuatro módulos de aprendizaje:</p>
-            <p>Reconoce las señales · Escudo Digital</p>
-            <p>Mi voz pone límites · Activa tu red</p>
-            <div class="data">
-              <p><b>Módulos completados:</b> 4 de 4</p>
-              <p><b>Evaluación inicial:</b> ${initial && Number.isInteger(initial.score) ? initial.score + "/10" : "No registrada"}</p>
-              <p><b>Evaluación final:</b> ${final && Number.isInteger(final.score) ? final.score + "/10" : "Pendiente"}</p>
-              <p><b>Fecha:</b> ${date}</p>
-            </div>
-            <p>💜 Aprender también es una forma de cuidarnos.</p>
-            <small>Constancia educativa generada localmente. No constituye certificación oficial.</small>
-          </main>
-        </body>
-        </html>
-      `);
-
-      w.document.close();
-      w.focus();
-      w.print();
+      win.document.open();
+      win.document.write(`
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Constancia educativa · Código Violeta</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:28px;background:#f5eef9;font-family:Arial,Helvetica,sans-serif;color:#35124e}
+.actions{max-width:950px;margin:0 auto 18px;display:flex;gap:10px;flex-wrap:wrap}
+.actions button{border:0;border-radius:10px;background:#6f2d99;color:white;padding:12px 20px;font-size:15px;cursor:pointer}
+.actions .back{background:#e9d8f2;color:#411a61}
+.paper{position:relative;max-width:950px;min-height:600px;margin:auto;background:#fff;border:2px solid #d7b6e9;box-shadow:0 10px 35px #44205b20;padding:52px 58px;text-align:center;overflow:hidden}
+.paper:before,.paper:after{content:"✿";position:absolute;color:#ead7f4;font-size:130px}
+.paper:before{top:-60px;left:-25px}.paper:after{bottom:-70px;right:-25px}
+.brand{color:#6f2d99;font-size:24px;font-weight:900;letter-spacing:2px}
+.eyebrow{font-size:12px;letter-spacing:3px;color:#8951aa;font-weight:700;margin:18px 0}
+h1{font-family:Georgia,serif;font-size:38px;line-height:1.2;color:#44145e;margin:15px 0 24px}
+.name{font-family:Georgia,serif;font-size:31px;color:#6b2a94;border-bottom:2px solid #d5b0e9;display:inline-block;padding:0 30px 9px;max-width:100%;overflow-wrap:anywhere}
+.lead{font-size:17px;line-height:1.6;max-width:750px;margin:20px auto}
+.modules{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:700px;margin:24px auto}
+.modules div{background:#f5ecfa;border-radius:9px;padding:13px 8px;font-size:14px;font-weight:bold}
+.details{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;border-top:1px solid #e3d1ee;padding-top:20px;margin-top:22px;font-size:14px}
+.footer{font-size:12px;color:#6e5978;margin-top:25px;line-height:1.6}
+.creator{font-weight:bold;color:#572179}
+@page{size:A4 landscape;margin:10mm}
+@media print{body{padding:0;background:white}.actions{display:none}.paper{max-width:none;min-height:175mm;box-shadow:none;border:2px solid #b989d6;padding:30px 45px}h1{font-size:34px}}
+@media(max-width:620px){.paper{padding:28px 16px}.modules{grid-template-columns:1fr}h1{font-size:30px}.name{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="actions"><button onclick="window.print()">🖨️ Imprimir o guardar como PDF</button><button class="back" onclick="window.close()">Cerrar</button></div>
+<main class="paper">
+  <div class="brand">✿ CÓDIGO VIOLETA</div>
+  <p class="eyebrow">CONSTANCIA DE PARTICIPACIÓN EDUCATIVA</p>
+  <h1>Reconocimiento por completar la ruta</h1>
+  <div class="name">${name}</div>
+  <p class="lead">Ha completado el recorrido educativo de Código Violeta, dedicado a reconocer señales de alerta, proteger la privacidad digital, expresar límites y fortalecer redes de apoyo.</p>
+  <section class="modules" aria-label="Módulos completados">
+    <div>🚩 Reconoce las señales</div>
+    <div>🔐 Escudo Digital</div>
+    <div>🗣️ Mi voz pone límites</div>
+    <div>🤝 Activa tu red</div>
+  </section>
+  <div class="details">
+    <span><b>Participación:</b> 4 módulos · 20 casos educativos</span>
+    <span><b>Evaluación inicial:</b> ${initScore}</span>
+    <span><b>Evaluación final:</b> ${finalScore}</span>
+    <span><b>Fecha:</b> ${esc(date)}</span>
+  </div>
+  <div class="footer">
+    <p>💜 Aprender, reconocer y acompañar también son formas de cuidarnos.</p>
+    <p class="creator">Proyecto Código Violeta · Creado por Guiselle Pilar Trejo Obregón</p>
+    <p>Documento generado localmente a partir del progreso guardado en este navegador. No es una certificación oficial, no acredita horas académicas y no dispone de verificación externa.</p>
+  </div>
+</main>
+</body>
+</html>`);
+      win.document.close();
+      win.focus();
     };
   }
 
@@ -1226,6 +1351,24 @@
     if (actions[name]) actions[name]();
   }
 
+
+  // Conversaciones simuladas: burbujas legibles y opciones grandes.
+  const cvConversationStyles = document.createElement("style");
+  cvConversationStyles.textContent = `
+    .cv-chat-context{background:#f3e7fc;padding:13px 16px;border-radius:12px;line-height:1.5}
+    .cv-chat-screen{background:linear-gradient(145deg,#f8f1ff,#eee0f8);padding:18px 12px;border-radius:16px;min-height:170px;display:flex;flex-direction:column;gap:14px;margin:16px 0}
+    .cv-chat-bubble{padding:12px 16px;border-radius:17px;max-width:87%;box-shadow:0 2px 8px #421b5c12}
+    .cv-chat-bubble small{font-weight:700;display:block;margin-bottom:4px;opacity:.7}
+    .cv-chat-bubble p{margin:0;line-height:1.5;overflow-wrap:anywhere}
+    .cv-chat-other{align-self:flex-start;background:white;color:#39204a;border-bottom-left-radius:4px}
+    .cv-chat-mine{align-self:flex-end;background:#7c3baa;color:white;border-bottom-right-radius:4px}
+    .cv-chat-choice{display:block;width:100%;text-align:left;background:#fff;color:#4e246a;border:2px solid #d9bce9;padding:14px 16px;border-radius:12px;margin:10px 0;font:inherit;cursor:pointer;line-height:1.5}
+    .cv-chat-choice:hover,.cv-chat-choice:focus-visible{border-color:#8137af;background:#f6eafb;outline-offset:2px}
+    .cv-chat-note{font-size:.85rem;color:#695777;line-height:1.5}
+    @media(max-width:600px){.cv-chat-bubble{max-width:95%}}
+  `;
+  document.head.appendChild(cvConversationStyles);
+
   // =====================================
   // NUEVOS BOTONES EN HERRAMIENTAS
   // =====================================
@@ -1234,7 +1377,6 @@
 
   if (grid) {
     const newTools = [
-      ["simulator","🎭","Simulador de decisiones","Explora historias y sus consecuencias educativas."],
       ["dashboard","📊","Mi panel de progreso","Revisa módulos y evaluaciones."]
     ];
 
